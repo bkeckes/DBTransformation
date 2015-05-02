@@ -1,4 +1,5 @@
-package de.bkdev.transformation;
+package de.bkdev.transformation.storage;
+
 
 /**
  * Relation.

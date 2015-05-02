@@ -1,5 +1,7 @@
 package de.bkdev.transformation;
 
+import de.bkdev.transformation.storage.Node;
+
 public class Main {
 
 	/**

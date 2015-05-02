@@ -1,11 +1,11 @@
-package de.bkdev.transformation;
+package de.bkdev.transformation.storage;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.bkdev.transformation.Node;
-import de.bkdev.transformation.Property;
+import de.bkdev.transformation.storage.Node;
+import de.bkdev.transformation.storage.Property;
 
 public class NodeTest {
 	@Test
@@ -35,23 +35,5 @@ public class NodeTest {
 		assertEquals(2, node.getPropertyCount());
 	}
 	
-	@Test
-	public void testeNodeVerhalten(){
-		Node n = new Node("US");
-		n.addProperty("uid", "u01");
-		n.addProperty("name", "Date");
-		
-		Node b = new Node("BG");
-		b.addProperty("bid", "b02");
-		b.addProperty("title", "IT-Systems");
-		
-		Relationship r = new Relationship("isAdminFrom", new NodeTupel(n, b));
-		r.addProperty("since", "begin");
-//		System.out.println(r.toString());
-		
-		assertEquals("Date", r.getStart().getPropertyValue("name"));
-//		System.out.println(r.getStart());
-//		System.out.println(r.getEnd());
-		assertEquals("b02", r.getEnd().getPropertyValue("bid"));
-	}
+	
 }
