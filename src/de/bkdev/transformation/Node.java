@@ -16,7 +16,7 @@ public class Node extends GraphObject{
 		this.label = label;
 	}
 	public String toString(){
-		return "(" + label + ")->" + this.getPropertyString();
+		return "(" + label + ")->" + this.getAllPropertysInString();
 	}
 	
 	public String getLabel() {

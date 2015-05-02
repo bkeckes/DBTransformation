@@ -1,6 +1,8 @@
 package de.bkdev.transformation;
 
+import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 /**
@@ -9,33 +11,42 @@ import java.util.Iterator;
  *
  */
 public abstract class GraphObject {
-	protected HashSet<Property> propertySet;
+	private Hashtable<String, String> property;
 	
 	public GraphObject(){
-		propertySet = new HashSet<Property>();
+		property = new Hashtable<String, String>();
 	}
 	
-	public HashSet<Property> getPropertySet() {
-		return propertySet;
+	public Hashtable<String, String> getPropertySet() {
+		return property;
 	}
 	
 	//TODO Element soll nicht eingefügt werden wenn key und value schon exisitiert.
 		//		Wenn sich value ändert soll Element überschrieben werden.
-	public void addProperty(Property property){
-		if(!propertySet.contains(property))
-			propertySet.add(property);
+	public void addProperty(String key, String value){
+		property.put(key, value);
 	}
 	
 	public int getPropertyCount(){
-		return propertySet.size();
+		return property.size();
 	}
 	
-	public String getPropertyString(){
+	public String getPropertyString(String key){
+		return key + ":'" + property.get(key) + "'";
+	}
+	
+	public String getAllPropertysInString(){
 		String temp="";
-		Iterator<Property> it = propertySet.iterator();
-		while(it.hasNext()){
-			temp += it.next().toString()+" ";
+		Enumeration<String> e = property.keys();
+		
+		while(e.hasMoreElements()){
+			temp += getPropertyString(e.nextElement()) +" ";
 		}
+		
 		return temp;
+	}
+	
+	public String getPropertyValue(String key){
+		return property.get(key);
 	}
 }
