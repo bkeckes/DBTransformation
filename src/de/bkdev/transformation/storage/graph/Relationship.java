@@ -24,10 +24,6 @@ public class Relationship extends GraphObject{
 	public void setLabel(String label) {
 		this.label = label;
 	}
-
-//	public NodeTupel getStartAndEnd() {
-//		return startAndEnd;
-//	}
 	
 	public Node getStart(){
 		return startAndEnd.getStart();

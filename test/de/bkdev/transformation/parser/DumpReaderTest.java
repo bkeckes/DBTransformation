@@ -6,9 +6,6 @@ import org.junit.Test;
 
 public class DumpReaderTest {
 
-	@Test
-	public void testImport() {
-		fail("Not yet implemented");
-	}
+	
 
 }

@@ -23,6 +23,14 @@ public class Table {
 		return name;
 	}
 	
+	public boolean hasPrimaryKey(){
+		for(Property p : property){
+			if(p.isPrimaryKey())
+				return true;
+		}
+		return false;
+	}
+	
 	public Property getPrimaryKey(){
 		Iterator<Property> it = property.iterator();
 		
@@ -48,6 +56,10 @@ public class Table {
 	public boolean isTableValid(){
 		//Ist Name gesetzt?
 		if(name!=null && !name.isEmpty()){
+			
+			//Sind mindestens 2 Eigenschaften vorhanden?
+			if(property.size()<2)
+				return false;
 			
 			//Sind alle Propertys in Ordnung?
 			for(Property p : property){
