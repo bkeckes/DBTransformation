@@ -73,7 +73,17 @@ public class Table {
 		}
 	}
 	
+	public Property getPropertyByName(String name){
+		for(Property p : property){
+			if(p.getName().equals(name))
+				return p;
+		}
+		return null;
+	}
 	
+	public int getPropertyCount(){
+		return property.size();
+	}
 	
 	
 }
