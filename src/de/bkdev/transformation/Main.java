@@ -1,6 +1,6 @@
 package de.bkdev.transformation;
 
-import de.bkdev.transformation.storage.Node;
+import de.bkdev.transformation.storage.graph.Node;
 
 public class Main {
 
@@ -12,6 +12,8 @@ public class Main {
 		node.addProperty("name", "benni");
 		node.addProperty("birth", "1988");
 		System.out.println(node.toString());
+		
+		GDBConnection con = new GDBConnection();
 
 	}
 

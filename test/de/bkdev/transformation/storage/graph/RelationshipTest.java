@@ -1,10 +1,12 @@
-package de.bkdev.transformation.storage;
+package de.bkdev.transformation.storage.graph;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import de.bkdev.transformation.storage.Relationship;
+import de.bkdev.transformation.storage.graph.Node;
+import de.bkdev.transformation.storage.graph.NodeTupel;
+import de.bkdev.transformation.storage.graph.Relationship;
 
 public class RelationshipTest {
 

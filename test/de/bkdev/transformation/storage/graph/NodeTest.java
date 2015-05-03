@@ -1,11 +1,11 @@
-package de.bkdev.transformation.storage;
+package de.bkdev.transformation.storage.graph;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.bkdev.transformation.storage.Node;
-import de.bkdev.transformation.storage.Property;
+import de.bkdev.transformation.storage.graph.Node;
+import de.bkdev.transformation.storage.relational.Property;
 
 public class NodeTest {
 	@Test

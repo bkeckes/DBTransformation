@@ -1,4 +1,4 @@
-package de.bkdev.transformation.storage;
+package de.bkdev.transformation.storage.graph;
 
 
 /**
