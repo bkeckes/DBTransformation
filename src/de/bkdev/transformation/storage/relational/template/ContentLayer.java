@@ -18,6 +18,10 @@ public class ContentLayer {
 			throw new TableException();
 	}
 	
+	public Hashtable<Property, String> getTupel(){
+		return tupel;
+	}
+	
 	public int getValueCount(){
 		return tupel.size();
 	}

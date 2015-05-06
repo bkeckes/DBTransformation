@@ -4,11 +4,19 @@ import java.util.HashSet;
 
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.Table;
-
+/**
+ * Diese Klasse ist für die Verwaltung der einzelnen Datensätze zuständig.
+ * @author Benjamin Keckes
+ *
+ */
 public class TableContent {
 	private Table table;
 	private HashSet<ContentLayer> layer;
 	
+	public HashSet<ContentLayer> getLayer() {
+		return layer;
+	}
+
 	private ContentLayer currentLayer;
 	
 	public TableContent(Table table){
@@ -59,4 +67,12 @@ public class TableContent {
 		return true;
 	}
 	//public ContentLayer getLayer()
+
+	public Table getTable() {
+		return table;
+	}
+
+	public ContentLayer getCurrentLayer() {
+		return currentLayer;
+	}
 }

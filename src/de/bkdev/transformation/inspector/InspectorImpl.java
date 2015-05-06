@@ -5,7 +5,7 @@ import de.bkdev.transformation.storage.graph.template.GDBRelation;
 import de.bkdev.transformation.storage.graph.template.GDBTemplate;
 import de.bkdev.transformation.storage.relational.Table;
 
-public class MyInspectorImpl implements InspectorController{
+public class InspectorImpl implements InspectorController{
 
 	@Override
 	public GDBTemplate getObject(Table table) {

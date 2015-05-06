@@ -47,9 +47,7 @@ public class TableContentTest {
 		tc.addAttributeToCurrentLayer("id", "c01");
 		tc.addAttributeToCurrentLayer("name", "date");
 		
-		tc.addAttributeToCurrentLayer("id", "c02");
-		
-		
+		tc.addAttributeToCurrentLayer("id", "c02");		
 		assertFalse(tc.isLayerSetValid());
 		tc.addAttributeToCurrentLayer("name", "hunt");
 		assertTrue(tc.isCurrentLayerValid());

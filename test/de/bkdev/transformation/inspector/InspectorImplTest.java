@@ -7,8 +7,9 @@ import org.junit.Test;
 import de.bkdev.transformation.storage.graph.template.GDBTemplate;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.Table;
+import de.bkdev.transformation.storage.relational.template.TableContent;
 
-public class MyInspectorImplTest {
+public class InspectorImplTest {
 
 	@Test
 	public void testeFunktionalitaetFuerNode() {
@@ -16,7 +17,7 @@ public class MyInspectorImplTest {
 		table.addProperty(new Property(true, false, "varchar(20)", "id"));
 		table.addProperty(new Property(false, false, "varchr(128)", "name"));
 		
-		InspectorController inspector = new MyInspectorImpl();
+		InspectorController inspector = new InspectorImpl();
 		GDBTemplate template = inspector.getObject(table);
 		assertEquals("Node", template.identify());
 		
@@ -28,7 +29,7 @@ public class MyInspectorImplTest {
 		table.addProperty(new Property(false, true, "varchar(20)", "id"));
 		table.addProperty(new Property(false, true, "varchr(128)", "name"));
 		
-		InspectorController inspector = new MyInspectorImpl();
+		InspectorController inspector = new InspectorImpl();
 		GDBTemplate template = inspector.getObject(table);
 		assertEquals("Relation", template.identify());
 	}
@@ -42,7 +43,7 @@ public class MyInspectorImplTest {
 		table.addProperty(new Property(false, true, "varchr(128)", "msg"));
 		table.addProperty(new Property(false, true, "varchr(12)", "date"));
 		
-		InspectorController inspector = new MyInspectorImpl();
+		InspectorController inspector = new InspectorImpl();
 		GDBTemplate template = inspector.getObject(table);
 		assertEquals("Relation", template.identify());
 	}
@@ -73,16 +74,29 @@ public class MyInspectorImplTest {
 		tg.addProperty(new Property(false, true, "String", "tuser"));
 		tg.addProperty(new Property(false, true, "String", "tcomment"));
 		
-		InspectorController inspector = new MyInspectorImpl();
+		InspectorController inspector = new InspectorImpl();
 		
 		assertEquals("Node", inspector.getObject(us).identify());
 		assertEquals("Node", inspector.getObject(bg).identify());
 		assertEquals("Relation", inspector.getObject(fr).identify());
 		assertEquals("Relation", inspector.getObject(ct).identify());
 		assertEquals("Relation", inspector.getObject(tg).identify());
+
+	}
+	
+	@Test
+	public void testNodeTransformation(){
+		Table us = new Table("US");
+		us.addProperty(new Property(true, false, "String", "uid"));
+		us.addProperty(new Property(false, false, "String", "uname"));
 		
-		
-		
+		TableContent tc = new TableContent(us);
+		tc.addContentLayer();
+		tc.addAttributeToCurrentLayer("id", "c01");
+		tc.addAttributeToCurrentLayer("name", "date");
+		tc.addContentLayer();
+		tc.addAttributeToCurrentLayer("id", "c02");
+		tc.addAttributeToCurrentLayer("name", "hunt");
 	}
 
 }

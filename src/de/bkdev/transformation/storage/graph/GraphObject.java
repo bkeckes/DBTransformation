@@ -21,8 +21,8 @@ public abstract class GraphObject {
 		return property;
 	}
 	
-	//TODO Element soll nicht eingefügt werden wenn key und value schon exisitiert.
-		//		Wenn sich value ändert soll Element überschrieben werden.
+	//TODO Element soll nicht eingefÃ¼gt werden wenn key und value schon exisitiert.
+		//		Wenn sich value Ã¤ndert soll Element ï¿½berschrieben werden.
 	public void addProperty(String key, String value){
 		property.put(key, value);
 	}
