@@ -12,6 +12,9 @@ public class ContentLayer {
 	}
 	
 	public void addValue(Property property, String value) throws TableException{
+		if(property==null)
+			throw new TableException();
+		
 		if(!tupel.contains(property) && !hasProperty(property.getName()))
 			tupel.put(property, value);
 		else

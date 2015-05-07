@@ -73,12 +73,12 @@ public class Table {
 		}
 	}
 	
-	public Property getPropertyByName(String name){
+	public Property getPropertyByName(String name) throws PropertyException{
 		for(Property p : property){
 			if(p.getName().equals(name))
 				return p;
 		}
-		return null;
+		throw new PropertyException();
 	}
 	
 	public int getPropertyCount(){

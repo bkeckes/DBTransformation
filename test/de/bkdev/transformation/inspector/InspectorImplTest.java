@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import de.bkdev.transformation.storage.graph.template.GDBTemplate;
 import de.bkdev.transformation.storage.relational.Property;
+import de.bkdev.transformation.storage.relational.PropertyException;
 import de.bkdev.transformation.storage.relational.Table;
 import de.bkdev.transformation.storage.relational.template.TableContent;
 
@@ -84,6 +85,17 @@ public class InspectorImplTest {
 
 	}
 	
+	@Test(expected = PropertyException.class)
+	public void testeFalschenBezeichner(){
+		Table us = new Table("US");
+		us.addProperty(new Property(true, false, "String", "uid"));
+		us.addProperty(new Property(false, false, "String", "uname"));
+		
+		TableContent tc = new TableContent(us);
+		tc.addContentLayer();
+		tc.addAttributeToCurrentLayer("id", "c01");
+		
+	}
 	@Test
 	public void testNodeTransformation(){
 		Table us = new Table("US");
@@ -92,11 +104,11 @@ public class InspectorImplTest {
 		
 		TableContent tc = new TableContent(us);
 		tc.addContentLayer();
-		tc.addAttributeToCurrentLayer("id", "c01");
-		tc.addAttributeToCurrentLayer("name", "date");
+		tc.addAttributeToCurrentLayer("uid", "c01");
+		tc.addAttributeToCurrentLayer("uname", "date");
 		tc.addContentLayer();
-		tc.addAttributeToCurrentLayer("id", "c02");
-		tc.addAttributeToCurrentLayer("name", "hunt");
+		tc.addAttributeToCurrentLayer("uid", "c02");
+		tc.addAttributeToCurrentLayer("uname", "hunt");
 	}
 
 }

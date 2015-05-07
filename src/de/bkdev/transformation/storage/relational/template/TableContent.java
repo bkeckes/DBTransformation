@@ -3,6 +3,7 @@ package de.bkdev.transformation.storage.relational.template;
 import java.util.HashSet;
 
 import de.bkdev.transformation.storage.relational.Property;
+import de.bkdev.transformation.storage.relational.PropertyException;
 import de.bkdev.transformation.storage.relational.Table;
 /**
  * Diese Klasse ist für die Verwaltung der einzelnen Datensätze zuständig.
@@ -36,7 +37,13 @@ public class TableContent {
 		if(currentLayer==null || isCurrentLayerValid())
 			addContentLayer();
 		
-		Property p = table.getPropertyByName(key);
+		Property p = null;
+		try{
+			p = table.getPropertyByName(key);
+		}
+		catch(PropertyException e){
+			e.printStackTrace();
+		}
 		
 		try{
 			currentLayer.addValue(p, value);
