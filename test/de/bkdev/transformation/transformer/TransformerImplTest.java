@@ -6,6 +6,8 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
+import de.bkdev.transformation.inspector.InspectorController;
+import de.bkdev.transformation.inspector.InspectorImpl;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.Table;
@@ -28,7 +30,11 @@ public class TransformerImplTest {
 		tc.addAttributeToCurrentLayer("name", "hunt");
 		
 		TransformerController transformer = new TransformerImpl();
-		HashSet<Node> nodes = transformer.makeNodes(tc);
+		HashSet<Node> nodes=null;
+		
+		InspectorController inspector = new InspectorImpl();
+		if(inspector.transformTableToGraph(table).identify().equals("Node"))
+				nodes = transformer.makeNodes(tc);
 		
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		assertEquals(2, nodes.size());

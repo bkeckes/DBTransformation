@@ -19,7 +19,7 @@ public class InspectorImplTest {
 		table.addProperty(new Property(false, false, "varchr(128)", "name"));
 		
 		InspectorController inspector = new InspectorImpl();
-		GDBTemplate template = inspector.getObject(table);
+		GDBTemplate template = inspector.transformTableToGraph(table);
 		assertEquals("Node", template.identify());
 		
 	}
@@ -31,7 +31,7 @@ public class InspectorImplTest {
 		table.addProperty(new Property(false, true, "varchr(128)", "name"));
 		
 		InspectorController inspector = new InspectorImpl();
-		GDBTemplate template = inspector.getObject(table);
+		GDBTemplate template = inspector.transformTableToGraph(table);
 		assertEquals("Relation", template.identify());
 	}
 	
@@ -45,7 +45,7 @@ public class InspectorImplTest {
 		table.addProperty(new Property(false, true, "varchr(12)", "date"));
 		
 		InspectorController inspector = new InspectorImpl();
-		GDBTemplate template = inspector.getObject(table);
+		GDBTemplate template = inspector.transformTableToGraph(table);
 		assertEquals("Relation", template.identify());
 	}
 	
@@ -77,15 +77,15 @@ public class InspectorImplTest {
 		
 		InspectorController inspector = new InspectorImpl();
 		
-		assertEquals("Node", inspector.getObject(us).identify());
-		assertEquals("Node", inspector.getObject(bg).identify());
-		assertEquals("Relation", inspector.getObject(fr).identify());
-		assertEquals("Relation", inspector.getObject(ct).identify());
-		assertEquals("Relation", inspector.getObject(tg).identify());
+		assertEquals("Node", inspector.transformTableToGraph(us).identify());
+		assertEquals("Node", inspector.transformTableToGraph(bg).identify());
+		assertEquals("Relation", inspector.transformTableToGraph(fr).identify());
+		assertEquals("Relation", inspector.transformTableToGraph(ct).identify());
+		assertEquals("Relation", inspector.transformTableToGraph(tg).identify());
 
 	}
 	
-	@Test(expected = PropertyException.class)
+	@Test
 	public void testeFalschenBezeichner(){
 		Table us = new Table("US");
 		us.addProperty(new Property(true, false, "String", "uid"));

@@ -8,7 +8,7 @@ import de.bkdev.transformation.storage.relational.Table;
 public class InspectorImpl implements InspectorController{
 
 	@Override
-	public GDBTemplate getObject(Table table) {
+	public GDBTemplate transformTableToGraph(Table table) {
 
 		if(!table.isTableValid())
 			return null;
