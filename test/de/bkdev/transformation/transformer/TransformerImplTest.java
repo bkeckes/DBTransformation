@@ -31,8 +31,8 @@ public class TransformerImplTest {
 		
 		TransformerController transformer = new TransformerImpl();
 		HashSet<Node> nodes=null;
-		
 		InspectorController inspector = new InspectorImpl();
+		
 		if(inspector.transformTableToGraph(table).identify().equals("Node"))
 				nodes = transformer.makeNodes(tc);
 		
