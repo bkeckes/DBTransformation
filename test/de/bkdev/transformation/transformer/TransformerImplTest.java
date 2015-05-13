@@ -39,5 +39,26 @@ public class TransformerImplTest {
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		assertEquals(2, nodes.size());
 	}
+	
+	@Test
+	public void testeRelation(){
+		Table table = new Table("FR");
+		table.addProperty(new Property(false, true, "varchar(20)", "fuser"));
+		table.addProperty(new Property(false, true, "varchar(20)", "fblog"));
+		
+		TableContent tc = new TableContent(table);
+		tc.addContentLayer();
+		tc.addAttributeToCurrentLayer("fuser", "u01");
+		tc.addAttributeToCurrentLayer("fblog", "b01");
+		tc.addContentLayer();
+		tc.addAttributeToCurrentLayer("fuser", "u01");
+		tc.addAttributeToCurrentLayer("fblog", "b02");
+		
+		TransformerController transformer = new TransformerImpl();
+		HashSet<Node> relation=null;
+		InspectorController inspector = new InspectorImpl();
+		
+		relation = transformer.makeNodes(tc);
+	}
 
 }

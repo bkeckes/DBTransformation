@@ -13,40 +13,92 @@ public class ContentLayerTest {
 		ContentLayer layer = new ContentLayer();
 		assertEquals(0, layer.getValueCount());
 		
-		try{
-			layer.addValue(new Property(false, true, "int", "id"), "cid");
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		
+		layer.addValue(new Property(false, true, "int", "id"), "cid");
+	
 		assertEquals(1, layer.getValueCount());
 		
-		try{
-			layer.addValue(new Property(false, true, "char", "name"), "date");
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		layer.addValue(new Property(false, true, "char", "name"), "date");
+		
 		assertEquals(2, layer.getValueCount());
 	}
-	
-	@Test
+	/**
+	 * TODO
+	 */
+	/*@Test
 	public void testFehlverhalten() {
 		ContentLayer layer = new ContentLayer();
 		assertEquals(0, layer.getValueCount());
 		
-		try{
-			layer.addValue(new Property(false, true, "int", "id"), "cid");
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		layer.addValue(new Property(false, true, "int", "id"), "cid");
+
 		assertEquals(1, layer.getValueCount());
-		
-		try{
-			layer.addValue(new Property(false, true, "char", "id"), "date");
-			fail("There should be an Exception");
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		layer.addValue(new Property(false, true, "char", "id"), "date");
+
+
 		assertEquals(1, layer.getValueCount());
 	}
+	*/
+	
+	@Test
+	public void testForeignKeyGetter(){
+		ContentLayer layer = new ContentLayer();
+		
+		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
+		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		
+		
+		PropertyValueTupel prop = layer.getFirstForeignKey();
+		assertEquals("fuser", prop.getProperty().getName());
+		assertEquals("c01", prop.getValue());
+	}
+	
+	@Test
+	public void testForeignKeyGetter2(){
+		ContentLayer layer = new ContentLayer();
+		
+		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
+		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		
+		
+		PropertyValueTupel prop = layer.getFirstForeignKey();
+		assertEquals("fuser", prop.getProperty().getName());
+
+		PropertyValueTupel second = layer.getForeignKeyAfter(prop);
+		assertEquals("fblod", second.getProperty().getName());
+	}
+	
+	@Test
+	public void testForeignKeyGetterMitAnderenWerten(){
+		ContentLayer layer = new ContentLayer();
+		
+		layer.addValue(new Property(true, false, "int", "id"), "1");
+		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
+		layer.addValue(new Property(false, false, "int", "date"), "18.12.");
+		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		
+		
+		PropertyValueTupel prop = layer.getFirstForeignKey();
+		assertEquals("fuser", prop.getProperty().getName());
+
+		PropertyValueTupel second = layer.getForeignKeyAfter(prop);
+		assertEquals("fblod", second.getProperty().getName());
+	}
+	
+	@Test
+	public void testForeignKeyCount(){
+		ContentLayer layer = new ContentLayer();
+		
+		assertEquals(0, layer.getForeignKeyCount());
+		layer.addValue(new Property(true, false, "int", "id"), "1");
+		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
+		assertEquals(1, layer.getForeignKeyCount());
+		layer.addValue(new Property(false, false, "int", "date"), "18.12.");
+		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		
+		
+		assertEquals(2, layer.getForeignKeyCount());
+	}
+
 
 }

@@ -6,8 +6,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import de.bkdev.transformation.storage.graph.Node;
+import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.template.ContentLayer;
+import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.template.TableContent;
 
 public class TransformerImpl implements TransformerController{
@@ -17,18 +19,36 @@ public class TransformerImpl implements TransformerController{
 		HashSet<Node> nodes = new HashSet<Node>();
 		Node currentNode;
 		for(ContentLayer c : tc.getLayer()){
-			currentNode = new Node(tc.getTable().getName());
 			
-			Iterator<Entry<Property, String>> it = c.getTupel().entrySet().iterator();
+			nodes.add(makeNode(tc.getTable().getName(), c));
 			
-			while(it.hasNext()){
-				Entry<Property, String> entry = it.next();
-				currentNode.addProperty(entry.getKey().getName(), entry.getValue());
-			}
-			nodes.add(currentNode);
 		}
 		
 		return nodes;
+	}
+	
+	private Node makeNode(String label, ContentLayer layer){
+		Node node = new Node("label");
+		
+		for(PropertyValueTupel tupel : layer.getAttributes()){
+			node.addProperty(tupel.getProperty().getName(), tupel.getValue());
+		}
+		
+		return node;
+	}
+
+	@Override
+	public HashSet<Relationship> makeRelationship(TableContent tc,
+			HashSet<Node> nodes) {
+		HashSet<Relationship> rels = new HashSet<Relationship>();
+		
+		for(ContentLayer c : tc.getLayer()){
+			PropertyValueTupel first = c.getFirstForeignKey();
+			String firstID = first.getProperty().getName();
+			String secondID =  c.getForeignKeyAfter(c.getFirstForeignKey()).getProperty().getName();
+		}
+		
+		return null;
 	}
 
 }

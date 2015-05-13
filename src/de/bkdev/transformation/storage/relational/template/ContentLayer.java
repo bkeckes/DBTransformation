@@ -1,41 +1,64 @@
 package de.bkdev.transformation.storage.relational.template;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import de.bkdev.transformation.storage.relational.*;
 
 public class ContentLayer {
-	private Hashtable<Property, String> tupel;
+	private ArrayList<PropertyValueTupel> attr;
 	
 	public ContentLayer(){
-		tupel = new Hashtable<Property, String>();
+		attr = new ArrayList<PropertyValueTupel>();
 	}
 	
-	public void addValue(Property property, String value) throws TableException{
-		if(property==null)
-			throw new TableException();
+	public void addValue(Property property, String value){
 		
-		if(!tupel.contains(property) && !hasProperty(property.getName()))
-			tupel.put(property, value);
-		else
-			throw new TableException();
-	}
-	
-	public Hashtable<Property, String> getTupel(){
-		return tupel;
+		attr.add(new PropertyValueTupel(property, value));
+		
 	}
 	
 	public int getValueCount(){
-		return tupel.size();
+		return attr.size();
+	}
+	public ArrayList<PropertyValueTupel> getAttributes(){
+		return attr;
+	}
+	public PropertyValueTupel getFirstForeignKey(){
+		
+		for (PropertyValueTupel p : attr){
+			if(p.getProperty().isForeignKey()){
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	public PropertyValueTupel getForeignKeyAfter(PropertyValueTupel tupel){
+		
+		for(int i=attr.indexOf(tupel)+1; i<attr.size(); i++){
+			if(attr.get(i).getProperty().isForeignKey())
+				return attr.get(i);
+		}
+		return null;
+	}
+	
+	public int getForeignKeyCount(){
+		int c=0;
+		for (PropertyValueTupel p : attr){
+			if(p.getProperty().isForeignKey()){
+				c++;
+			}
+		}
+		return c;
 	}
 	
 	private boolean hasProperty(String key){
-		Enumeration<Property> propEnum = tupel.keys();
 		
-		while(propEnum.hasMoreElements()){
-			Property prop = propEnum.nextElement();
-			if(prop.getName().equals(key))
+		for (PropertyValueTupel p : attr){
+			if(p.getProperty().getName().equals(key)){
 				return true;
+			}
 		}
 		return false;
 	}

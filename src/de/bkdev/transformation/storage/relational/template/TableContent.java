@@ -45,11 +45,8 @@ public class TableContent {
 			e.printStackTrace();
 		}
 		
-		try{
-			currentLayer.addValue(p, value);
-		}catch(TableException e){
-			e.printStackTrace();
-		}
+		currentLayer.addValue(p, value);
+
 		
 	}
 	
