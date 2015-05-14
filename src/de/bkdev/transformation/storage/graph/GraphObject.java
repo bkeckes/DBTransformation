@@ -40,11 +40,23 @@ public abstract class GraphObject {
 		Enumeration<String> e = property.keys();
 		
 		while(e.hasMoreElements()){
+			temp += getPropertyString(e.nextElement()) +", ";
+		}
+		
+		return temp.substring(0, temp.length()-2);
+	}
+	public String getPropertyStringForStatement(){
+		String temp="";
+		Enumeration<String> e = property.keys();
+		
+		while(e.hasMoreElements()){
+			//e.nextElement()
 			temp += getPropertyString(e.nextElement()) +" ";
 		}
 		
 		return temp;
 	}
+	
 	
 	public String getPropertyValue(String key){
 		return property.get(key);

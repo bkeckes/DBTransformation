@@ -28,7 +28,7 @@ public class TransformerImpl implements TransformerController{
 	}
 	
 	private Node makeNode(String label, ContentLayer layer){
-		Node node = new Node("label");
+		Node node = new Node(label);
 		
 		for(PropertyValueTupel tupel : layer.getAttributes()){
 			node.addProperty(tupel.getProperty().getName(), tupel.getValue());
@@ -45,7 +45,9 @@ public class TransformerImpl implements TransformerController{
 		for(ContentLayer c : tc.getLayer()){
 			PropertyValueTupel first = c.getFirstForeignKey();
 			String firstID = first.getProperty().getName();
-			String secondID =  c.getForeignKeyAfter(c.getFirstForeignKey()).getProperty().getName();
+			String secondID =  c.getForeignKeyAfter(first).getProperty().getName();
+			
+			
 		}
 		
 		return null;

@@ -17,7 +17,7 @@ public class TransformerImplTest {
 
 	@Test
 	public void testeAnzahlNodes() {
-		Table table = new Table("US");
+		Table table = new Table("BJ");
 		table.addProperty(new Property(true, false, "varchar(20)", "id"));
 		table.addProperty(new Property(false, false, "varchr(128)", "name"));
 		

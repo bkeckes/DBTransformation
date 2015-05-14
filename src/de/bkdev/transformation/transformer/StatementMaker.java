@@ -10,7 +10,9 @@ public class StatementMaker {
 	 * TODO
 	 */
 	private static String makeNodeStatement(Node node) {
-		return node.toString();
+		
+		
+		return "CREATE (ee:" + node.getLabel() + " {" + node.getAllPropertysInString() + "});";
 	}
 
 	public static String makeCypherStatementFromNodes(HashSet<Node> nodes) {
