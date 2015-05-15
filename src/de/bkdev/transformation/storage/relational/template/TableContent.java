@@ -4,14 +4,14 @@ import java.util.HashSet;
 
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.PropertyException;
-import de.bkdev.transformation.storage.relational.Table;
+import de.bkdev.transformation.storage.relational.Tablescheme;
 /**
  * Diese Klasse ist für die Verwaltung der einzelnen Datensätze zuständig.
  * @author Benjamin Keckes
  *
  */
 public class TableContent {
-	private Table table;
+	private Tablescheme table;
 	private HashSet<ContentLayer> layer;
 	
 	public HashSet<ContentLayer> getLayer() {
@@ -20,7 +20,7 @@ public class TableContent {
 
 	private ContentLayer currentLayer;
 	
-	public TableContent(Table table){
+	public TableContent(Tablescheme table){
 		this.table = table;
 		this.layer = new HashSet<ContentLayer>();
 	}
@@ -72,7 +72,7 @@ public class TableContent {
 	}
 	//public ContentLayer getLayer()
 
-	public Table getTable() {
+	public Tablescheme getTable() {
 		return table;
 	}
 

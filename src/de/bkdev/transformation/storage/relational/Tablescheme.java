@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-public class Table {
+public class Tablescheme {
 	private String name;
 	private Set<Property> property;
 	
-	public Table(String n){
+	public Tablescheme(String n){
 		this.name = n;
 		this.property = new HashSet<Property>();
 	}

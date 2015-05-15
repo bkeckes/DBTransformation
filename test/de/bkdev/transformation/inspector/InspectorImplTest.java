@@ -7,14 +7,14 @@ import org.junit.Test;
 import de.bkdev.transformation.storage.graph.template.GDBTemplate;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.PropertyException;
-import de.bkdev.transformation.storage.relational.Table;
+import de.bkdev.transformation.storage.relational.Tablescheme;
 import de.bkdev.transformation.storage.relational.template.TableContent;
 
 public class InspectorImplTest {
 
 	@Test
 	public void testeFunktionalitaetFuerNode() {
-		Table table = new Table("US");
+		Tablescheme table = new Tablescheme("US");
 		table.addProperty(new Property(true, false, "varchar(20)", "id"));
 		table.addProperty(new Property(false, false, "varchr(128)", "name"));
 		
@@ -26,7 +26,7 @@ public class InspectorImplTest {
 	
 	@Test
 	public void testeFunktionalitaetFuerRelation() {
-		Table table = new Table("US");
+		Tablescheme table = new Tablescheme("US");
 		table.addProperty(new Property(false, true, "varchar(20)", "id"));
 		table.addProperty(new Property(false, true, "varchr(128)", "name"));
 		
@@ -37,7 +37,7 @@ public class InspectorImplTest {
 	
 	@Test
 	public void testeFunktionalitaetFuerRelation2() {
-		Table table = new Table("CT");
+		Tablescheme table = new Tablescheme("CT");
 		table.addProperty(new Property(true, false, "int", "id"));
 		table.addProperty(new Property(false, true, "varchr(128)", "blog"));
 		table.addProperty(new Property(false, true, "varchr(128)", "user"));
@@ -51,27 +51,27 @@ public class InspectorImplTest {
 	
 	@Test
 	public void testeBeispiel(){
-		Table us = new Table("US");
+		Tablescheme us = new Tablescheme("US");
 		us.addProperty(new Property(true, false, "String", "uid"));
 		us.addProperty(new Property(false, false, "String", "uname"));
 		
-		Table bg = new Table("BG");
+		Tablescheme bg = new Tablescheme("BG");
 		bg.addProperty(new Property(true, false, "String", "bid"));
 		bg.addProperty(new Property(false, false, "String", "bname"));
 		bg.addProperty(new Property(false, false, "String", "admin"));
 		
-		Table fr = new Table("FR");
+		Tablescheme fr = new Tablescheme("FR");
 		fr.addProperty(new Property(false, true, "String", "fuser"));
 		fr.addProperty(new Property(false, true, "String", "fblog"));
 		
-		Table ct = new Table("CT");
+		Tablescheme ct = new Tablescheme("CT");
 		ct.addProperty(new Property(true, false, "String", "cid"));
 		ct.addProperty(new Property(false, true, "String", "cblog"));
 		ct.addProperty(new Property(false, true, "String", "cuser"));
 		ct.addProperty(new Property(false, false, "String", "msg"));
 		ct.addProperty(new Property(false, false, "String", "date"));
 		
-		Table tg = new Table("TG");
+		Tablescheme tg = new Tablescheme("TG");
 		tg.addProperty(new Property(false, true, "String", "tuser"));
 		tg.addProperty(new Property(false, true, "String", "tcomment"));
 		
@@ -87,7 +87,7 @@ public class InspectorImplTest {
 	
 	@Test
 	public void testeFalschenBezeichner(){
-		Table us = new Table("US");
+		Tablescheme us = new Tablescheme("US");
 		us.addProperty(new Property(true, false, "String", "uid"));
 		us.addProperty(new Property(false, false, "String", "uname"));
 		
@@ -98,7 +98,7 @@ public class InspectorImplTest {
 	}
 	@Test
 	public void testNodeTransformation(){
-		Table us = new Table("US");
+		Tablescheme us = new Tablescheme("US");
 		us.addProperty(new Property(true, false, "String", "uid"));
 		us.addProperty(new Property(false, false, "String", "uname"));
 		
