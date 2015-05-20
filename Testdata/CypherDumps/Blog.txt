@@ -1,0 +1,23 @@
+begin
+create index on :`BG`(`bid`)
+create index on :`Category`(`categoryID`)
+create index on :`Product`(`productID`)
+create index on :`Supplier`(`supplierID`)
+create index on :`US`(`uid`)
+create (_197:`US` {`name`:"Date", `uid`:"u01"})
+create (_198:`US` {`name`:"Hunt", `uid`:"u02"})
+create (_201:`BG` {`bid`:"b02", `name`:"Databases"})
+create (_202:`BG` {`bid`:"b03", `name`:"Science"})
+create (_203:`BG` {`bid`:"b01", `name`:"IT-Systems"})
+create _197-[:`isAdmin`]->_201
+create _197-[:`follows`]->_202
+create _197-[:`follows`]->_201
+create _197-[:`follows`]->_203
+create _197-[:`comment` {`date`:"25.11.2015", `id`:"c01", `msg`:"Exactly what I was looking for"}]->_203
+create _198-[:`isAdmin`]->_202
+create _198-[:`isAdmin`]->_203
+create _198-[:`follows`]->_203
+create _198-[:`comment` {`date`:"31.01.2015", `id`:"c03", `msg`:"He is a nice guy"}]->_197
+create _198-[:`comment` {`date`:"31.01.2015", `id`:"c02", `msg`:"Too boring"}]->_201
+;
+commit 
