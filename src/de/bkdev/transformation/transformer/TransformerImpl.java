@@ -1,5 +1,6 @@
 package de.bkdev.transformation.transformer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -11,17 +12,20 @@ import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.template.ContentLayer;
 import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.template.TableContent;
+import de.bkdev.transformation.storage.relational.template.TableList;
 
 public class TransformerImpl implements TransformerController{
 
 	@Override
-	public HashSet<Node> makeNodes(TableContent tc) {
-		HashSet<Node> nodes = new HashSet<Node>();
-		Node currentNode;
-		for(ContentLayer c : tc.getLayer()){
+	public ArrayList<Node> makeNodes(TableList tableList) {
+		Iterator<TableContent> it = tableList.getNodes().iterator();
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		while(it.hasNext()){
+			TableContent tc = it.next();
 			
-			nodes.add(makeNode(tc.getTable().getName(), c));
-			
+			for(ContentLayer c : tc.getLayer()){
+				nodes.add(makeNode(tc.getTableScheme().getName(), c));
+			}
 		}
 		
 		return nodes;

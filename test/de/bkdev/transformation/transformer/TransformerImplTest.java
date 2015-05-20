@@ -2,6 +2,7 @@ package de.bkdev.transformation.transformer;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.junit.Test;
@@ -12,16 +13,17 @@ import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.Tablescheme;
 import de.bkdev.transformation.storage.relational.template.TableContent;
+import de.bkdev.transformation.storage.relational.template.TableList;
 
 public class TransformerImplTest {
 
 	@Test
 	public void testeNodeMaker() {
-		Tablescheme table = new Tablescheme("BJ");
-		table.addProperty(new Property(true, false, "varchar(20)", "id"));
-		table.addProperty(new Property(false, false, "varchr(128)", "name"));
+		Tablescheme tablescheme = new Tablescheme("BJ");
+		tablescheme.addProperty(new Property(true, false, "varchar(20)", "id"));
+		tablescheme.addProperty(new Property(false, false, "varchr(128)", "name"));
 		
-		TableContent tc = new TableContent(table);
+		TableContent tc = new TableContent(tablescheme);
 		tc.addContentLayer();
 		tc.addAttributeToCurrentLayer("id", "c01");
 		tc.addAttributeToCurrentLayer("name", "date");
@@ -29,12 +31,16 @@ public class TransformerImplTest {
 		tc.addAttributeToCurrentLayer("id", "c02");
 		tc.addAttributeToCurrentLayer("name", "hunt");
 		
+		TableList tableList = new TableList();
+		tableList.add(tc);
+		
 		TransformerController transformer = new TransformerImpl();
-		HashSet<Node> nodes=null;
+		
+		ArrayList<Node> nodes=null;
 		InspectorController inspector = new InspectorImpl();
 		
-		if(inspector.transformTableToGraph(table).identify().equals("Node"))
-				nodes = transformer.makeNodes(tc);
+		if(inspector.transformTableToGraph(tablescheme).identify().equals("Node"))
+				nodes = transformer.makeNodes(tableList);
 		
 		
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
@@ -55,11 +61,14 @@ public class TransformerImplTest {
 		tc.addAttributeToCurrentLayer("fuser", "u01");
 		tc.addAttributeToCurrentLayer("fblog", "b02");
 		
+		TableList tableList = new TableList();
+		tableList.add(tc);
+		
 		TransformerController transformer = new TransformerImpl();
 		HashSet<Node> relation=null;
 		InspectorController inspector = new InspectorImpl();
 		
-		relation = transformer.makeNodes(tc);
+		//relation = transformer.makeNodes(tableList);
 	}
 
 }

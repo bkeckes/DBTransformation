@@ -2,6 +2,7 @@ package de.bkdev.transformation.transformer;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import de.bkdev.transformation.storage.graph.Node;
@@ -16,7 +17,7 @@ public class StatementMakerTest {
 		node.addProperty("name", "benni");
 		node.addProperty("birth", "1988");
 		
-		HashSet<Node> nodes = new HashSet<Node>();
+		ArrayList<Node> nodes = new ArrayList<Node>();
 		nodes.add(node);
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		assertEquals("CREATE (n:Human {id:'1', name:'benni', birth:'1988'});",StatementMaker.makeNodeStatement(node));

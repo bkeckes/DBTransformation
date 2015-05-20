@@ -1,5 +1,6 @@
 package de.bkdev.transformation.transformer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import de.bkdev.transformation.storage.graph.Node;
@@ -13,7 +14,7 @@ public class StatementMaker {
 		return "CREATE (n:" + node.getLabel() + " {" + node.getAllPropertysInString() + "});";
 	}
 
-	public static String makeCypherStatementFromNodes(HashSet<Node> nodes) {
+	public static String makeCypherStatementFromNodes(ArrayList<Node> nodes) {
 		String temp="";
 		for(Node n : nodes){
 			temp += makeNodeStatement(n)+"\n";

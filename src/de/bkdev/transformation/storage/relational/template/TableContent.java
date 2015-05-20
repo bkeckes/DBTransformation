@@ -72,7 +72,7 @@ public class TableContent {
 	}
 	//public ContentLayer getLayer()
 
-	public Tablescheme getTable() {
+	public Tablescheme getTableScheme() {
 		return table;
 	}
 
