@@ -37,20 +37,20 @@ public class TransformerImplTest {
 		tc.addAttributeToCurrentLayer("id", "c02");
 		tc.addAttributeToCurrentLayer("name", "hunt");
 		
-		TableList tableList = new TableList();
+		ArrayList<TableContent> tableList = new ArrayList<>();
 		tableList.add(tc);
 		
 		TransformerController transformer = new TransformerImpl();
 		
-		ArrayList<Node> nodes=null;
-		InspectorController inspector = new InspectorImpl();
+		ArrayList<Node> nodes= transformer.makeNodes(tableList);
+		
 		
 		/*if(inspector.transformTableToGraph(tablescheme).identify().equals("Node"))
 				nodes = transformer.makeNodes(tableList);
 		*/
 		
-		//System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
-		//assertEquals(2, nodes.size());
+		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
+		assertEquals(2, nodes.size());
 	}
 	
 	@Test
@@ -131,10 +131,14 @@ public class TransformerImplTest {
 		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
 		ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
 		
+		
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
 		
+		assertEquals("US", relationships.get(1).getStart().getLabel());
+		assertEquals("BG", relationships.get(1).getEnd().getLabel());
 		
+		assertEquals("uid", relationships.get(1).getStart().getPrimaryKey().getKey());
 		/*
 		 * TODO ähnliches wie Tablelist. Der Inhalt von contents muss nach nodes gefiltert werden und erstellt werden.
 		 * Anschließend werden die Relationships erstellt.
