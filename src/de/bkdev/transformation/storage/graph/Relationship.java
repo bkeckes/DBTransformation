@@ -10,11 +10,17 @@ public class Relationship extends GraphObject{
 
 	private String label;
 	private NodeTupel startAndEnd;
+	private final String relID;
 	
 	public Relationship(String label, NodeTupel startAndEnd){
 		super();
 		this.label = label;
 		this.startAndEnd = startAndEnd;
+		this.relID = IdentificationMaker.makeRelationshipID();
+	}
+
+	public String getRelID() {
+		return relID;
 	}
 
 	public String getLabel() {

@@ -51,18 +51,7 @@ public abstract class GraphObject {
 		return temp.substring(0, temp.length()-2);
 	}
 	
-	/*
-	 * public String getAllPropertysInString(){
-	 
-		String temp="";
-		Enumeration<String> e = property.keys();
-		
-		while(e.hasMoreElements()){
-			temp += getPropertyString(e.nextElement()) +", ";
-		}
-		
-		return temp.substring(0, temp.length()-2);
-	}*/
+	
 	public String getPropertyStringForStatement(){
 		String temp ="";
 		for(KeyValuePair e : attr){

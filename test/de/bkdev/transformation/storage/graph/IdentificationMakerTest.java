@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class NodeIDMakerTest {
+public class IdentificationMakerTest {
 
 	@Test
 	public void test() {
-		String nID = NodeIDMaker.makeNewNodeID();
+		String nID = IdentificationMaker.makeNewNodeID();
 		//assertEquals("n1", NodeIDMaker.makeNewNodeID());
-		assertNotSame(nID,  NodeIDMaker.makeNewNodeID());
+		assertNotSame(nID,  IdentificationMaker.makeNewNodeID());
 	}
 	
 	

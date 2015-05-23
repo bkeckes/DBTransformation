@@ -15,7 +15,7 @@ public class StatementMaker {
 		return "CREATE (" + node.getNodeID() + ":" + node.getLabel() + " {" + node.getAllPropertysInString() + "});";
 	}
 	public static String makeRelationshipStatement(Relationship rel){
-		return "CREATE (" + rel.getStart().getNodeID() + ")-[r:" + rel.getLabel() + "]->(" + rel.getEnd().getNodeID() + ")";
+		return "CREATE (" + rel.getStart().getNodeID() + ")-[" + rel.getRelID() + ":" + rel.getLabel() + "]->(" + rel.getEnd().getNodeID() + ")";
 	}
 
 	public static String makeCypherStatementFromNodes(ArrayList<Node> nodes) {
