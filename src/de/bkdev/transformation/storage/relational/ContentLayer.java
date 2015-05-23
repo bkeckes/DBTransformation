@@ -1,9 +1,6 @@
 package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import de.bkdev.transformation.storage.relational.*;
 
 public class ContentLayer {
 	private ArrayList<PropertyValueTupel> attr;
@@ -56,13 +53,4 @@ public class ContentLayer {
 		return c;
 	}
 	
-	private boolean hasProperty(String key){
-		
-		for (PropertyValueTupel p : attr){
-			if(p.getProperty().getName().equals(key)){
-				return true;
-			}
-		}
-		return false;
-	}
 }

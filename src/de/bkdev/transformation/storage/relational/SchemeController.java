@@ -1,7 +1,6 @@
 package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SchemeController {
 	private ArrayList<Tablescheme> schemes;

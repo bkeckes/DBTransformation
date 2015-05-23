@@ -1,7 +1,6 @@
 package de.bkdev.transformation.transformer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;

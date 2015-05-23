@@ -1,7 +1,6 @@
 package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Diese Klasse ist für die Verwaltung der einzelnen Datensätze zuständig.
@@ -36,12 +35,9 @@ public class TableContent {
 			addContentLayer();
 		
 		Property p = null;
-		try{
-			p = table.getPropertyByName(key);
-		}
-		catch(PropertyException e){
-			e.printStackTrace();
-		}
+		
+		p = table.getPropertyByName(key);
+		
 		
 		currentLayer.addValue(p, value);
 

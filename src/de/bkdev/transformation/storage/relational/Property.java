@@ -1,9 +1,5 @@
 package de.bkdev.transformation.storage.relational;
 
-import java.util.Hashtable;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
-
 /**
  * Stellt eine Eigenschaft der Tabelle dar.
  * @author Benjamin Keckes

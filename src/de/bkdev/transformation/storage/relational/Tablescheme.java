@@ -53,6 +53,7 @@ public class Tablescheme {
 		return count;
 	}
 	
+	
 	public boolean isTableValid(){
 		//Ist Name gesetzt?
 		if(name!=null && !name.isEmpty()){
@@ -73,12 +74,13 @@ public class Tablescheme {
 		}
 	}
 	
-	public Property getPropertyByName(String name) throws PropertyException{
+	public Property getPropertyByName(String name) {
 		for(Property p : property){
 			if(p.getName().equals(name))
 				return p;
 		}
-		throw new PropertyException();
+		return null;
+		
 	}
 	
 	public int getPropertyCount(){
