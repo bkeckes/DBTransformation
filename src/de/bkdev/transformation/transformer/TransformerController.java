@@ -11,4 +11,5 @@ import de.bkdev.transformation.storage.relational.template.TableContent;
 public interface TransformerController {
 	public ArrayList<Node> makeNodes(ArrayList<TableContent> tableList);
 	public ArrayList<Relationship> makeRelationship(ArrayList<TableContent> rels, ArrayList<Node> nodes);
+	public ArrayList<Relationship> makeRelationshipsWithProperties(ArrayList<Node> nodes);
 }

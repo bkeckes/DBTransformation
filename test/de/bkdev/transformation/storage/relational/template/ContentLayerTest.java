@@ -48,7 +48,7 @@ public class ContentLayerTest {
 		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
 		
 		
-		PropertyValueTupel prop = layer.getFirstForeignKey();
+		PropertyValueTupel prop = layer.getForeignKeyAt(0);
 		assertEquals("fuser", prop.getProperty().getName());
 		assertEquals("c01", prop.getValue());
 	}
@@ -61,10 +61,10 @@ public class ContentLayerTest {
 		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
 		
 		
-		PropertyValueTupel prop = layer.getFirstForeignKey();
+		PropertyValueTupel prop = layer.getForeignKeyAt(0);
 		assertEquals("fuser", prop.getProperty().getName());
 
-		PropertyValueTupel second = layer.getForeignKeyAfter(prop);
+		PropertyValueTupel second = layer.getForeignKeyAt(1);
 		assertEquals("fblod", second.getProperty().getName());
 	}
 	
@@ -78,10 +78,10 @@ public class ContentLayerTest {
 		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
 		
 		
-		PropertyValueTupel prop = layer.getFirstForeignKey();
+		PropertyValueTupel prop = layer.getForeignKeyAt(0);
 		assertEquals("fuser", prop.getProperty().getName());
 
-		PropertyValueTupel second = layer.getForeignKeyAfter(prop);
+		PropertyValueTupel second = layer.getForeignKeyAt(1);
 		assertEquals("fblod", second.getProperty().getName());
 	}
 	

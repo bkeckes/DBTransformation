@@ -18,21 +18,21 @@ public class ContentLayer {
 		
 	}
 	
+	public PropertyValueTupel getPrimaryKey(){
+		for(PropertyValueTupel p : attr){
+			if(p.getProperty().isPrimaryKey())
+				return p;
+		}
+		return null;
+	}
+	
 	public int getValueCount(){
 		return attr.size();
 	}
 	public ArrayList<PropertyValueTupel> getAttributes(){
 		return attr;
 	}
-	public PropertyValueTupel getFirstForeignKey(){
-		
-		for (PropertyValueTupel p : attr){
-			if(p.getProperty().isForeignKey()){
-				return p;
-			}
-		}
-		return null;
-	}
+	
 	
 	public PropertyValueTupel getForeignKeyAt(int index){
 		ArrayList<PropertyValueTupel> fks = new ArrayList<PropertyValueTupel>();
@@ -43,18 +43,8 @@ public class ContentLayer {
 		}
 		return fks.get(index);
 	}
-	public PropertyValueTupel getSecondForeignKey(){
-		return getForeignKeyAfter(getFirstForeignKey());
-	}
 	
-	public PropertyValueTupel getForeignKeyAfter(PropertyValueTupel tupel){
-		
-		for(int i=attr.indexOf(tupel)+1; i<attr.size(); i++){
-			if(attr.get(i).getProperty().isForeignKey())
-				return attr.get(i);
-		}
-		return null;
-	}
+	
 	
 	public int getForeignKeyCount(){
 		int c=0;

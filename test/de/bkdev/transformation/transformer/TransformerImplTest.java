@@ -107,10 +107,11 @@ public class TransformerImplTest {
 		
 		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
 		ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
-		
+		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
 		
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
+		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
 		
 		assertEquals("US", relationships.get(1).getStart().getLabel());
 		assertEquals("BG", relationships.get(1).getEnd().getLabel());
