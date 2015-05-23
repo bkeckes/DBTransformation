@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import de.bkdev.transformation.storage.graph.Node;
+import de.bkdev.transformation.storage.graph.NodeTupel;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.template.ContentLayer;
@@ -17,14 +18,12 @@ import de.bkdev.transformation.storage.relational.template.TableList;
 public class TransformerImpl implements TransformerController{
 
 	@Override
-	public ArrayList<Node> makeNodes(TableList tableList) {
-		Iterator<TableContent> it = tableList.getNodes().iterator();
+	public ArrayList<Node> makeNodes(ArrayList<TableContent> tableList) {
+		
 		ArrayList<Node> nodes = new ArrayList<Node>();
-		while(it.hasNext()){
-			TableContent tc = it.next();
-			
-			for(ContentLayer c : tc.getLayer()){
-				nodes.add(makeNode(tc.getTableScheme().getName(), c));
+		for(TableContent e : tableList){
+			for(ContentLayer c : e.getLayer()){
+				nodes.add(makeNode(e.getTableScheme().getName(), c));
 			}
 		}
 		
@@ -35,25 +34,36 @@ public class TransformerImpl implements TransformerController{
 		Node node = new Node(label);
 		
 		for(PropertyValueTupel tupel : layer.getAttributes()){
-			node.addProperty(tupel.getProperty().getName(), tupel.getValue());
+			node.addProperty(tupel.getProperty(), tupel.getValue());
 		}
 		
 		return node;
 	}
-
+	
 	@Override
-	public HashSet<Relationship> makeRelationship(TableContent tc,
-			HashSet<Node> nodes) {
-		HashSet<Relationship> rels = new HashSet<Relationship>();
+	public ArrayList<Relationship> makeRelationship(ArrayList<TableContent> rels, ArrayList<Node> nodes) {
+		ArrayList<Relationship> relationships = new ArrayList<Relationship>();
 		
-		for(ContentLayer c : tc.getLayer()){
-			PropertyValueTupel first = c.getFirstForeignKey();
-			String firstID = first.getProperty().getName();
-			String secondID =  c.getForeignKeyAfter(first).getProperty().getName();
-			
-			
+		for(TableContent rel : rels){
+			for(ContentLayer layer : rel.getLayer()){
+				PropertyValueTupel firstfk = layer.getForeignKeyAt(0);
+				PropertyValueTupel secondfk = layer.getForeignKeyAt(1);
+				
+				Node firstN = getNodeWithPrimaryKeyValue(firstfk, nodes);
+				Node secondN = getNodeWithPrimaryKeyValue(secondfk, nodes);
+				
+				relationships.add(new Relationship(rel.getTableScheme().getName(), new NodeTupel(firstN, secondN)));
+			}
 		}
-		
+		return relationships;
+	}
+	
+	public Node getNodeWithPrimaryKeyValue(PropertyValueTupel tupel, ArrayList<Node> nodes){
+		for(Node node : nodes){
+			if(node.getPrimaryKey().getValue().equals(tupel.getValue())){
+				return node;
+			}
+		}
 		return null;
 	}
 

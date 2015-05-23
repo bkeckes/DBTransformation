@@ -11,7 +11,7 @@ public class NodeTest {
 	@Test
 	public void testeNodeErstellung(){
 		Node node = new Node("Person");
-		node.addProperty("name", "benni");
+		node.addProperty(new Property(false, false, "char", "name"), "benni");
 		
 //		System.out.println(node.toString());
 	}
@@ -26,12 +26,12 @@ public class NodeTest {
 	public void testeNodeAnzahl(){
 		Node node = new Node("Person");
 		assertEquals(0, node.getPropertyCount());
-		node.addProperty("name", "benni");
+		node.addProperty(new Property(false, false, "char", "name"), "benni");
 		assertEquals(1, node.getPropertyCount());
 		//TODO
 //		node.addProperty(new Property("name", "benni"));
 //		assertEquals(1, node.getPropertyCount());
-		node.addProperty("birth", "1988");
+		node.addProperty(new Property(false, false, "char", "birth"), "1988");
 		assertEquals(2, node.getPropertyCount());
 	}
 	

@@ -34,6 +34,19 @@ public class ContentLayer {
 		return null;
 	}
 	
+	public PropertyValueTupel getForeignKeyAt(int index){
+		ArrayList<PropertyValueTupel> fks = new ArrayList<PropertyValueTupel>();
+		
+		for(PropertyValueTupel p : attr){
+			if(p.getProperty().isForeignKey())
+				fks.add(p);
+		}
+		return fks.get(index);
+	}
+	public PropertyValueTupel getSecondForeignKey(){
+		return getForeignKeyAfter(getFirstForeignKey());
+	}
+	
 	public PropertyValueTupel getForeignKeyAfter(PropertyValueTupel tupel){
 		
 		for(int i=attr.indexOf(tupel)+1; i<attr.size(); i++){

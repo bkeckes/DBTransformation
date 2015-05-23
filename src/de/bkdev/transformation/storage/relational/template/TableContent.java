@@ -1,5 +1,6 @@
 package de.bkdev.transformation.storage.relational.template;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import de.bkdev.transformation.storage.relational.Property;
@@ -12,9 +13,9 @@ import de.bkdev.transformation.storage.relational.Tablescheme;
  */
 public class TableContent {
 	private Tablescheme table;
-	private HashSet<ContentLayer> layer;
+	private ArrayList<ContentLayer> layer;
 	
-	public HashSet<ContentLayer> getLayer() {
+	public ArrayList<ContentLayer> getLayer() {
 		return layer;
 	}
 
@@ -22,7 +23,7 @@ public class TableContent {
 	
 	public TableContent(Tablescheme table){
 		this.table = table;
-		this.layer = new HashSet<ContentLayer>();
+		this.layer = new ArrayList<ContentLayer>();
 	}
 	
 	public void addContentLayer(){

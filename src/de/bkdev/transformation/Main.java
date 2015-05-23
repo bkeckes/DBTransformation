@@ -14,8 +14,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Node node = new Node("Person");
-		node.addProperty("name", "benni");
-		node.addProperty("birth", "1988");
+		
 		System.out.println(node.toString());
 		
 		//GDBConnection con = new GDBConnection();

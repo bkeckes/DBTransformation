@@ -9,6 +9,6 @@ import de.bkdev.transformation.storage.relational.template.TableContent;
 import de.bkdev.transformation.storage.relational.template.TableList;
 
 public interface TransformerController {
-	public ArrayList<Node> makeNodes(TableList tableList);
-	public HashSet<Relationship> makeRelationship(TableContent tc, HashSet<Node> nodes);
+	public ArrayList<Node> makeNodes(ArrayList<TableContent> tableList);
+	public ArrayList<Relationship> makeRelationship(ArrayList<TableContent> rels, ArrayList<Node> nodes);
 }

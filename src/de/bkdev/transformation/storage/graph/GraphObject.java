@@ -6,28 +6,28 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import de.bkdev.transformation.storage.relational.Property;
+import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
+
 /**
  * This class is for Nodes and Relations.
  * @author Benjamin Keckes
  *
  */
 public abstract class GraphObject {
-	private Hashtable<String, String> property;
 	private ArrayList<KeyValuePair> attr;
 	
 	public GraphObject(){
-		property = new Hashtable<String, String>();
 		attr = new ArrayList<KeyValuePair>();
 	}
 	
-	public Hashtable<String, String> getPropertySet() {
-		return property;
+	public ArrayList<KeyValuePair> getPropertySet() {
+		return attr;
 	}
 	
 	//TODO Element soll nicht eingefügt werden wenn key und value schon exisitiert.
 	//		Wenn sich value ändert soll Element überschrieben werden.
-	public void addProperty(String key, String value){
-		property.put(key, value);
+	public void addProperty(Property key, String value){
 		attr.add(new KeyValuePair(key, value));
 	}
 	
@@ -36,8 +36,11 @@ public abstract class GraphObject {
 	}
 	
 	public String getPropertyString(String key){
-		
-		return key + ":'" + property.get(key) + "'";
+		for(KeyValuePair e : attr){
+			if(e.getKey().equals(key))
+				return e.getKey() + ":'" + e.getValue() + "'";
+		}
+		return "";
 	}
 	
 	public String getAllPropertysInString(){
@@ -61,12 +64,10 @@ public abstract class GraphObject {
 		return temp.substring(0, temp.length()-2);
 	}*/
 	public String getPropertyStringForStatement(){
-		String temp="";
-		Enumeration<String> e = property.keys();
-		
-		while(e.hasMoreElements()){
+		String temp ="";
+		for(KeyValuePair e : attr){
 			//e.nextElement()
-			temp += getPropertyString(e.nextElement()) +" ";
+			temp += getPropertyString(e.getValue()) + " ";
 		}
 		
 		return temp;
@@ -74,6 +75,19 @@ public abstract class GraphObject {
 	
 	
 	public String getPropertyValue(String key){
-		return property.get(key);
+		for(KeyValuePair e : attr){
+			if(e.getKey().equals(key))
+				return e.getValue();
+		}
+		return null;
 	}
+	
+	public KeyValuePair getPrimaryKey(){
+		for(KeyValuePair e: attr){
+			if(e.isPrimaryKey())
+				return e;
+		}
+		return null;
+	}
+	
 }

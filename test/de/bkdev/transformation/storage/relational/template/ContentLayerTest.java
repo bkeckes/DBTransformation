@@ -101,4 +101,18 @@ public class ContentLayerTest {
 	}
 
 
+	@Test
+	public void testForeignKeys(){
+		ContentLayer layer = new ContentLayer();
+		layer.addValue(new Property(true, false, "int", "id"), "1");
+		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
+		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		
+		PropertyValueTupel first = layer.getForeignKeyAt(0);
+		assertEquals("fuser", first.getProperty().getName());
+		
+		PropertyValueTupel second = layer.getForeignKeyAt(1);
+		assertEquals("fblod", second.getProperty().getName());
+		
+	}
 }

@@ -27,5 +27,9 @@ public class Node extends GraphObject{
 	public String getLabel() {
 		return label;
 	}
+	
+	/*public boolean isPKValue(){
 		
+	}
+	*/	
 }
