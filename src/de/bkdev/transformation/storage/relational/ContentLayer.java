@@ -1,4 +1,4 @@
-package de.bkdev.transformation.storage.relational.template;
+package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

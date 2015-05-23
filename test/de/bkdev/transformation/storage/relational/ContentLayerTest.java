@@ -1,8 +1,9 @@
-package de.bkdev.transformation.storage.relational.template;
+package de.bkdev.transformation.storage.relational;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
 
 import de.bkdev.transformation.storage.relational.Property;
 

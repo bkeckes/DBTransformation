@@ -3,7 +3,6 @@ package de.bkdev.transformation.storage.relational;
 import java.util.ArrayList;
 
 import de.bkdev.transformation.rules.Rules;
-import de.bkdev.transformation.storage.relational.template.TableContent;
 
 public class ContentController {
 	private ArrayList<TableContent> contents; 

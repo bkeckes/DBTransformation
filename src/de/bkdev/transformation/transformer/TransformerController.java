@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
-import de.bkdev.transformation.storage.relational.template.TableContent;
+import de.bkdev.transformation.storage.relational.TableContent;
 
 
 public interface TransformerController {

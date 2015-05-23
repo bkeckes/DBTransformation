@@ -1,6 +1,5 @@
-package de.bkdev.transformation.storage.relational.template;
+package de.bkdev.transformation.storage.relational;
 
-import de.bkdev.transformation.storage.relational.Property;
 
 public class PropertyValueTupel {
 	private Property prop;

@@ -14,10 +14,10 @@ import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentController;
 import de.bkdev.transformation.storage.relational.Property;
+import de.bkdev.transformation.storage.relational.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.SchemeController;
+import de.bkdev.transformation.storage.relational.TableContent;
 import de.bkdev.transformation.storage.relational.Tablescheme;
-import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
-import de.bkdev.transformation.storage.relational.template.TableContent;
 
 
 public class TransformerImplTest {

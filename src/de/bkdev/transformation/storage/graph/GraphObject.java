@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import de.bkdev.transformation.storage.relational.Property;
-import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
+import de.bkdev.transformation.storage.relational.PropertyValueTupel;
 
 /**
  * This class is for Nodes and Relations.

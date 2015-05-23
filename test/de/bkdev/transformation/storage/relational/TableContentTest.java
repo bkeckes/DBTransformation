@@ -1,4 +1,4 @@
-package de.bkdev.transformation.storage.relational.template;
+package de.bkdev.transformation.storage.relational;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import de.bkdev.transformation.storage.relational.Property;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.TableContent;import de.bkdev.transformation.storage.relational.Tablescheme;
 
 public class TableContentTest {
 

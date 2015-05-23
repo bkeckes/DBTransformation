@@ -1,11 +1,8 @@
-package de.bkdev.transformation.storage.relational.template;
+package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import de.bkdev.transformation.storage.relational.Property;
-import de.bkdev.transformation.storage.relational.PropertyException;
-import de.bkdev.transformation.storage.relational.Tablescheme;
 /**
  * Diese Klasse ist für die Verwaltung der einzelnen Datensätze zuständig.
  * @author Benjamin Keckes
