@@ -13,7 +13,6 @@ import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.template.ContentLayer;
 import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.template.TableContent;
-import de.bkdev.transformation.storage.relational.template.TableList;
 
 public class TransformerImpl implements TransformerController{
 

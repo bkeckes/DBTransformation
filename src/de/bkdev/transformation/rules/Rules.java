@@ -1,7 +1,6 @@
 package de.bkdev.transformation.rules;
 
-import de.bkdev.transformation.storage.graph.template.GDBNode;
-import de.bkdev.transformation.storage.graph.template.GDBRelation;
+
 import de.bkdev.transformation.storage.relational.Tablescheme;
 
 public class Rules {

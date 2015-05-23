@@ -9,8 +9,7 @@ import javax.swing.table.TableStringConverter;
 
 import org.junit.Test;
 
-import de.bkdev.transformation.inspector.InspectorController;
-import de.bkdev.transformation.inspector.InspectorImpl;
+
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentController;
@@ -19,7 +18,7 @@ import de.bkdev.transformation.storage.relational.SchemeController;
 import de.bkdev.transformation.storage.relational.Tablescheme;
 import de.bkdev.transformation.storage.relational.template.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.template.TableContent;
-import de.bkdev.transformation.storage.relational.template.TableList;
+
 
 public class TransformerImplTest {
 
@@ -53,29 +52,7 @@ public class TransformerImplTest {
 		assertEquals(2, nodes.size());
 	}
 	
-	@Test
-	public void testeRelation(){
-		Tablescheme table = new Tablescheme("FR");
-		table.addProperty(new Property(false, true, "varchar(20)", "fuser"));
-		table.addProperty(new Property(false, true, "varchar(20)", "fblog"));
-		
-		TableContent tc = new TableContent(table);
-		tc.addContentLayer();
-		tc.addAttributeToCurrentLayer("fuser", "u01");
-		tc.addAttributeToCurrentLayer("fblog", "b01");
-		tc.addContentLayer();
-		tc.addAttributeToCurrentLayer("fuser", "u01");
-		tc.addAttributeToCurrentLayer("fblog", "b02");
-		
-		TableList tableList = new TableList();
-		tableList.add(tc);
-		
-		TransformerController transformer = new TransformerImpl();
-		HashSet<Node> relation=null;
-		InspectorController inspector = new InspectorImpl();
-		
-		//relation = transformer.makeNodes(tableList);
-	}
+	
 	
 	@Test
 	public void testeZusammenSpielKanteUndKnoten(){
