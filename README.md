@@ -1,1 +1,3 @@
-Tranforms Oracle12DBs to graph Neo4JDBs
+Tranforms relational database to Neo4J database
+
+From sql dump to cypher dump
