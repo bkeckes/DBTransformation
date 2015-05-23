@@ -11,7 +11,7 @@ public class StatementMaker {
 	 * TODO
 	 */
 	public static String makeNodeStatement(Node node) {
-		return "CREATE (n:" + node.getLabel() + " {" + node.getAllPropertysInString() + "});";
+		return "CREATE (" + node.getNodeID() + ":" + node.getLabel() + " {" + node.getAllPropertysInString() + "});";
 	}
 
 	public static String makeCypherStatementFromNodes(ArrayList<Node> nodes) {

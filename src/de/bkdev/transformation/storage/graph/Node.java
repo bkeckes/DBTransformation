@@ -10,10 +10,15 @@ import java.util.Iterator;
  */
 public class Node extends GraphObject{
 	private String label;
+	private String nodeID;
 	
 	public Node(String label){
 		super();
 		this.label = label;
+		this.nodeID = NodeIDMaker.makeNewNodeID();
+	}
+	public String getNodeID() {
+		return nodeID;
 	}
 	public String toString(){
 		return "(" + label + ")->" + this.getAllPropertysInString();
