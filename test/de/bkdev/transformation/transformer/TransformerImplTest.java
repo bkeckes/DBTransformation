@@ -89,17 +89,17 @@ public class TransformerImplTest {
 		
 		contents.addContent(new TableContent(schemes.getScheme("BG")));
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("bid", "b01");
-		contents.getActualContent().addAttributeToCurrentLayer("name", "Informatics");
-		contents.getActualContent().addAttributeToCurrentLayer("admin", "u01");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "b01");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(1, "Informatics2");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "u01");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("bid", "b02");
-		contents.getActualContent().addAttributeToCurrentLayer("name", "Biotech");
-		contents.getActualContent().addAttributeToCurrentLayer("admin", "u01");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "b02");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(1, "Biotech");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "u01");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("bid", "b03");
-		contents.getActualContent().addAttributeToCurrentLayer("name", "Science");
-		contents.getActualContent().addAttributeToCurrentLayer("admin", "u02");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "b03");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(1, "Science");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "u02");
 		
 		contents.addContent(new TableContent(schemes.getScheme("FR")));
 		contents.getActualContent().addContentLayer();

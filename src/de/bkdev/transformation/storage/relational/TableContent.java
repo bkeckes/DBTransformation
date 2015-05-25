@@ -30,6 +30,14 @@ public class TableContent {
 		currentLayer = new ContentLayer();
 		layer.add(currentLayer);
 	}
+	
+	public void addAttributeToCurrentLayerByIndex(int index, String value){
+		if(currentLayer==null || isCurrentLayerValid())
+			addContentLayer();
+		
+		currentLayer.addValue(table.getPropertyByIndex(index), value);
+		
+	}
 	public void addAttributeToCurrentLayer(String key, String value) {
 		if(currentLayer==null || isCurrentLayerValid())
 			addContentLayer();

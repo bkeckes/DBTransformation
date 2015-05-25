@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
@@ -35,18 +33,17 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class DatabaseReader {
 	
+	
+	
+	
 	private SchemeController schemes = new SchemeController();
 	private ContentController contents = new ContentController();
 	
 	
-	public SchemeController readSchemes(Connection connection, String dbName){
-		
-		return null;
-	}
-	public DatabaseReader(String db){
+	public DatabaseReader(String dburl, String dbName, String user, String password){
 		try {
 
-    		final Connection connection = DriverManager.getConnection(db);
+    		final Connection connection = DriverManager.getConnection(dburl + "/" + dbName + "?user=" + user + "&password=" + password);
     		
 
     	    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
@@ -56,7 +53,7 @@ public class DatabaseReader {
 
     	    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, new SchemaCrawlerOptions());
     	    
-    	    final Schema delSchema = catalog.getSchema("delikat");
+    	    final Schema delSchema = catalog.getSchema(dbName);
     	    
     	    System.out.println("Lese DB: " + delSchema.getFullName());
     	    for (final Table table: catalog.getTables(delSchema)){
@@ -68,40 +65,18 @@ public class DatabaseReader {
     	    															column.isPartOfForeignKey(), 
     	    															column.getColumnDataType().getFullName(), 
     	    															column.getName()));
+    	    		
     	    	}
+    	    	System.out.println(schemes.getActualScheme().getName()+" FKs"
+	    				+ schemes.getActualScheme().getForeignKeyCount());
     	    	
     	    	contents.addContent(new TableContent(schemes.getScheme(schemes.getActualScheme().getName())));
     	    	contents = readContent(connection, table.getName(), contents, schemes.getActualScheme().getPropertyCount());
 
 
-    	    	TransformerController transformer = new TransformerImpl();
-    			
-    			ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
-    			ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
-    			ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
-    			
-    			System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
-    			System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
-    			System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
     	    	
-    	    	/*
-    	    	 System.out.print("o--> " + table);
-    	    	 
-    	    	if (table instanceof View){
-    	    		System.out.println(" (VIEW)");
-    	    	}
-		        else{
-		        	System.out.println();
-		        }
-    	    	for (final Column column: table.getColumns()){
-		          System.out.println("     o--> " + column + " ("
-		                             + column.getColumnDataType() + ")"
-		                             + isPK(column.isPartOfPrimaryKey())
-		                             + isFK(column.isPartOfForeignKey()));
-		        }
     	    	
-    	    	readContent(connection, table);
-    	    	*/
+    	    	
     	    }
 
     	} catch (SQLException ex) {
@@ -114,18 +89,23 @@ public class DatabaseReader {
 			e.printStackTrace();
 		}
 		
-		for(Tablescheme scheme : schemes.getSchemes()){
-			System.out.println("Schema: "+scheme.getName() + ", c: "+scheme.getPropertyCount());
-		}
-		for(TableContent content : contents.getNodes()){
-			System.out.println("Conent fuer: "+content.getTableScheme().getName() +" - " + content.getLayerCount());
-		}
+		
+		
+		TransformerController transformer = new TransformerImpl();
+		
+		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
+		ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
+		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
+		
+		System.out.println("Nodes: "+nodes.size());
+		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
+		
+		System.out.println("Relationships: "+(relationships.size()+relationships2.size()));
+		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
+		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
 	}
 	
-	public static void main(String[] args) {
-		new DatabaseReader("jdbc:mysql://localhost/delikat?" + "user=root&password=admin");
-    	
-	}
+
 	
 	private String isPK(boolean p){
 		if(p)
@@ -148,9 +128,9 @@ public class DatabaseReader {
 			  while (resultSet.next()){
 				  contents.getActualContent().addContentLayer();
 				  //System.out.println(resultSet.getString(1));
-				  
-				  for(int i=1; i<propCount; i++){
-					  contents.getActualContent().addAttributeToCurrentLayer(contents.getActualContent().getTableScheme().getPropertyNameByIndex(i), resultSet.getString(i));
+				  for(int i=1; i<=propCount; i++){
+					  
+					  contents.getActualContent().addAttributeToCurrentLayerByIndex(i-1, resultSet.getString(i));
 				  }
 			  }  
 		  
@@ -164,4 +144,17 @@ public class DatabaseReader {
 	  public String removeMarks(String name){
 		  return name.replace("`", "");
 	  }
+	  
+	  public static void main(String[] args) {
+			String dburl = args[0];
+			String dbName =  args[1];
+			String user = args[2];
+			String pwd = args[3];
+			if(dburl.isEmpty() || dbName.isEmpty() || user.isEmpty() || pwd.isEmpty()){
+				System.out.println("Parameter: dburl, dbname, user, password");
+				return;
+			}
+				
+			new DatabaseReader(dburl,dbName,user,pwd);
+		}
 }

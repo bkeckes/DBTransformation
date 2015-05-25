@@ -93,4 +93,7 @@ public class Tablescheme {
 		return property.get(index).getName();
 	}
 	
+	public Property getPropertyByIndex(int index){
+		return property.get(index);
+	}
 }
