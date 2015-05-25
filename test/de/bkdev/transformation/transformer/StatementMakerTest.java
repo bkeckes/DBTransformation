@@ -1,10 +1,6 @@
 package de.bkdev.transformation.transformer;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-import java.util.HashSet;
-
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.relational.Property;
 

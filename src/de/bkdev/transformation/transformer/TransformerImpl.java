@@ -1,20 +1,15 @@
 package de.bkdev.transformation.transformer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 import de.bkdev.transformation.storage.graph.KeyValuePair;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.NodeTupel;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentLayer;
-import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.TableContent;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+
 
 public class TransformerImpl implements TransformerController{
 
