@@ -12,14 +12,23 @@ public class Rules {
 		
 		if(table.hasPrimaryKey()){
 			if(table.getForeignKeyCount()!=2){
+				if(table.getForeignKeyCount() != (table.getPropertyCount()-1))
+						return true;
+				else
+						return false;
+			}
+			else{
+				return false;
+			}
+		}else{
+			if(table.getForeignKeyCount()!=2){
 				return true;
 			}
 			else{
 				return false;
 			}
 		}
-		
-		return false;
+	
 	}
 	/*
 	 * TODO

@@ -55,38 +55,50 @@ public class TransformerImplTest {
 		
 		schemes.addScheme(new Tablescheme("US"));
 		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "uid"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "uname"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
 		
 		schemes.addScheme(new Tablescheme("BG"));
 		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "bid"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "bname"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "name"));
 		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "admin"));
 		
 		schemes.addScheme(new Tablescheme("FR"));
 		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "fuser"));
 		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "fblog"));
 		
+		schemes.addScheme(new Tablescheme("TG"));
+		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "tuser"));
+		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "tcomment"));
+		
+		schemes.addScheme(new Tablescheme("CT"));
+		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "cid"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "cblog"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "cuser"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "msg"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "date"));
+		
+		
 		
 		contents.addContent(new TableContent(schemes.getScheme("US")));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("uid", "u01");
-		contents.getActualContent().addAttributeToCurrentLayer("uname", "Date");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Date");
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("uid", "u02");
-		contents.getActualContent().addAttributeToCurrentLayer("uname", "Hunt");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Hunt");
 		
 		contents.addContent(new TableContent(schemes.getScheme("BG")));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("bid", "b01");
-		contents.getActualContent().addAttributeToCurrentLayer("bname", "Informatics");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Informatics");
 		contents.getActualContent().addAttributeToCurrentLayer("admin", "u01");
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("bid", "b02");
-		contents.getActualContent().addAttributeToCurrentLayer("bname", "Biotech");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Biotech");
 		contents.getActualContent().addAttributeToCurrentLayer("admin", "u01");
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("bid", "b03");
-		contents.getActualContent().addAttributeToCurrentLayer("bname", "Science");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Science");
 		contents.getActualContent().addAttributeToCurrentLayer("admin", "u02");
 		
 		contents.addContent(new TableContent(schemes.getScheme("FR")));
@@ -95,7 +107,26 @@ public class TransformerImplTest {
 		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b01");
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u01");
+		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b02");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u01");
 		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b03");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u02");
+		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b01");
+		
+		contents.addContent(new TableContent(schemes.getScheme("TG")));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("tuser", "u01");
+		contents.getActualContent().addAttributeToCurrentLayer("tcomment", "c01");
+		
+		contents.addContent(new TableContent(schemes.getScheme("CT")));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("cid", "c01");
+		contents.getActualContent().addAttributeToCurrentLayer("cblog", "b01");
+		contents.getActualContent().addAttributeToCurrentLayer("cuser", "u01");
+		contents.getActualContent().addAttributeToCurrentLayer("msg", "Das ist toll");
+		contents.getActualContent().addAttributeToCurrentLayer("date", "11.01.2012");
 		
 		TransformerController transformer = new TransformerImpl();
 		

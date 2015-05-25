@@ -14,7 +14,9 @@ public class SchemeController {
 	public Tablescheme getActualScheme(){
 		return schemes.get(schemes.size()-1);
 	}
-	
+	/**
+	 * TODO Exception werfen wenn das Schema nicht gefunden wurde.
+	 */
 	public Tablescheme getScheme(String schemeName){
 		
 		for(Tablescheme e : schemes){

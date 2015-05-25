@@ -11,7 +11,7 @@ public class StatementMaker {
 	 * TODO
 	 */
 	public static String makeNodeStatement(Node node) {
-		return "CREATE (" + node.getNodeID() + ":" + node.getLabel() + " {" + node.getAllPropertysInString() + "});";
+		return "CREATE (" + node.getNodeID() + ":" + node.getLabel() + " {" + node.getAllPropertysInString() + "})";
 	}
 	public static String makeRelationshipStatement(Relationship rel){
 		return "CREATE (" + rel.getStart().getNodeID() + ")-[" + rel.getRelID() + ":" + rel.getLabel().toUpperCase() + "]->(" + rel.getEnd().getNodeID() + ")";
