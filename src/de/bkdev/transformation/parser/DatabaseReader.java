@@ -69,11 +69,13 @@ public class DatabaseReader {
 								column.getReferencedColumn().getParent().getName(),
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
+    	    			
     	    		}else{
     	    			schemes.getActualScheme().addProperty(new Property(column.isPartOfPrimaryKey(), 
 								column.isPartOfForeignKey(), 
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
+    	    	
     	    		}
     	    			
     	    		
@@ -110,11 +112,11 @@ public class DatabaseReader {
 		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
 		
 		System.out.println("Nodes: "+nodes.size());
-		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
+		//System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		
 		System.out.println("Relationships: "+(relationships.size()+relationships2.size()));
-		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
-		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
+		//System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
+		//System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
 	}
 	
 
