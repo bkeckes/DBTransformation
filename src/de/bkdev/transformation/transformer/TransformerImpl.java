@@ -52,8 +52,8 @@ public class TransformerImpl implements TransformerController{
 				PropertyValueTupel secondfk = layer.getForeignKeyAt(1);
 				
 				//TODO Das muss über Constraint gelöst werden
-				Node firstN = getNodeWithPrimaryKeyValue(firstfk, nodes);
-				Node secondN = getNodeWithPrimaryKeyValue(secondfk, nodes);
+				Node firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
+				Node secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
 				//
 				Relationship newRelationship = new Relationship(rel.getTableScheme().getName(), new NodeTupel(firstN, secondN));
 				
@@ -67,6 +67,15 @@ public class TransformerImpl implements TransformerController{
 		return relationships;
 	}
 	
+	public ArrayList<Node> getNodesWithScheme(ArrayList<Node> nodes, String schemename){
+		ArrayList<Node> list = new ArrayList<>();
+		for(Node node : nodes){
+			if(node.getLabel().equals(schemename)){
+				list.add(node);
+			}
+		}
+		return list;
+	}
 	public Node getNodeWithPrimaryKeyValue(PropertyValueTupel tupel, ArrayList<Node> nodes){
 		for(Node node : nodes){
 			if(node.getPrimaryKey().getValue().equals(tupel.getValue()) && node.getPrimaryKey().getProperty().getType().equals(tupel.getProperty().getType())){
