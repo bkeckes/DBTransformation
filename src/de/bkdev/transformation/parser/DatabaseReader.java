@@ -61,13 +61,25 @@ public class DatabaseReader {
     	    	schemes.addScheme(new Tablescheme(removeMarks(table.getName())));
     	    	
     	    	for (final Column column: table.getColumns()){
-    	    		schemes.getActualScheme().addProperty(new Property( column.isPartOfPrimaryKey(), 
-    	    															column.isPartOfForeignKey(), 
-    	    															column.getColumnDataType().getFullName(), 
-    	    															column.getName()));
+    	    		
+    	    		
+    	    		if(column.getReferencedColumn()!=null){
+    	    			schemes.getActualScheme().addProperty(new Property( column.isPartOfPrimaryKey(), 
+								column.isPartOfForeignKey(), 
+								column.getReferencedColumn().getParent().getName(),
+								column.getColumnDataType().getFullName(), 
+								removeMarks(column.getName())));
+    	    		}else{
+    	    			schemes.getActualScheme().addProperty(new Property(column.isPartOfPrimaryKey(), 
+								column.isPartOfForeignKey(), 
+								column.getColumnDataType().getFullName(), 
+								removeMarks(column.getName())));
+    	    		}
+    	    			
+    	    		
     	    		
     	    	}
-    	    	System.out.println(schemes.getActualScheme().getName()+" FKs"
+    	    	System.out.println(schemes.getActualScheme().getName()+": FKs "
 	    				+ schemes.getActualScheme().getForeignKeyCount());
     	    	
     	    	contents.addContent(new TableContent(schemes.getScheme(schemes.getActualScheme().getName())));

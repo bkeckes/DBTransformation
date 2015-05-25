@@ -10,6 +10,7 @@ public class Property {
 	private boolean isForeignKey;
 	private String type;
 	private String name;
+	private String refTable;
 	
 	public Property(boolean p, boolean f, String type, String name){
 		this.isPrimaryKey = p;
@@ -17,7 +18,17 @@ public class Property {
 		this.type = type;
 		this.name = name;
 	}
+	public Property(boolean p, boolean f, String refTable, String type, String name){
+		this.refTable = refTable;
+		this.isPrimaryKey = p;
+		this.isForeignKey = f;
+		this.type = type;
+		this.name = name;
+	}
 
+	public String getRefTable() {
+		return refTable;
+	}
 	public String getName() {
 		return name;
 	}

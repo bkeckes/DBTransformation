@@ -29,6 +29,14 @@ public class ContentLayer {
 	public ArrayList<PropertyValueTupel> getAttributes(){
 		return attr;
 	}
+	public ArrayList<PropertyValueTupel> getAttributesWithoutFks(){
+		ArrayList<PropertyValueTupel> list = new ArrayList<>();
+		for(PropertyValueTupel p : attr){
+			if(!p.getProperty().isForeignKey())
+				list.add(p);
+		}
+		return list;
+	}
 	
 	
 	public PropertyValueTupel getForeignKeyAt(int index){

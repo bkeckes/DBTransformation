@@ -51,10 +51,17 @@ public class TransformerImpl implements TransformerController{
 				PropertyValueTupel firstfk = layer.getForeignKeyAt(0);
 				PropertyValueTupel secondfk = layer.getForeignKeyAt(1);
 				
+				//TODO Das muss über Constraint gelöst werden
 				Node firstN = getNodeWithPrimaryKeyValue(firstfk, nodes);
 				Node secondN = getNodeWithPrimaryKeyValue(secondfk, nodes);
+				//
+				Relationship newRelationship = new Relationship(rel.getTableScheme().getName(), new NodeTupel(firstN, secondN));
 				
-				relationships.add(new Relationship(rel.getTableScheme().getName(), new NodeTupel(firstN, secondN)));
+				for(PropertyValueTupel tupel : layer.getAttributesWithoutFks()){
+					newRelationship.addProperty(tupel.getProperty(), tupel.getValue());
+				}
+				
+				relationships.add(newRelationship);
 			}
 		}
 		return relationships;
@@ -70,7 +77,7 @@ public class TransformerImpl implements TransformerController{
 	}
 
 	/**
-	 * macht Relationen wenn PrimaryKey in einer anderen Node erwÃ¤hnt wird.
+	 * macht Relationen wenn PrimaryKey in einer anderen Node erwähnt wird.
 	 * TODO Muss kein Foreign Key sein?
 	 */
 	@Override
