@@ -1,17 +1,19 @@
 package de.bkdev.transformation.storage.relational;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 
 public class Tablescheme {
 	private String name;
-	private Set<Property> property;
+	private List<Property> property;
 	
 	public Tablescheme(String n){
 		this.name = n;
-		this.property = new HashSet<Property>();
+		this.property = new ArrayList<Property>();
 	}
 	
 	public void addProperty(Property prop){
@@ -87,5 +89,8 @@ public class Tablescheme {
 		return property.size();
 	}
 	
+	public String getPropertyNameByIndex(int index){
+		return property.get(index).getName();
+	}
 	
 }

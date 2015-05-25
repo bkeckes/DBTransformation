@@ -25,4 +25,7 @@ public class SchemeController {
 		}
 		return null;
 	}
+	public ArrayList<Tablescheme> getSchemes() {
+		return schemes;
+	}
 }
