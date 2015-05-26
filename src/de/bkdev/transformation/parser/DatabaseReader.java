@@ -45,7 +45,7 @@ public class DatabaseReader {
 
     		final Connection connection = DriverManager.getConnection(dburl + "/" + dbName + "?user=" + user + "&password=" + password);
     		
-
+    		
     	    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 
     	    options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
@@ -64,6 +64,7 @@ public class DatabaseReader {
     	    		
     	    		
     	    		if(column.getReferencedColumn()!=null){
+    	    			System.out.println("Parent: "+column.getReferencedColumn().getParent().getName());
     	    			schemes.getActualScheme().addProperty(new Property( column.isPartOfPrimaryKey(), 
 								column.isPartOfForeignKey(), 
 								column.getReferencedColumn().getParent().getName(),

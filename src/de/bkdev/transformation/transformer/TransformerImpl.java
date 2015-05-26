@@ -74,6 +74,12 @@ public class TransformerImpl implements TransformerController{
 				list.add(node);
 			}
 		}
+		
+		if(list.isEmpty()){
+			System.out.println(schemename + " not found ");
+			throw new NullPointerException();
+		}
+			
 		return list;
 	}
 	public Node getNodeWithPrimaryKeyValue(PropertyValueTupel tupel, ArrayList<Node> nodes){
