@@ -41,7 +41,7 @@ public class Tablescheme {
 			if(p.isPrimaryKey())
 				return p;
 		}
-		return null;
+		throw new NullPointerException("No PK found in '" + this.name + "'");
 	}
 	
 	public int getForeignKeyCount(){

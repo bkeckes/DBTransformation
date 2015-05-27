@@ -120,25 +120,26 @@ public class DatabaseReader {
 		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
 		
 		//Kanten werden erstellt.
-		ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
+		ArrayList<Relationship> nToMRelationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
 		
 		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
-		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
+		ArrayList<Relationship> oneToManyRelationships 	= transformer.makeRelationshipsWithProperties(nodes);
 		
-		System.out.println("Constraints:");
+		
 		constStatements = StatementMaker.makeConstraints(schemes.getNodeSchemes());
+		log4j.info("Constraints: " + constStatements.size());
 		
 		
 		
-		System.out.println("Nodes:");
 		nodeStatements = StatementMaker.makeCypherStatementFromNodes(nodes);
-				
+		log4j.info("Nodes: " + nodeStatements.size());		
 		//System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		
-		System.out.println("Relationships:");
-		relStatements = StatementMaker.makeCypherStatementFromSingleRelationships(relationships);
-		relStatements = StatementMaker.makeCypherStatementFromSingleRelationships(relationships2);
-
+		
+		relStatements = StatementMaker.makeCypherStatementFromSingleRelationships(nToMRelationships);
+		relStatements.addAll(StatementMaker.makeCypherStatementFromSingleRelationships(oneToManyRelationships));
+		
+		log4j.info("Relationships: " + relStatements.size());
 	}
 	
 
@@ -189,7 +190,7 @@ public class DatabaseReader {
 	  }
 	  
 	  public String removeMarks(String name){
-		  return name.replace("`", "");
+		  return name.replace("`", "").replace(" ", "_");
 	  }
 	  
 	  public static void main(String[] args) {

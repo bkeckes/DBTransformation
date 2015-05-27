@@ -51,7 +51,7 @@ public abstract class GraphObject {
 	public String getAllPropertysInString(){
 		String temp = "";
 		for(int i=0; i<attr.size(); i++){
-			temp += attr.get(i).getKey() + ":'" + attr.get(i).getValue() + "', ";
+			temp += attr.get(i).getKey() + ":'" + attr.get(i).getValue().replace("'", "") + "', ";
 		}
 		return temp.substring(0, temp.length()-2);
 	}
@@ -81,7 +81,7 @@ public abstract class GraphObject {
 			if(e.isPrimaryKey())
 				return e;
 		}
-		return null;
+		throw new NullPointerException("No PK found " + this.toString());
 	}
 	
 }

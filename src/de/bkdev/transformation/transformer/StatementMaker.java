@@ -15,6 +15,7 @@ public class StatementMaker {
 		return node.getPrimaryKey().getKey()+node.getPrimaryKey().getValue();
 	}
 	public static String makeNodeStatement(Node node) {
+		
 		return "CREATE (" + getNodeIdentifer(node) + ":" + node.getLabel() + " {" + node.getAllPropertysInString() + "})";
 	}
 	public static String makeRelationshipStatement(Relationship rel){
@@ -28,7 +29,11 @@ public class StatementMaker {
 	public static ArrayList<String> makeCypherStatementFromNodes(ArrayList<Node> nodes) {
 		ArrayList<String> temp = new ArrayList<>();
 		for(Node n : nodes){
-			temp.add(makeNodeStatement(n)+";");
+			try{
+				temp.add(makeNodeStatement(n)+";");
+			}catch(NullPointerException e){
+				e.printStackTrace();
+			}
 		}
 		return temp;
 	}
@@ -47,7 +52,11 @@ public class StatementMaker {
 		String cName = "";
 		for(Tablescheme s : schemas){
 			cName = "const" + s.getName();
-			list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE;");
+			try{
+				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE;");
+			}catch(NullPointerException e){
+				e.printStackTrace();
+			}
 		}
 		return list;
 	}
@@ -60,7 +69,7 @@ public class StatementMaker {
 		
 		temp = "MATCH (a:" + rel.getStart().getLabel() + " { " + rel.getStart().getPrimaryKey().getKey() + ":'" + rel.getStart().getPrimaryKey().getValue() + "'})";
 		temp += ", (b:" + rel.getEnd().getLabel() + " { " + rel.getEnd().getPrimaryKey().getKey() + ":'" + rel.getEnd().getPrimaryKey().getValue() + "'})";
-		temp += "MERGE (a)-[r:" + rel.getLabel().toUpperCase() + props + "]->(b)";
+		temp += " MERGE (a)-[r:" + rel.getLabel().toUpperCase() + props + "]->(b)";
 		return temp; //"CREATE (" + getNodeIdentifer(rel.getStart()) + ")-[" + rel.getRelID() + ":" + rel.getLabel().toUpperCase() + props + "]->(" + getNodeIdentifer(rel.getEnd()) + ")";
 	}
 	public static ArrayList<String> makeCypherStatementFromSingleRelationships(ArrayList<Relationship> rels){
