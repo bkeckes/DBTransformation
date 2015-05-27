@@ -2,6 +2,11 @@ package de.bkdev.transformation.transformer;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.rules.RunRules;
+
+import de.bkdev.transformation.parser.DatabaseReader;
 import de.bkdev.transformation.storage.graph.KeyValuePair;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.NodeTupel;
@@ -13,6 +18,8 @@ import de.bkdev.transformation.storage.relational.TableContent;
 
 public class TransformerImpl implements TransformerController{
 
+	private static final Logger log4j = LogManager.getLogger(TransformerImpl.class
+	        .getName());
 	/**
 	 * macht normale Nodes
 	 */
@@ -21,6 +28,7 @@ public class TransformerImpl implements TransformerController{
 		
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for(TableContent e : tableList){
+			log4j.info("Make Nodes for '" + e.getTableScheme().getName() + "'");
 			for(ContentLayer c : e.getLayer()){
 				nodes.add(makeNode(e.getTableScheme().getName(), c));
 			}
@@ -47,16 +55,23 @@ public class TransformerImpl implements TransformerController{
 		ArrayList<Relationship> relationships = new ArrayList<Relationship>();
 		
 		for(TableContent rel : rels){
+			log4j.info("Make Relationships for '" + rel.getTableScheme().getName() +"'");
 			for(ContentLayer layer : rel.getLayer()){
 				PropertyValueTupel firstfk = layer.getForeignKeyAt(0);
 				PropertyValueTupel secondfk = layer.getForeignKeyAt(1);
-				
-				//TODO Das muss über Constraint gelöst werden
-				Node firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
-				Node secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
-				//
+				Node firstN = null;
+				Node secondN = null;
+				try{
+					firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
+					secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
+				}catch(RuntimeException e){
+					log4j.error("Reference to '" + firstfk.getProperty().getRefTable() + "' could not found in Nodes");
+					e.printStackTrace();
+				}
+				//Kante wird erstellt.
 				Relationship newRelationship = new Relationship(rel.getTableScheme().getName(), new NodeTupel(firstN, secondN));
 				
+				//Attribute (falls vorhanden) werden hinzugefügt (Aber nicht die FKs).
 				for(PropertyValueTupel tupel : layer.getAttributesWithoutFks()){
 					newRelationship.addProperty(tupel.getProperty(), tupel.getValue());
 				}
@@ -76,18 +91,34 @@ public class TransformerImpl implements TransformerController{
 		}
 		return list;
 	}
+	public ArrayList<Node> getNodesWithoutScheme(ArrayList<Node> nodes, String schemename){
+		ArrayList<Node> list = new ArrayList<>();
+		for(Node node : nodes){
+			if(!node.getLabel().equals(schemename)){
+				list.add(node);
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Geht alle Nodes durch und Vergleicht ob der PK gleich dem PK des tupels ist. Wenn ja wird die Node zurück gegeben.
+	 * @param tupel
+	 * @param nodes
+	 * @return foundNode
+	 */
 	public Node getNodeWithPrimaryKeyValue(PropertyValueTupel tupel, ArrayList<Node> nodes){
 		for(Node node : nodes){
 			if(node.getPrimaryKey().getValue().equals(tupel.getValue()) && node.getPrimaryKey().getProperty().getType().equals(tupel.getProperty().getType())){
 				return node;
 			}
 		}
-		return null;
+		throw new RuntimeException();
 	}
 
 	/**
 	 * macht Relationen wenn PrimaryKey in einer anderen Node erwähnt wird.
-	 * TODO Muss kein Foreign Key sein?
+	 * 
 	 */
 	@Override
 	public ArrayList<Relationship> makeRelationshipsWithProperties(ArrayList<Node> nodes) {

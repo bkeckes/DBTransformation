@@ -61,13 +61,16 @@ public class DatabaseReader {
     	    final Schema delSchema = catalog.getSchema(dbName);
     	    
     	    
-    	    log4j.info("Reading RDB " + delSchema.getFullName());
+    	    log4j.info("Reading RDB '" + delSchema.getFullName() + "'");
+    	    
+    	    //Alle Tabellen hintereinander
     	    for (final Table table: catalog.getTables(delSchema)){
     	    	
     	    	schemes.addScheme(new Tablescheme(removeMarks(table.getName())));
+    	    	log4j.info("Reading Schema from table '" + removeMarks(table.getName()) + "'");
+    	    	
     	    	
     	    	for (final Column column: table.getColumns()){
-    	    		
     	    		
     	    		if(column.getReferencedColumn()!=null){
     	    			schemes.getActualScheme().addProperty(new Property(
@@ -75,6 +78,9 @@ public class DatabaseReader {
 								column.getReferencedColumn().getParent().getName(),
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
+    	    			
+    	    			log4j.info("'" + table.getName() + "." + column.getName() + "' has a reference to table '" + column.getReferencedColumn().getParent().getName() + "'");
+    	    			
     	    		}else{
     	    			schemes.getActualScheme().addProperty(new Property(
     	    					column.isPartOfPrimaryKey(), 
@@ -86,10 +92,11 @@ public class DatabaseReader {
     	    		
     	    		
     	    	}
-    	    	System.out.println(schemes.getActualScheme().getName()+": FKs "
-	    				+ schemes.getActualScheme().getForeignKeyCount());
     	    	
+    	    	//Daten werden geholt.
     	    	contents.addContent(new TableContent(schemes.getScheme(schemes.getActualScheme().getName())));
+    	    	
+    	    	log4j.info("Reading Data from table'" + table.getName() + "'");
     	    	contents = readContent(connection, table.getName(), contents, schemes.getActualScheme().getPropertyCount());
 
 
@@ -100,11 +107,12 @@ public class DatabaseReader {
 
     	} catch (SQLException ex) {
     	    // handle any errors
+    		log4j.error("An SQL ERROR occured while reading the data");
     	    System.out.println("SQLException: " + ex.getMessage());
     	    System.out.println("SQLState: " + ex.getSQLState());
     	    System.out.println("VendorError: " + ex.getErrorCode());
     	} catch (SchemaCrawlerException e) {
-			// TODO Auto-generated catch block
+			log4j.error("An ERROR occured while reading the schema");
 			e.printStackTrace();
 		}
 		
@@ -112,14 +120,19 @@ public class DatabaseReader {
 		
 		TransformerController transformer = new TransformerImpl();
 		
+		//Nodes werden erstellt.
 		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
+		
+		//Kanten werden erstellt.
 		ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
+		
+		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
 		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
 		
-		System.out.println("Nodes: "+nodes.size());
+		
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		
-		System.out.println("Relationships: "+(relationships.size()+relationships2.size()));
+		
 		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
 		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
 	}
