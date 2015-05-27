@@ -60,7 +60,7 @@ public class TransformerImplTest {
 		schemes.addScheme(new Tablescheme("BG"));
 		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "bid"));
 		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "admin"));
+		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "admin"));
 		
 		schemes.addScheme(new Tablescheme("FR"));
 		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "fuser"));
@@ -72,8 +72,8 @@ public class TransformerImplTest {
 		
 		schemes.addScheme(new Tablescheme("CT"));
 		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "cid"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "cblog"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "cuser"));
+		schemes.getActualScheme().addProperty(new Property(false, "BG", "varchar(20)", "cblog"));
+		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "cuser"));
 		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "msg"));
 		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "date"));
 		
@@ -81,56 +81,83 @@ public class TransformerImplTest {
 		
 		contents.addContent(new TableContent(schemes.getScheme("US")));
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("uid", "u01");
+		contents.getActualContent().addAttributeToCurrentLayer("uid", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Date");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("uid", "u02");
+		contents.getActualContent().addAttributeToCurrentLayer("uid", "2");
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Hunt");
 		
 		contents.addContent(new TableContent(schemes.getScheme("BG")));
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "b01");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "1");
 		contents.getActualContent().addAttributeToCurrentLayerByIndex(1, "Informatics2");
-		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "u01");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "1");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "b02");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "2");
 		contents.getActualContent().addAttributeToCurrentLayerByIndex(1, "Biotech");
-		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "u01");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "1");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "b03");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(0, "3");
 		contents.getActualContent().addAttributeToCurrentLayerByIndex(1, "Science");
-		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "u02");
+		contents.getActualContent().addAttributeToCurrentLayerByIndex(2, "2");
 		
 		contents.addContent(new TableContent(schemes.getScheme("FR")));
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u01");
-		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b01");
+		contents.getActualContent().addAttributeToCurrentLayer("fuser", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("fblog", "1");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u01");
-		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b02");
+		contents.getActualContent().addAttributeToCurrentLayer("fuser", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("fblog", "2");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u01");
-		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b03");
+		contents.getActualContent().addAttributeToCurrentLayer("fuser", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("fblog", "3");
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("fuser", "u02");
-		contents.getActualContent().addAttributeToCurrentLayer("fblog", "b01");
+		contents.getActualContent().addAttributeToCurrentLayer("fuser", "2");
+		contents.getActualContent().addAttributeToCurrentLayer("fblog", "1");
 		
 		contents.addContent(new TableContent(schemes.getScheme("TG")));
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("tuser", "u01");
-		contents.getActualContent().addAttributeToCurrentLayer("tcomment", "c01");
+		contents.getActualContent().addAttributeToCurrentLayer("tuser", "2");
+		contents.getActualContent().addAttributeToCurrentLayer("tcomment", "1");
 		
 		contents.addContent(new TableContent(schemes.getScheme("CT")));
 		contents.getActualContent().addContentLayer();
-		contents.getActualContent().addAttributeToCurrentLayer("cid", "c01");
-		contents.getActualContent().addAttributeToCurrentLayer("cblog", "b01");
-		contents.getActualContent().addAttributeToCurrentLayer("cuser", "u01");
+		contents.getActualContent().addAttributeToCurrentLayer("cid", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("cblog", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("cuser", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("msg", "Das ist toll");
 		contents.getActualContent().addAttributeToCurrentLayer("date", "11.01.2012");
+		
+		
+		//5 verschiedene Tabellen 
+		assertEquals(5, contents.getContent().size());
+		
+		//2 User
+		assertEquals("Erwarte 2 User", 2, contents.getContent().get(0).getLayerCount());
+		assertEquals("Das sind User Nodes", true, contents.isNode(contents.getContent().get(0).getTableScheme()));
+		
+		//3 Blogs
+		assertEquals("Erwarte 3 Blogs", 3, contents.getContent().get(1).getLayerCount());
+		assertEquals("Das sind Blog Nodes", true, contents.isNode(contents.getContent().get(1).getTableScheme()));
+		
+		//1 Kommentar
+		assertEquals("Erwarte 1 Kommentar", 1, contents.getContent().get(4).getLayerCount());
+		assertEquals("Das ist K-Node", true, contents.isNode(contents.getContent().get(4).getTableScheme()));
+		
+		
+		
+		//3 Tabellen sind Nodes
+		assertEquals(3, contents.getNodes().size());
+		
+		//2 Tabellen sind Kanten
+		assertEquals(2, contents.getRelationships().size());
+		
+		
 		
 		TransformerController transformer = new TransformerImpl();
 		
 		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
+		
 		ArrayList<Relationship> relationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
 		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
 		
@@ -171,6 +198,74 @@ public class TransformerImplTest {
 		
 		assertEquals("Mensch", transformer.getNodeWithPrimaryKeyValue(pv, nodes).getLabel());
 		
+	}
+	
+	@Test
+	public void testeEinsZuVieleRelationsships(){
+		SchemeController schemes = new SchemeController();
+		ContentController contents = new ContentController();
+		
+		schemes.addScheme(new Tablescheme("USER"));
+		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		
+		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Ben");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "2");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Rey");
+		
+		
+		schemes.addScheme(new Tablescheme("BLOG"));
+		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(false, "US", "int", "admin"));
+		
+		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Science");
+		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "2");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "French");
+		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "3");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Math");
+		contents.getActualContent().addAttributeToCurrentLayer("admin", "2");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "4");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Bio");
+		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
+		
+		//2 Tabellen
+		assertEquals(2, contents.getContent().size());
+		
+		assertEquals("Das sind User Nodes", true, contents.isNode(contents.getContent().get(0).getTableScheme()));
+		assertEquals("Das sind Blog Nodes", true, contents.isNode(contents.getContent().get(1).getTableScheme()));
+		
+		TransformerController transformer = new TransformerImpl();
+		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
+		ArrayList<Relationship> ntom 	= transformer.makeRelationship(contents.getRelationships(), nodes);
+		ArrayList<Relationship> oneToMany 	= transformer.makeRelationshipsWithProperties(nodes);
+		
+		
+		assertEquals("Keine N to M Rels", 0, ntom.size());
+		
+		assertEquals("Ben", oneToMany.get(0).getStart().getProperyValue("name"));
+		assertEquals("Science", oneToMany.get(0).getEnd().getProperyValue("name"));
+		
+		assertEquals("Ben", oneToMany.get(1).getStart().getProperyValue("name"));
+		assertEquals("French", oneToMany.get(1).getEnd().getProperyValue("name"));
+		
+		assertEquals("Rey", oneToMany.get(2).getStart().getProperyValue("name"));
+		assertEquals("Math", oneToMany.get(2).getEnd().getProperyValue("name"));
+		
+		assertEquals("Ben", oneToMany.get(3).getStart().getProperyValue("name"));
+		assertEquals("Bio", oneToMany.get(3).getEnd().getProperyValue("name"));
 	}
 
 }

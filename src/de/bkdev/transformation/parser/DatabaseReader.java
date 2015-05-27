@@ -138,17 +138,7 @@ public class DatabaseReader {
 	}
 	
 
-	
-	private String isPK(boolean p){
-		if(p)
-			return "PK";
-		return "";
-	}
-	  private String isFK(boolean p){
-		  if(p)
-			  return "FK";
-		  return "";
-	  }
+
 	  
 	  private ContentController readContent(Connection conn, String table, ContentController contents, int propCount){
 		  

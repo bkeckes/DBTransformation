@@ -18,7 +18,10 @@ public class Rules {
 						return false;
 			}
 			else{
-				return false;
+				if(table.getNonKeyPropertyCount() >0)
+					return true;
+				else
+					return false;
 			}
 		}else{
 			if(table.getForeignKeyCount()!=2){

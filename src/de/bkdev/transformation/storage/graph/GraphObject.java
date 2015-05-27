@@ -40,6 +40,14 @@ public abstract class GraphObject {
 		return "";
 	}
 	
+	public String getProperyValue(String key){
+		for(KeyValuePair e : attr){
+			if(e.getKey().equals(key))
+				return e.getValue();
+		}
+		return "";
+	}
+	
 	public String getAllPropertysInString(){
 		String temp = "";
 		for(int i=0; i<attr.size(); i++){

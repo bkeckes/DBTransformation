@@ -55,17 +55,27 @@ public class TransformerImpl implements TransformerController{
 		ArrayList<Relationship> relationships = new ArrayList<Relationship>();
 		
 		for(TableContent rel : rels){
-			log4j.info("Make Relationships for '" + rel.getTableScheme().getName() +"'");
+			log4j.info("Make n:m Relationships for '" + rel.getTableScheme().getName() +"'");
 			for(ContentLayer layer : rel.getLayer()){
 				PropertyValueTupel firstfk = layer.getForeignKeyAt(0);
 				PropertyValueTupel secondfk = layer.getForeignKeyAt(1);
 				Node firstN = null;
 				Node secondN = null;
+				
 				try{
 					firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
-					secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
+					//secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
 				}catch(RuntimeException e){
-					log4j.error("Reference to '" + firstfk.getProperty().getRefTable() + "' could not found in Nodes");
+					log4j.error("Reference from '" + firstN.getLabel() + "' to '" + firstfk.getProperty().getRefTable() + "' could not found in Nodes");
+					e.printStackTrace();
+				}
+				
+				try{
+					//firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
+					secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
+					
+				}catch(RuntimeException e){
+					log4j.error("Reference from '" + secondN.getLabel() + "' to '" + secondfk.getProperty().getRefTable() + "' could not found in Nodes");
 					e.printStackTrace();
 				}
 				//Kante wird erstellt.
@@ -130,6 +140,7 @@ public class TransformerImpl implements TransformerController{
 					Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, n.getLabel());
 					if(found!=null){
 						relationships.add(new Relationship(kv.getKey(), new NodeTupel(found, n)));
+						log4j.info("Make 1:1 or 1:N Relationship from '" + found.getLabel() +"' to '" + n.getLabel() + "'");
 					}
 				}
 			}

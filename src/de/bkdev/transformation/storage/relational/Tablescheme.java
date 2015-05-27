@@ -85,6 +85,14 @@ public class Tablescheme {
 		
 	}
 	
+	public int getNonKeyPropertyCount(){
+		int count=0;
+		for(Property p : property){
+			if(!p.isPrimaryKey() && !p.isForeignKey())
+				count++;
+		}
+		return count;
+	}
 	public int getPropertyCount(){
 		return property.size();
 	}

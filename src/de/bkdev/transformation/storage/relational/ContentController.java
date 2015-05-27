@@ -7,6 +7,7 @@ import de.bkdev.transformation.rules.Rules;
 public class ContentController {
 	private ArrayList<TableContent> contents; 
 	
+	
 	public ContentController(){
 		contents = new ArrayList<TableContent>();
 	}
@@ -19,13 +20,27 @@ public class ContentController {
 		return contents.get(contents.size()-1);
 	}
 	
+	public boolean isNode(Tablescheme schema){
+		return Rules.isNode(schema);
+	}
+	
+	public ArrayList<TableContent> getContent(){
+		return contents;
+	}
+	
+	
 	public ArrayList<TableContent> getNodes(){
 		
 		ArrayList<TableContent> nodes = new ArrayList<TableContent>();
 		
 		for(TableContent e : contents){
-			if(Rules.isNode(e.getTableScheme()))
+			if(Rules.isNode(e.getTableScheme())){
+				
 				nodes.add(e);
+				
+				
+			}
+				
 		}
 		return nodes;
 	}
