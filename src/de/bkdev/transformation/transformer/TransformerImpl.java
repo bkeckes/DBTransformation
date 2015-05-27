@@ -99,6 +99,12 @@ public class TransformerImpl implements TransformerController{
 				list.add(node);
 			}
 		}
+		
+		if(list.isEmpty()){
+			log4j.error("Schemaname '" + schemename + "' not found ");
+			throw new NullPointerException();
+		}
+			
 		return list;
 	}
 	public ArrayList<Node> getNodesWithoutScheme(ArrayList<Node> nodes, String schemename){

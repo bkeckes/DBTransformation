@@ -17,6 +17,7 @@ public class StatementMaker {
 		String props = "";
 		if(rel.getPropertyCount()>0)
 			props = " {" + rel.getAllPropertysInString() + "}";
+		
 		return "CREATE (" + rel.getStart().getNodeID() + ")-[" + rel.getRelID() + ":" + rel.getLabel().toUpperCase() + props + "]->(" + rel.getEnd().getNodeID() + ")";
 	}
 

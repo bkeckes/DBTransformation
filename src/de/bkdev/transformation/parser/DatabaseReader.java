@@ -50,7 +50,7 @@ public class DatabaseReader {
 
     		final Connection connection = DriverManager.getConnection(dburl + "/" + dbName + "?user=" + user + "&password=" + password);
     		
-
+    		
     	    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 
     	    options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
@@ -73,6 +73,7 @@ public class DatabaseReader {
     	    	for (final Column column: table.getColumns()){
     	    		
     	    		if(column.getReferencedColumn()!=null){
+
     	    			schemes.getActualScheme().addProperty(new Property(
     	    					column.isPartOfPrimaryKey(), 
 								column.getReferencedColumn().getParent().getName(),
@@ -87,6 +88,7 @@ public class DatabaseReader {
 								column.isPartOfForeignKey(), 
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
+    	    	
     	    		}
     	    			
     	    		
@@ -129,12 +131,12 @@ public class DatabaseReader {
 		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
 		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
 		
+
 		
 		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
-		
-		
 		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
 		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
+
 	}
 	
 
