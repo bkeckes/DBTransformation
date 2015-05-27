@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import de.bkdev.transformation.Main;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentController;
@@ -33,7 +37,8 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class DatabaseReader {
 	
-	
+	private static final Logger log4j = LogManager.getLogger(DatabaseReader.class
+		        .getName());
 	
 	
 	private SchemeController schemes = new SchemeController();
@@ -55,7 +60,8 @@ public class DatabaseReader {
     	    
     	    final Schema delSchema = catalog.getSchema(dbName);
     	    
-    	    System.out.println("Lese DB: " + delSchema.getFullName());
+    	    
+    	    log4j.info("Reading RDB " + delSchema.getFullName());
     	    for (final Table table: catalog.getTables(delSchema)){
     	    	
     	    	schemes.addScheme(new Tablescheme(removeMarks(table.getName())));
@@ -64,13 +70,14 @@ public class DatabaseReader {
     	    		
     	    		
     	    		if(column.getReferencedColumn()!=null){
-    	    			schemes.getActualScheme().addProperty(new Property( column.isPartOfPrimaryKey(), 
-								column.isPartOfForeignKey(), 
+    	    			schemes.getActualScheme().addProperty(new Property(
+    	    					column.isPartOfPrimaryKey(), 
 								column.getReferencedColumn().getParent().getName(),
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
     	    		}else{
-    	    			schemes.getActualScheme().addProperty(new Property(column.isPartOfPrimaryKey(), 
+    	    			schemes.getActualScheme().addProperty(new Property(
+    	    					column.isPartOfPrimaryKey(), 
 								column.isPartOfForeignKey(), 
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
@@ -158,14 +165,14 @@ public class DatabaseReader {
 	  }
 	  
 	  public static void main(String[] args) {
+		  	if(args.length<3){
+		  		System.out.println("ERROR: You have to use the Parameter: dburl, dbname, user, password");
+		  		return;
+		  	}
 			String dburl = args[0];
 			String dbName =  args[1];
 			String user = args[2];
 			String pwd = args[3];
-			if(dburl.isEmpty() || dbName.isEmpty() || user.isEmpty() || pwd.isEmpty()){
-				System.out.println("Parameter: dburl, dbname, user, password");
-				return;
-			}
 				
 			new DatabaseReader(dburl,dbName,user,pwd);
 		}

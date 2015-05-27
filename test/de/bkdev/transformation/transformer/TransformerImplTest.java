@@ -63,12 +63,12 @@ public class TransformerImplTest {
 		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "admin"));
 		
 		schemes.addScheme(new Tablescheme("FR"));
-		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "fuser"));
-		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "fblog"));
+		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "fuser"));
+		schemes.getActualScheme().addProperty(new Property(false, "BG", "varchar(20)", "fblog"));
 		
 		schemes.addScheme(new Tablescheme("TG"));
-		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "tuser"));
-		schemes.getActualScheme().addProperty(new Property(false, true, "varchar(20)", "tcomment"));
+		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "tuser"));
+		schemes.getActualScheme().addProperty(new Property(false, "CT", "varchar(20)", "tcomment"));
 		
 		schemes.addScheme(new Tablescheme("CT"));
 		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "cid"));

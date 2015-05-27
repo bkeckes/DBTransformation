@@ -18,12 +18,19 @@ public class Property {
 		this.type = type;
 		this.name = name;
 	}
-	public Property(boolean p, boolean f, String refTable, String type, String name){
-		this.refTable = refTable;
+	public Property(boolean p, String refTable, String type, String name){
 		this.isPrimaryKey = p;
-		this.isForeignKey = f;
 		this.type = type;
 		this.name = name;
+		
+		if(!refTable.isEmpty()){
+			this.refTable = refTable;
+			this.isForeignKey = true;
+		}else{
+			this.isForeignKey = false;
+		}
+		
+		
 	}
 
 	public String getRefTable() {
