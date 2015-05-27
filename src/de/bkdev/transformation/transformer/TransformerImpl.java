@@ -14,6 +14,7 @@ import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentLayer;
 import de.bkdev.transformation.storage.relational.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.TableContent;
+import de.bkdev.transformation.storage.relational.Tablescheme;
 
 
 public class TransformerImpl implements TransformerController{
@@ -133,7 +134,7 @@ public class TransformerImpl implements TransformerController{
 	}
 
 	/**
-	 * macht Relationen wenn PrimaryKey in einer anderen Node erwähnt wird.
+	 * macht Relationen wenn FK in einer anderen Node erwähnt wird.
 	 * 
 	 */
 	@Override
@@ -143,16 +144,42 @@ public class TransformerImpl implements TransformerController{
 		for(Node n : nodes){
 			for(KeyValuePair kv : n.getPropertySet()){
 				if(!kv.getProperty().isPrimaryKey()){
-					Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, n.getLabel());
+					
+					Node found = findAttributeInNodesAsPrimaryKey2(kv, nodes, kv.getProperty().getRefTable());
+					// Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, n.getLabel());
+					 
 					if(found!=null){
+						//relationships.add(new Relationship(kv.getKey(), new NodeTupel(n, found)));
+						//log4j.info("Make 1:1 or 1:N Relationship from '" + n.getLabel() +"' to '" + found.getLabel() + "'");
+						
 						relationships.add(new Relationship(kv.getKey(), new NodeTupel(found, n)));
 						log4j.info("Make 1:1 or 1:N Relationship from '" + found.getLabel() +"' to '" + n.getLabel() + "'");
+					}else if(!kv.getProperty().getRefTable().isEmpty()){
+						log4j.error("Could not make relationship from '" + kv.getValue() + "' to '" + kv.getProperty().getRefTable() + "'");
 					}
+					
 				}
 			}
 		}
 		return relationships;
 	}
+	
+	public Node findAttributeInNodesAsPrimaryKey2(KeyValuePair toFind, ArrayList<Node> nodes, String inScheme){
+		
+		for(Node n : nodes){
+			if(n.getLabel().equals(inScheme)){
+				for(KeyValuePair kv : n.getPropertySet()){
+					if(kv.getProperty().isPrimaryKey()){
+						if(kv.getValue().equals(toFind.getValue())){
+							return n;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Durchsucht alle Nodes (TODO Ausser in angegebener Tabelle) ob sie diesen Wert als PK haben. 

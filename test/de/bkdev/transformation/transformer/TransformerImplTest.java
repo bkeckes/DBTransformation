@@ -221,7 +221,7 @@ public class TransformerImplTest {
 		schemes.addScheme(new Tablescheme("BLOG"));
 		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
 		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, "US", "int", "admin"));
+		schemes.getActualScheme().addProperty(new Property(false, "USER", "int", "admin"));
 		
 		contents.addContent(new TableContent(schemes.getActualScheme()));
 		contents.getActualContent().addContentLayer();
@@ -267,5 +267,75 @@ public class TransformerImplTest {
 		assertEquals("Ben", oneToMany.get(3).getStart().getProperyValue("name"));
 		assertEquals("Bio", oneToMany.get(3).getEnd().getProperyValue("name"));
 	}
+	
+	@Test
+	public void testeEinsZuVieleRelationsships2(){
+		SchemeController schemes = new SchemeController();
+		ContentController contents = new ContentController();
+		
+		schemes.addScheme(new Tablescheme("USER"));
+		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		
+		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Ben");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "2");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Rey");
+		
+		
+		schemes.addScheme(new Tablescheme("BLOG"));
+		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(false, "USER", "int", "admin"));
+		
+		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "Science");
+		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "2");
+		contents.getActualContent().addAttributeToCurrentLayer("name", "French");
+		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
+
+		schemes.addScheme(new Tablescheme("COMMENT"));
+		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, "BLOG", "int", "cblog"));
+		schemes.getActualScheme().addProperty(new Property(false, "USER", "int", "cuser"));
+		schemes.getActualScheme().addProperty(new Property(false, false, "char", "msg"));
+		
+		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.getActualContent().addContentLayer();
+		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("cblog", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("cuser", "1");
+		contents.getActualContent().addAttributeToCurrentLayer("msg", "wow");
+		
+		//2 Tabellen
+		assertEquals(3, contents.getContent().size());
+		
+		assertEquals("Das sind User Nodes", true, contents.isNode(contents.getContent().get(0).getTableScheme()));
+		assertEquals("Das sind Blog Nodes", true, contents.isNode(contents.getContent().get(1).getTableScheme()));
+		assertEquals("Das sind Kommentar Nodes", true, contents.isNode(contents.getContent().get(2).getTableScheme()));
+		
+		TransformerController transformer = new TransformerImpl();
+		ArrayList<Node> nodes			= transformer.makeNodes(contents.getNodes());
+		ArrayList<Relationship> ntom 	= transformer.makeRelationship(contents.getRelationships(), nodes);
+		ArrayList<Relationship> oneToMany 	= transformer.makeRelationshipsWithProperties(nodes);
+		
+		
+		assertEquals("Keine N to M Rels", 0, ntom.size());
+		//assertEquals("Science", oneToMany.get(2).getStart().getProperyValue("name"));
+		//assertEquals("wow", oneToMany.get(2).getEnd().getProperyValue("msg"));
+		
+		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
+		System.out.println(StatementMaker.makeCypherStatementFromRelationships(ntom));
+		System.out.println(StatementMaker.makeCypherStatementFromRelationships(oneToMany));
+	}
+	
+	
 
 }

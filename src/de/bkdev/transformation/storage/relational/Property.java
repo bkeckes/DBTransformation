@@ -17,11 +17,11 @@ public class Property {
 		this.isForeignKey = f;
 		this.type = type;
 		this.name = name;
+		this.refTable="";
 	}
 	public Property(boolean p, String refTable, String type, String name){
-		this.isPrimaryKey = p;
-		this.type = type;
-		this.name = name;
+		this(p, false, type, name);
+		
 		
 		if(!refTable.isEmpty()){
 			this.refTable = refTable;
@@ -29,8 +29,11 @@ public class Property {
 		}else{
 			this.isForeignKey = false;
 		}
-		
-		
+	}
+	
+	public Property(boolean p, boolean f, String refTable, String type, String name){
+		this(p, f, type, name);
+		this.refTable = refTable;
 	}
 
 	public String getRefTable() {

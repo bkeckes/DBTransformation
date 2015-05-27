@@ -72,24 +72,29 @@ public class DatabaseReader {
     	    	
     	    	for (final Column column: table.getColumns()){
     	    		
+    	    		
+    	    		//if(column.isPartOfForeignKey()){
+    	    		String refCol = "";
     	    		if(column.getReferencedColumn()!=null){
-
+    	    			refCol = column.getReferencedColumn().getParent().getName();
+    	    		}
     	    			schemes.getActualScheme().addProperty(new Property(
     	    					column.isPartOfPrimaryKey(), 
-								column.getReferencedColumn().getParent().getName(),
+    	    					column.isPartOfForeignKey(),
+    	    					refCol,
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
     	    			
-    	    			log4j.info("'" + table.getName() + "." + column.getName() + "' has a reference to table '" + column.getReferencedColumn().getParent().getName() + "'");
+    	    			log4j.info("'" + table.getName() + "." + column.getName() + "' has a reference to table '" + refCol + "' "+column.isPartOfForeignKey());
     	    			
-    	    		}else{
+    	    		/*}else{
     	    			schemes.getActualScheme().addProperty(new Property(
     	    					column.isPartOfPrimaryKey(), 
 								column.isPartOfForeignKey(), 
 								column.getColumnDataType().getFullName(), 
 								removeMarks(column.getName())));
     	    	
-    	    		}
+    	    		}*/
     	    			
     	    		
     	    		
