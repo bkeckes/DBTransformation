@@ -17,7 +17,7 @@ public class StatementMakerTest {
 		
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		nodes.add(node);
-		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
+		
 	
 		
 		//assertEquals("CREATE (n:Human {id:'1', name:'benni', birth:'1988'});",StatementMaker.makeNodeStatement(node));

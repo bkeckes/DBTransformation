@@ -2,6 +2,8 @@ package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
 
+import de.bkdev.transformation.rules.Rules;
+
 public class SchemeController {
 	private ArrayList<Tablescheme> schemes;
 	
@@ -27,5 +29,15 @@ public class SchemeController {
 	}
 	public ArrayList<Tablescheme> getSchemes() {
 		return schemes;
+	}
+	
+	public ArrayList<Tablescheme> getNodeSchemes() {
+		ArrayList<Tablescheme> list = new ArrayList<>();
+		
+		for(Tablescheme s : schemes){
+			if(Rules.isNode(s))
+				list.add(s);
+		}
+		return list;
 	}
 }

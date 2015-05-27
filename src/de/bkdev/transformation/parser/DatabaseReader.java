@@ -44,6 +44,9 @@ public class DatabaseReader {
 	private SchemeController schemes = new SchemeController();
 	private ContentController contents = new ContentController();
 	
+	private ArrayList<String> constStatements;
+	private ArrayList<String> nodeStatements;
+	private ArrayList<String> relStatements;
 	
 	public DatabaseReader(String dburl, String dbName, String user, String password){
 		try {
@@ -96,10 +99,6 @@ public class DatabaseReader {
     	    	log4j.info("Reading Data from table'" + table.getName() + "'");
     	    	contents = readContent(connection, table.getName(), contents, schemes.getActualScheme().getPropertyCount());
 
-
-    	    	
-    	    	
-    	    	
     	    }
 
     	} catch (SQLException ex) {
@@ -126,18 +125,47 @@ public class DatabaseReader {
 		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
 		ArrayList<Relationship> relationships2 	= transformer.makeRelationshipsWithProperties(nodes);
 		
-
+		System.out.println("Constraints:");
+		constStatements = StatementMaker.makeConstraints(schemes.getNodeSchemes());
 		
-		System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
-		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships));
-		System.out.println(StatementMaker.makeCypherStatementFromRelationships(relationships2));
+		
+		
+		System.out.println("Nodes:");
+		nodeStatements = StatementMaker.makeCypherStatementFromNodes(nodes);
+				
+		//System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
+		
+		System.out.println("Relationships:");
+		relStatements = StatementMaker.makeCypherStatementFromSingleRelationships(relationships);
+		relStatements = StatementMaker.makeCypherStatementFromSingleRelationships(relationships2);
 
 	}
 	
 
 
 	  
-	  private ContentController readContent(Connection conn, String table, ContentController contents, int propCount){
+	  public ArrayList<String> getConstStatements() {
+		return constStatements;
+	}
+
+
+
+
+	public ArrayList<String> getNodeStatements() {
+		return nodeStatements;
+	}
+
+
+
+
+	public ArrayList<String> getRelStatements() {
+		return relStatements;
+	}
+
+
+
+
+	private ContentController readContent(Connection conn, String table, ContentController contents, int propCount){
 		  
 		 
 		  try{
