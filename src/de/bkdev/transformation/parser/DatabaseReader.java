@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.parboiled.common.Reference;
 
 import de.bkdev.transformation.Main;
 import de.bkdev.transformation.storage.graph.Node;
@@ -17,6 +18,7 @@ import de.bkdev.transformation.storage.relational.ContentController;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.SchemeController;
 import de.bkdev.transformation.storage.relational.TableContent;
+import de.bkdev.transformation.storage.relational.TableReference;
 import de.bkdev.transformation.storage.relational.Tablescheme;
 import de.bkdev.transformation.transformer.StatementMaker;
 import de.bkdev.transformation.transformer.TransformerController;
@@ -77,16 +79,15 @@ public class DatabaseReader {
     	    		
     	    		
     	    		//if(column.isPartOfForeignKey()){
-    	    		String refCol = "";
+    	    		TableReference refCol = null;
     	    		if(column.getReferencedColumn()!=null){
-    	    			refCol = column.getReferencedColumn().getParent().getName();
+    	    			refCol = new TableReference(column.getReferencedColumn().getParent().getName().toString(), column.getReferencedColumn().getName().toString());
     	    			log4j.info("'" + table.getName() + "." + column.getName() + "' has a reference to table '" + refCol + "'");
     	    		}
     	    		
     	    		//Schemateil zum aktuellen Schema hinzufuegen
 	    			schemes.getActualScheme().addProperty(new Property(
 	    					column.isPartOfPrimaryKey(), 
-	    					column.isPartOfForeignKey(),
 	    					refCol,
 							column.getColumnDataType().getFullName(), 
 							removeMarks(column.getName())));   	    		
@@ -96,7 +97,7 @@ public class DatabaseReader {
     	    	//Daten werden geholt.
     	    	contents.addContent(new TableContent(schemes.getScheme(schemes.getActualScheme().getName())));
     	    	
-    	    	log4j.info("Reading Data from table'" + table.getName() + "'");
+    	    	log4j.info("Reading Data from table '" + table.getName() + "'");
     	    	contents = readContent(connection, table.getName(), contents, schemes.getActualScheme().getPropertyCount());
 
     	    }

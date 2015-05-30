@@ -10,34 +10,19 @@ public class Property {
 	private boolean isForeignKey;
 	private String type;
 	private String name;
-	private String refTable;
+	private TableReference reference;
 	
-	public Property(boolean p, boolean f, String type, String name){
+	
+	public Property(boolean p, TableReference ref, String type, String name){
 		this.isPrimaryKey = p;
-		this.isForeignKey = f;
+		this.reference = ref;
 		this.type = type;
 		this.name = name;
-		this.refTable="";
-	}
-	public Property(boolean p, String refTable, String type, String name){
-		this(p, false, type, name);
 		
-		
-		if(!refTable.isEmpty()){
-			this.refTable = refTable;
-			this.isForeignKey = true;
-		}else{
-			this.isForeignKey = false;
-		}
-	}
-	
-	public Property(boolean p, boolean f, String refTable, String type, String name){
-		this(p, f, type, name);
-		this.refTable = refTable;
 	}
 
 	public String getRefTable() {
-		return refTable;
+		return reference.getTable();
 	}
 	public String getName() {
 		return name;
@@ -48,7 +33,9 @@ public class Property {
 	}
 
 	public boolean isForeignKey() {
-		return isForeignKey;
+		if(this.reference==null)
+			return false;
+		return true;
 	}
 
 	public String getType() {

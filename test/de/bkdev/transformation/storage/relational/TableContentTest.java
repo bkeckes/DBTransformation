@@ -17,8 +17,8 @@ public class TableContentTest {
 	@Test
 	public void testeVerhalten() {
 		Tablescheme table = new Tablescheme("US");
-		table.addProperty(new Property(true, false, "varchar(20)", "id"));
-		table.addProperty(new Property(false, false, "varchr(128)", "name"));
+		table.addProperty(new Property(true, null, "varchar(20)", "id"));
+		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		TableContent tc = new TableContent(table);
 		
@@ -39,8 +39,8 @@ public class TableContentTest {
 	@Test
 	public void testeVerhalten2() {
 		Tablescheme table = new Tablescheme("US");
-		table.addProperty(new Property(true, false, "varchar(20)", "id"));
-		table.addProperty(new Property(false, false, "varchr(128)", "name"));
+		table.addProperty(new Property(true, null, "varchar(20)", "id"));
+		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		TableContent tc = new TableContent(table);
 		
@@ -56,8 +56,8 @@ public class TableContentTest {
 	@Test
 	public void testeFehlverhalten() {
 		Tablescheme table = new Tablescheme("US");
-		table.addProperty(new Property(true, false, "varchar(20)", "id"));
-		table.addProperty(new Property(false, false, "varchr(128)", "name"));
+		table.addProperty(new Property(true, null, "varchar(20)", "id"));
+		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		TableContent tc = new TableContent(table);
 		tc.addContentLayer();
@@ -76,8 +76,8 @@ public class TableContentTest {
 	@Test
 	public void testeVerhalten3() {
 		Tablescheme table = new Tablescheme("US");
-		table.addProperty(new Property(true, false, "varchar(20)", "id"));
-		table.addProperty(new Property(false, false, "varchr(128)", "name"));
+		table.addProperty(new Property(true, null, "varchar(20)", "id"));
+		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		TableContent tc = new TableContent(table);
 		tc.addContentLayer();

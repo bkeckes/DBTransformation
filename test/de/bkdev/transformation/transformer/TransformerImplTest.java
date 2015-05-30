@@ -9,6 +9,7 @@ import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentController;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.PropertyValueTupel;
+import de.bkdev.transformation.storage.relational.TableReference;
 import de.bkdev.transformation.storage.relational.SchemeController;
 import de.bkdev.transformation.storage.relational.TableContent;
 import de.bkdev.transformation.storage.relational.Tablescheme;
@@ -19,8 +20,8 @@ public class TransformerImplTest {
 	@Test
 	public void testeNodeMaker() {
 		Tablescheme tablescheme = new Tablescheme("BJ");
-		tablescheme.addProperty(new Property(true, false, "varchar(20)", "id"));
-		tablescheme.addProperty(new Property(false, false, "varchr(128)", "name"));
+		tablescheme.addProperty(new Property(true, null, "varchar(20)", "id"));
+		tablescheme.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		TableContent tc = new TableContent(tablescheme);
 		tc.addContentLayer();
@@ -54,28 +55,28 @@ public class TransformerImplTest {
 		ContentController contents = new ContentController();
 		
 		schemes.addScheme(new Tablescheme("US"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "uid"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "uid"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		schemes.addScheme(new Tablescheme("BG"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "bid"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "admin"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "bid"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "name"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "admin"));
 		
 		schemes.addScheme(new Tablescheme("FR"));
-		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "fuser"));
-		schemes.getActualScheme().addProperty(new Property(false, "BG", "varchar(20)", "fblog"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "fuser"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "fblog"));
 		
 		schemes.addScheme(new Tablescheme("TG"));
-		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "tuser"));
-		schemes.getActualScheme().addProperty(new Property(false, "CT", "varchar(20)", "tcomment"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "tuser"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("CT", "cid"), "varchar(20)", "tcomment"));
 		
 		schemes.addScheme(new Tablescheme("CT"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "varchar(20)", "cid"));
-		schemes.getActualScheme().addProperty(new Property(false, "BG", "varchar(20)", "cblog"));
-		schemes.getActualScheme().addProperty(new Property(false, "US", "varchar(20)", "cuser"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "msg"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchar(20)", "date"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "cid"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "cblog"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "cuser"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "msg"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "date"));
 		
 		
 		
@@ -177,8 +178,8 @@ public class TransformerImplTest {
 	
 	@Test
 	public void testeRelationshipMaker(){
-		Property id = new Property(true, false, "char", "id");
-		Property name = new Property(true, false, "char", "name");
+		Property id = new Property(true, null, "char", "id");
+		Property name = new Property(true, null, "char", "name");
 		
 		Node node1 = new Node("Mensch");
 		node1.addProperty(id, "u01");
@@ -192,7 +193,7 @@ public class TransformerImplTest {
 		nodes.add(node1);
 		nodes.add(node2);
 		
-		PropertyValueTupel pv = new PropertyValueTupel(new Property(false, true, "char", "id"), "u01");
+		PropertyValueTupel pv = new PropertyValueTupel(new Property(false, new TableReference("US", "uid"), "char", "id"), "u01");
 		
 		TransformerImpl transformer = new TransformerImpl();
 		
@@ -206,8 +207,8 @@ public class TransformerImplTest {
 		ContentController contents = new ContentController();
 		
 		schemes.addScheme(new Tablescheme("USER"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		contents.addContent(new TableContent(schemes.getActualScheme()));
 		contents.getActualContent().addContentLayer();
@@ -219,9 +220,9 @@ public class TransformerImplTest {
 		
 		
 		schemes.addScheme(new Tablescheme("BLOG"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, "USER", "int", "admin"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
 		
 		contents.addContent(new TableContent(schemes.getActualScheme()));
 		contents.getActualContent().addContentLayer();
@@ -274,8 +275,8 @@ public class TransformerImplTest {
 		ContentController contents = new ContentController();
 		
 		schemes.addScheme(new Tablescheme("USER"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		contents.addContent(new TableContent(schemes.getActualScheme()));
 		contents.getActualContent().addContentLayer();
@@ -287,9 +288,9 @@ public class TransformerImplTest {
 		
 		
 		schemes.addScheme(new Tablescheme("BLOG"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "varchr(128)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, "USER", "int", "admin"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
 		
 		contents.addContent(new TableContent(schemes.getActualScheme()));
 		contents.getActualContent().addContentLayer();
@@ -302,10 +303,10 @@ public class TransformerImplTest {
 		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
 
 		schemes.addScheme(new Tablescheme("COMMENT"));
-		schemes.getActualScheme().addProperty(new Property(true, false, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, "BLOG", "int", "cblog"));
-		schemes.getActualScheme().addProperty(new Property(false, "USER", "int", "cuser"));
-		schemes.getActualScheme().addProperty(new Property(false, false, "char", "msg"));
+		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BLOG", "id"), "int", "cblog"));
+		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "cuser"));
+		schemes.getActualScheme().addProperty(new Property(false, null, "char", "msg"));
 		
 		contents.addContent(new TableContent(schemes.getActualScheme()));
 		contents.getActualContent().addContentLayer();

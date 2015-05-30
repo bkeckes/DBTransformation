@@ -15,11 +15,11 @@ public class ContentLayerTest {
 		assertEquals(0, layer.getValueCount());
 		
 		
-		layer.addValue(new Property(false, true, "int", "id"), "cid");
+		layer.addValue(new Property(false, null, "int", "id"), "cid");
 	
 		assertEquals(1, layer.getValueCount());
 		
-		layer.addValue(new Property(false, true, "char", "name"), "date");
+		layer.addValue(new Property(false, null, "char", "name"), "date");
 		
 		assertEquals(2, layer.getValueCount());
 	}
@@ -45,8 +45,8 @@ public class ContentLayerTest {
 	public void testForeignKeyGetter(){
 		ContentLayer layer = new ContentLayer();
 		
-		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
-		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fuser"), "c01");
+		layer.addValue(new Property(false, new TableReference("BG",  "a"), "int", "fblod"), "b01");
 		
 		
 		PropertyValueTupel prop = layer.getForeignKeyAt(0);
@@ -58,8 +58,8 @@ public class ContentLayerTest {
 	public void testForeignKeyGetter2(){
 		ContentLayer layer = new ContentLayer();
 		
-		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
-		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fuser"), "c01");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fblod"), "b01");
 		
 		
 		PropertyValueTupel prop = layer.getForeignKeyAt(0);
@@ -73,10 +73,10 @@ public class ContentLayerTest {
 	public void testForeignKeyGetterMitAnderenWerten(){
 		ContentLayer layer = new ContentLayer();
 		
-		layer.addValue(new Property(true, false, "int", "id"), "1");
-		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
-		layer.addValue(new Property(false, false, "int", "date"), "18.12.");
-		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		layer.addValue(new Property(true, null, "int", "id"), "1");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fuser"), "c01");
+		layer.addValue(new Property(false, null, "int", "date"), "18.12.");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fblod"), "b01");
 		
 		
 		PropertyValueTupel prop = layer.getForeignKeyAt(0);
@@ -91,11 +91,11 @@ public class ContentLayerTest {
 		ContentLayer layer = new ContentLayer();
 		
 		assertEquals(0, layer.getForeignKeyCount());
-		layer.addValue(new Property(true, false, "int", "id"), "1");
-		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
+		layer.addValue(new Property(true, null, "int", "id"), "1");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fuser"), "c01");
 		assertEquals(1, layer.getForeignKeyCount());
-		layer.addValue(new Property(false, false, "int", "date"), "18.12.");
-		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		layer.addValue(new Property(false, null, "int", "date"), "18.12.");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fblod"), "b01");
 		
 		
 		assertEquals(2, layer.getForeignKeyCount());
@@ -105,9 +105,9 @@ public class ContentLayerTest {
 	@Test
 	public void testForeignKeys(){
 		ContentLayer layer = new ContentLayer();
-		layer.addValue(new Property(true, false, "int", "id"), "1");
-		layer.addValue(new Property(false, true, "int", "fuser"), "c01");
-		layer.addValue(new Property(false, true, "int", "fblod"), "b01");
+		layer.addValue(new Property(true, null, "int", "id"), "1");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fuser"), "c01");
+		layer.addValue(new Property(false, new TableReference("US",  "a"), "int", "fblod"), "b01");
 		
 		PropertyValueTupel first = layer.getForeignKeyAt(0);
 		assertEquals("fuser", first.getProperty().getName());

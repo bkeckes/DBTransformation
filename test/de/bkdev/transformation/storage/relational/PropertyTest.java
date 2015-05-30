@@ -8,26 +8,26 @@ public class PropertyTest {
 	
 	@Test
 	public void testePropertyGueltigkeit(){
-		Property p = new Property(true, false, "int", "");
+		Property p = new Property(true, null, "int", "");
 		assertFalse(p.isPropertyValid());
 		
-		p = new Property(true, false, "", "");
+		p = new Property(true, null, "", "");
 		assertFalse(p.isPropertyValid());
 		
-		p = new Property(true, false, "", "name");
+		p = new Property(true, null, "", "name");
 		assertFalse(p.isPropertyValid());
 		
-		p = new Property(true, true, "char", "name");
+		p = new Property(true, new TableReference("Us",  "as"), "char", "name");
 		assertFalse(p.isPropertyValid());
 		
-		p = new Property(false, false, "int", "alter");
+		p = new Property(false, null, "int", "alter");
 		assertTrue(p.isPropertyValid());
 		
-		p = new Property(false, true, "int", "alter");
+		p = new Property(false, new TableReference("Us",  "as"), "int", "alter");
 		assertTrue(p.isPropertyValid());
 		assertTrue(p.isForeignKey());
 		
-		p = new Property(true, false, "int", "alter");
+		p = new Property(true, null, "int", "alter");
 		assertTrue(p.isPropertyValid());
 		
 		assertTrue(p.isPrimaryKey());
@@ -35,7 +35,7 @@ public class PropertyTest {
 	
 	@Test
 	public void testePrimaryKey(){
-		Property p = new Property(true, false, "int", "");
+		Property p = new Property(true, null, "int", "");
 		assertTrue(p.isPrimaryKey());
 	}
 }

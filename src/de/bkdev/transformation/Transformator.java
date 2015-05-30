@@ -33,11 +33,17 @@ public class Transformator {
 		try ( Transaction tx = graphDb.beginTx() )
 		{
 			//erst alles loeschen
-			//graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;");
+			graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;");
 			
 			for(String cons : reader.getConstStatements()){
-				//graphDb.execute(cons);
 				System.out.println(cons);
+				/*
+				try{
+					graphDb.execute(cons);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				*/
 			}
 			
 			for(String node : reader.getNodeStatements()){

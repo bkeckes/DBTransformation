@@ -143,7 +143,7 @@ public class TransformerImpl implements TransformerController{
 		
 		for(Node n : nodes){
 			for(KeyValuePair kv : n.getPropertySet()){
-				if(!kv.getProperty().isPrimaryKey()){
+				if(kv.getProperty().isForeignKey()){
 					
 					Node found = findAttributeInNodesAsPrimaryKey2(kv, nodes, kv.getProperty().getRefTable());
 					// Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, n.getLabel());
@@ -165,6 +165,7 @@ public class TransformerImpl implements TransformerController{
 	}
 	
 	public Node findAttributeInNodesAsPrimaryKey2(KeyValuePair toFind, ArrayList<Node> nodes, String inScheme){
+		
 		
 		for(Node n : nodes){
 			if(n.getLabel().equals(inScheme)){

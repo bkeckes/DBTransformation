@@ -14,15 +14,15 @@ public class RelationshipTest {
 	@Test
 	public void testeRelationen(){
 		Node n = new Node("US");
-		n.addProperty(new Property(false, false, "char", "uid"), "u01");
-		n.addProperty(new Property(false, false, "char", "name"), "Date");
+		n.addProperty(new Property(false, null, "char", "uid"), "u01");
+		n.addProperty(new Property(false, null, "char", "name"), "Date");
 		
 		Node b = new Node("BG");
-		b.addProperty(new Property(false, false, "char", "bid"), "b02");
-		b.addProperty(new Property(false, false, "char", "title"), "IT-Systems");
+		b.addProperty(new Property(false, null, "char", "bid"), "b02");
+		b.addProperty(new Property(false, null, "char", "title"), "IT-Systems");
 		
 		Relationship r = new Relationship("isAdminFrom", new NodeTupel(n, b));
-		r.addProperty(new Property(false, false, "char", "since"), "begin");
+		r.addProperty(new Property(false, null, "char", "since"), "begin");
 //		System.out.println(r.toString());
 		
 		assertEquals("Date", r.getStart().getPropertyValue("name"));
