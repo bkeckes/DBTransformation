@@ -78,8 +78,10 @@ public class DatabaseReader {
     	    	for (final Column column: table.getColumns()){
     	    		
     	    		
-    	    		//if(column.isPartOfForeignKey()){
+    	    		
     	    		TableReference refCol = null;
+    	    		
+    	    		//Ist es ein Foreignkey?
     	    		if(column.getReferencedColumn()!=null){
     	    			refCol = new TableReference(column.getReferencedColumn().getParent().getName().toString(), column.getReferencedColumn().getName().toString());
     	    			log4j.info("'" + table.getName() + "." + column.getName() + "' has a reference to table '" + refCol + "'");

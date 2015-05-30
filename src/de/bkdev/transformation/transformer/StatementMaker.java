@@ -30,7 +30,7 @@ public class StatementMaker {
 		ArrayList<String> temp = new ArrayList<>();
 		for(Node n : nodes){
 			try{
-				temp.add(makeNodeStatement(n)+";");
+				temp.add(makeNodeStatement(n));
 			}catch(NullPointerException e){
 				e.printStackTrace();
 			}
@@ -53,7 +53,7 @@ public class StatementMaker {
 		for(Tablescheme s : schemas){
 			cName = "const" + s.getName();
 			try{
-				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE;");
+				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE");
 			}catch(NullPointerException e){
 				e.printStackTrace();
 			}
@@ -75,7 +75,7 @@ public class StatementMaker {
 	public static ArrayList<String> makeCypherStatementFromSingleRelationships(ArrayList<Relationship> rels){
 		ArrayList<String> temp = new ArrayList<>();
 		for(Relationship r : rels){
-			temp.add(makeSingleRelationshipStatement(r) + ";");
+			temp.add(makeSingleRelationshipStatement(r));
 		}
 		return temp;
 	}
