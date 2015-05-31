@@ -135,14 +135,16 @@ public class DatabaseReader {
 		
 		
 		nodeStatements = StatementMaker.makeCypherStatementFromNodes(nodes);
-		log4j.info("Nodes: " + nodeStatements.size());		
+		log4j.info(nodeStatements.size() + " Nodes identified");		
 		//System.out.println(StatementMaker.makeCypherStatementFromNodes(nodes));
 		
 		
 		relStatements = StatementMaker.makeCypherStatementFromSingleRelationships(nToMRelationships);
 		relStatements.addAll(StatementMaker.makeCypherStatementFromSingleRelationships(oneToManyRelationships));
 		
-		log4j.info("Relationships: " + relStatements.size());
+		log4j.info(nToMRelationships.size() + " 1:1 or 1:n Relationships identified");
+	
+		log4j.info(oneToManyRelationships.size() + " n:m Relationships identified");
 	}
 	
 

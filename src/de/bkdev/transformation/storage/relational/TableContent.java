@@ -35,7 +35,9 @@ public class TableContent {
 		if(currentLayer==null || isCurrentLayerValid())
 			addContentLayer();
 		
-		currentLayer.addValue(table.getPropertyByIndex(index), value);
+		//Wenn NULL in RDB dann wird das Attribut nicht in GDB aufgenommen
+		if(value!=null)
+			currentLayer.addValue(table.getPropertyByIndex(index), value);
 		
 	}
 	public void addAttributeToCurrentLayer(String key, String value) {

@@ -2,7 +2,11 @@ package de.bkdev.transformation.storage.graph;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+
+import de.bkdev.transformation.parser.DatabaseReader;
 import de.bkdev.transformation.storage.relational.Property;
 
 
@@ -12,6 +16,9 @@ import de.bkdev.transformation.storage.relational.Property;
  *
  */
 public abstract class GraphObject {
+	private static final Logger log4j = LogManager.getLogger(GraphObject.class
+	        .getName());
+	
 	private ArrayList<KeyValuePair> attr;
 	
 	public GraphObject(){
@@ -22,8 +29,6 @@ public abstract class GraphObject {
 		return attr;
 	}
 	
-	//TODO Element soll nicht eingefügt werden wenn key und value schon exisitiert.
-	//		Wenn sich value ändert soll Element überschrieben werden.
 	public void addProperty(Property key, String value){
 		attr.add(new KeyValuePair(key, value));
 	}
@@ -51,7 +56,11 @@ public abstract class GraphObject {
 	public String getAllPropertysInString(){
 		String temp = "";
 		for(int i=0; i<attr.size(); i++){
-			temp += attr.get(i).getKey() + ":'" + attr.get(i).getValue().replace("'", "") + "', ";
+			try{
+				temp += attr.get(i).getKey() + ":'" + attr.get(i).getValue().replace("'", "") + "', ";
+			}catch(NullPointerException e){
+				log4j.error("Could not find key in "+ temp);
+			}
 		}
 		return temp.substring(0, temp.length()-2);
 	}

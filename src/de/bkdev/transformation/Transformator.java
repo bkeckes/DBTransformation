@@ -1,5 +1,7 @@
 package de.bkdev.transformation;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -8,6 +10,8 @@ import de.bkdev.transformation.parser.DatabaseReader;
 
 public class Transformator {
 
+	private static final Logger log4j = LogManager.getLogger(Transformator.class
+	        .getName());
 	/**
 	 * @param args
 	 */
@@ -29,14 +33,16 @@ public class Transformator {
 			//"Could not connect to GraphDB"
 			e.printStackTrace();
 		}
-
+		log4j.info("Transaction to Neo4j DB...");
+		int nodeCounter = 0;
+		int relCounter = 0;
 		try ( Transaction tx = graphDb.beginTx() )
 		{
 			//erst alles loeschen
 			graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;");
 			
 			for(String cons : reader.getConstStatements()){
-				System.out.println(cons);
+				//System.out.println(cons);
 				/*
 				try{
 					graphDb.execute(cons);
@@ -47,18 +53,20 @@ public class Transformator {
 			}
 			
 			for(String node : reader.getNodeStatements()){
-				System.out.println(node);
+				//System.out.println(node);
 				graphDb.execute(node);
-				
+				nodeCounter++;
 			}
 				
 			for(String rel : reader.getRelStatements()){
 				graphDb.execute(rel);
-				System.out.println(rel);
+				//System.out.println(rel);
+				relCounter++;
 			}
 		    tx.success();
 		}
-
+		log4j.info("Transaction done");
+		log4j.info(nodeCounter + " Nodes and " +relCounter + " Relationships created");
 	}
 
 	

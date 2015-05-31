@@ -135,7 +135,7 @@ public class TransformerImpl implements TransformerController{
 
 	/**
 	 * macht Relationen wenn FK in einer anderen Node erwähnt wird.
-	 * 
+	 * Also 1:1 und 1:n
 	 */
 	@Override
 	public ArrayList<Relationship> makeRelationshipsWithProperties(ArrayList<Node> nodes) {
@@ -149,11 +149,11 @@ public class TransformerImpl implements TransformerController{
 					// Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, n.getLabel());
 					 
 					if(found!=null){
-						//relationships.add(new Relationship(kv.getKey(), new NodeTupel(n, found)));
-						//log4j.info("Make 1:1 or 1:N Relationship from '" + n.getLabel() +"' to '" + found.getLabel() + "'");
+						relationships.add(new Relationship(kv.getKey(), new NodeTupel(n, found)));
+						log4j.info("Make 1:1 or 1:N Relationship from '" + n.getLabel() +"' to '" + found.getLabel() + "'");
 						
-						relationships.add(new Relationship(kv.getKey(), new NodeTupel(found, n)));
-						log4j.info("Make 1:1 or 1:N Relationship from '" + found.getLabel() +"' to '" + n.getLabel() + "'");
+						//relationships.add(new Relationship(kv.getKey(), new NodeTupel(found, n)));
+						//log4j.info("Make 1:1 or 1:N Relationship from '" + found.getLabel() +"' to '" + n.getLabel() + "'");
 					}else if(!kv.getProperty().getRefTable().isEmpty()){
 						log4j.error("Could not make relationship from '" + kv.getValue() + "' to '" + kv.getProperty().getRefTable() + "'");
 					}
