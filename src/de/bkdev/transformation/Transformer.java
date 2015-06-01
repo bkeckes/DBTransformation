@@ -49,7 +49,9 @@ public class Transformer {
 		
 		try ( Transaction tx = graphDb.beginTx() )
 		{
-			//graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r");
+			graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r");
+			tx.success();
+			log4j.info("cleaned graphDB from existing nodes and relationships");
 		}catch(Exception e){
 			log4j.error("Could not perform statement for deleting all existing nodes");
 			e.printStackTrace();
