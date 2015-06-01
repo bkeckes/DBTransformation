@@ -9,43 +9,62 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
 public class Transformer {
 
+	private static String configFile;
 	private static final Logger log4j = LogManager.getLogger(Transformer.class
 	        .getName());
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		if(args.length<3){
-	  		System.out.println("ERROR: You have to use the Parameter: dburl, dbname, user, password");
-	  		return;
+		configFile = "config.properties";
+		
+		if(args.length>0){
+			configFile = args[0];
 	  	}
-		String dburl = args[0];
-		String dbName =  args[1];
-		String user = args[2];
-		String pwd = args[3];
+		ConfigFileReader.readFile(configFile);
+		log4j.info("Read configfile '" + configFile + "'");
+		
+		
+		// jdbc:mysql://localhost;
+		String dburl = "jdbc:" + ConfigFileReader.getRelationalDatabaseType() + "://" + ConfigFileReader.getRelationalDatabasePath();
+		String dbName =  ConfigFileReader.getRelationalDatabaseName();
+		String user = ConfigFileReader.getRelationalDatabaseUser();
+		String pwd = ConfigFileReader.getRelationalDatabasePassword();
 			
+		log4j.info("Using Relational Database: " + dburl + dbName + ", Graph Database: " + ConfigFileReader.getGraphDatabasePath());
+		
 		DatabaseReader reader = new DatabaseReader(dburl,dbName,user,pwd);
 		GraphDatabaseService graphDb = null;
 		try{
-			graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( "C:\\Users\\Benni\\Documents\\Neo4j\\default.graphdb" );
+			graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(ConfigFileReader.getGraphDatabasePath());
 		}catch(RuntimeException e){
-			//"Could not connect to GraphDB"
+			log4j.error("Could not connect to GraphDB " + ConfigFileReader.getGraphDatabasePath());
 			e.printStackTrace();
+			return;
 		}
 		log4j.info("Transaction to Neo4j DB...");
 		int nodeCounter = 0;
 		int relCounter = 0;
 		int constCounter = 0;
+		
+		try ( Transaction tx = graphDb.beginTx() )
+		{
+			//graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r");
+		}catch(Exception e){
+			log4j.error("Could not perform statement for deleting all existing nodes");
+			e.printStackTrace();
+		}
+		
 		try ( Transaction tx = graphDb.beginTx() )
 		{
 			//erst alles loeschen
-			graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;");
+			//graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;");
 			
 			for(String cons : reader.getConstStatements()){
 				//System.out.println(cons);
 				
 				try{
-					graphDb.execute(cons);
+					//graphDb.execute(cons);
 					constCounter++;
 				}catch(Exception e){
 					e.printStackTrace();
