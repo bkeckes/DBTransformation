@@ -1,3 +1,5 @@
-Tranforms relational database to Neo4J database
+# Tranforms relational database to Neo4J database
 
-From sql dump to cypher dump
+Supported relational databases:
+* mysql
+
