@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.Tableschema;
 
 public class StatementMaker {
 
@@ -46,11 +46,11 @@ public class StatementMaker {
 		return temp;
 	}
 	
-	public static ArrayList<String> makeConstraints(ArrayList<Tablescheme> schemas){
+	public static ArrayList<String> makeConstraints(ArrayList<Tableschema> schemas){
 		ArrayList<String> list = new ArrayList<>();
 		String temp="";
 		String cName = "";
-		for(Tablescheme s : schemas){
+		for(Tableschema s : schemas){
 			cName = "const" + s.getName();
 			try{
 				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE");

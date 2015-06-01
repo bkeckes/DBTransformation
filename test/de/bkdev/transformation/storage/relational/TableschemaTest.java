@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TableschemeTest {
+public class TableschemaTest {
 
 	
 	
 	@Test
 	public void testeTabellenName(){
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -19,7 +19,7 @@ public class TableschemeTest {
 	
 	@Test
 	public void testePrimaryKey(){
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -29,7 +29,7 @@ public class TableschemeTest {
 	
 	@Test
 	public void testeForeignKey(){
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -43,21 +43,21 @@ public class TableschemeTest {
 	
 	@Test
 	public void testeInvalideTabelle(){
-		Tablescheme table = new Tablescheme(null);
+		Tableschema table = new Tableschema(null);
 		table.addProperty(new Property(true, new TableReference("", ""), "int", "name"));
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		assertFalse(table.isTableValid());
 	}
 	@Test
 	public void testeInvalideTabelle2(){
-		Tablescheme table = new Tablescheme("");
+		Tableschema table = new Tableschema("");
 		table.addProperty(new Property(true, new TableReference("", ""), "int", "name"));
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		assertFalse(table.isTableValid());
 	}
 	@Test
 	public void testeInvalideTabelle3(){
-		Tablescheme table = new Tablescheme("BG");
+		Tableschema table = new Tableschema("BG");
 		assertFalse(table.isTableValid());
 		
 		table.addProperty(null);
@@ -73,7 +73,7 @@ public class TableschemeTest {
 	
 	@Test
 	public void testeAufPrimaryKey(){
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -82,7 +82,7 @@ public class TableschemeTest {
 	
 	@Test
 	public void testeAufFalschenPrimaryKey(){
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(false, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		

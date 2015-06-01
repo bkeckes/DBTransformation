@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.TableReference;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.Tableschema;
 
 public class RulesTest {
 
 	@Test
 	public void testUser() {
 		//Node
-		Tablescheme us = new Tablescheme("US");
+		Tableschema us = new Tableschema("US");
 		us.addProperty(new Property(true, null, "varchar(20)", "uid"));
 		us.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -24,7 +24,7 @@ public class RulesTest {
 	@Test
 	public void testBlog() {
 		//Node
-		Tablescheme bg= new Tablescheme("BG");
+		Tableschema bg= new Tableschema("BG");
 		bg.addProperty(new Property(true, null, "varchar(20)", "bid"));
 		bg.addProperty(new Property(false, null, "varchar(20)", "name"));
 		bg.addProperty(new Property(false, new TableReference("US","uid"), "varchar(20)", "admin"));
@@ -36,7 +36,7 @@ public class RulesTest {
 	@Test
 	public void testKommentar() {
 		//Node
-		Tablescheme ct = new Tablescheme("CT");
+		Tableschema ct = new Tableschema("CT");
 		ct.addProperty(new Property(true, null, "varchar(20)", "cid"));
 		ct.addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "cblog"));
 		ct.addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "cuser"));
@@ -50,7 +50,7 @@ public class RulesTest {
 	@Test
 	public void testNM() {
 		//Node
-		Tablescheme fr = new Tablescheme("FR");
+		Tableschema fr = new Tableschema("FR");
 		fr.addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "user"));
 		fr.addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "blog"));
 		
@@ -61,7 +61,7 @@ public class RulesTest {
 	@Test
 	public void testnmMitID() {
 		//Node
-		Tablescheme fr = new Tablescheme("FR");
+		Tableschema fr = new Tableschema("FR");
 		fr.addProperty(new Property(true, null, "int", "id"));
 		fr.addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "user"));
 		fr.addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "blog"));

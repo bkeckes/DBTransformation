@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 
-public class Tablescheme {
+public class Tableschema {
 	private String name;
 	private List<Property> property;
 	
-	public Tablescheme(String n){
+	public Tableschema(String n){
 		this.name = n;
 		this.property = new ArrayList<Property>();
 	}

@@ -15,10 +15,10 @@ import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentController;
 import de.bkdev.transformation.storage.relational.Property;
-import de.bkdev.transformation.storage.relational.SchemeController;
+import de.bkdev.transformation.storage.relational.SchemaController;
 import de.bkdev.transformation.storage.relational.TableContent;
 import de.bkdev.transformation.storage.relational.TableReference;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.Tableschema;
 import de.bkdev.transformation.transformer.StatementMaker;
 import de.bkdev.transformation.transformer.TransformerController;
 import de.bkdev.transformation.transformer.TransformerImpl;
@@ -42,7 +42,7 @@ public class DatabaseReader {
 		        .getName());
 	
 	
-	private SchemeController schemes = new SchemeController();
+	private SchemaController schemes = new SchemaController();
 	private ContentController contents = new ContentController();
 	
 	private ArrayList<String> constStatements;
@@ -70,7 +70,7 @@ public class DatabaseReader {
     	    //Alle Tabellen hintereinander
     	    for (final Table table: catalog.getTables(delSchema)){
     	    	
-    	    	schemes.addScheme(new Tablescheme(removeMarks(table.getName())));
+    	    	schemes.addScheme(new Tableschema(removeMarks(table.getName())));
     	    	log4j.info("Reading Schema from table '" + removeMarks(table.getName()) + "'");
     	    	
     	    	

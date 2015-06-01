@@ -20,7 +20,7 @@ public class ContentController {
 		return contents.get(contents.size()-1);
 	}
 	
-	public boolean isNode(Tablescheme schema){
+	public boolean isNode(Tableschema schema){
 		return Rules.isNode(schema);
 	}
 	

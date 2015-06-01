@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import de.bkdev.transformation.storage.relational.Property;
-import de.bkdev.transformation.storage.relational.TableContent;import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.TableContent;import de.bkdev.transformation.storage.relational.Tableschema;
 
 public class TableContentTest {
 
@@ -16,7 +16,7 @@ public class TableContentTest {
 	
 	@Test
 	public void testeVerhalten() {
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -38,7 +38,7 @@ public class TableContentTest {
 	
 	@Test
 	public void testeVerhalten2() {
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -55,7 +55,7 @@ public class TableContentTest {
 	
 	@Test
 	public void testeFehlverhalten() {
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -75,7 +75,7 @@ public class TableContentTest {
 	
 	@Test
 	public void testeVerhalten3() {
-		Tablescheme table = new Tablescheme("US");
+		Tableschema table = new Tableschema("US");
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		

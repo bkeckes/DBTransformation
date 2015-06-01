@@ -10,16 +10,16 @@ import de.bkdev.transformation.storage.relational.ContentController;
 import de.bkdev.transformation.storage.relational.Property;
 import de.bkdev.transformation.storage.relational.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.TableReference;
-import de.bkdev.transformation.storage.relational.SchemeController;
+import de.bkdev.transformation.storage.relational.SchemaController;
 import de.bkdev.transformation.storage.relational.TableContent;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.Tableschema;
 
 
 public class TransformerImplTest {
 
 	@Test
 	public void testeNodeMaker() {
-		Tablescheme tablescheme = new Tablescheme("BJ");
+		Tableschema tablescheme = new Tableschema("BJ");
 		tablescheme.addProperty(new Property(true, null, "varchar(20)", "id"));
 		tablescheme.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -51,27 +51,27 @@ public class TransformerImplTest {
 	
 	@Test
 	public void testeZusammenSpielKanteUndKnoten(){
-		SchemeController schemes = new SchemeController();
+		SchemaController schemes = new SchemaController();
 		ContentController contents = new ContentController();
 		
-		schemes.addScheme(new Tablescheme("US"));
+		schemes.addScheme(new Tableschema("US"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "uid"));
 		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
-		schemes.addScheme(new Tablescheme("BG"));
+		schemes.addScheme(new Tableschema("BG"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "bid"));
 		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "name"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "admin"));
 		
-		schemes.addScheme(new Tablescheme("FR"));
+		schemes.addScheme(new Tableschema("FR"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "fuser"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "fblog"));
 		
-		schemes.addScheme(new Tablescheme("TG"));
+		schemes.addScheme(new Tableschema("TG"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "tuser"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("CT", "cid"), "varchar(20)", "tcomment"));
 		
-		schemes.addScheme(new Tablescheme("CT"));
+		schemes.addScheme(new Tableschema("CT"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "cid"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "cblog"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "cuser"));
@@ -203,10 +203,10 @@ public class TransformerImplTest {
 	
 	@Test
 	public void testeEinsZuVieleRelationsships(){
-		SchemeController schemes = new SchemeController();
+		SchemaController schemes = new SchemaController();
 		ContentController contents = new ContentController();
 		
-		schemes.addScheme(new Tablescheme("USER"));
+		schemes.addScheme(new Tableschema("USER"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
 		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -219,7 +219,7 @@ public class TransformerImplTest {
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Rey");
 		
 		
-		schemes.addScheme(new Tablescheme("BLOG"));
+		schemes.addScheme(new Tableschema("BLOG"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
 		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
@@ -271,10 +271,10 @@ public class TransformerImplTest {
 	
 	@Test
 	public void testeEinsZuVieleRelationsships2(){
-		SchemeController schemes = new SchemeController();
+		SchemaController schemes = new SchemaController();
 		ContentController contents = new ContentController();
 		
-		schemes.addScheme(new Tablescheme("USER"));
+		schemes.addScheme(new Tableschema("USER"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
 		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
@@ -287,7 +287,7 @@ public class TransformerImplTest {
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Rey");
 		
 		
-		schemes.addScheme(new Tablescheme("BLOG"));
+		schemes.addScheme(new Tableschema("BLOG"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
 		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
@@ -302,7 +302,7 @@ public class TransformerImplTest {
 		contents.getActualContent().addAttributeToCurrentLayer("name", "French");
 		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
 
-		schemes.addScheme(new Tablescheme("COMMENT"));
+		schemes.addScheme(new Tableschema("COMMENT"));
 		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BLOG", "id"), "int", "cblog"));
 		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "cuser"));

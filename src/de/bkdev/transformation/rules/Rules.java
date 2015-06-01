@@ -1,11 +1,11 @@
 package de.bkdev.transformation.rules;
 
 
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.Tableschema;
 
 public class Rules {
 	
-	public static boolean isNode(Tablescheme table){
+	public static boolean isNode(Tableschema table){
 		if(!table.isTableValid())
 			return false;
 		
@@ -36,7 +36,7 @@ public class Rules {
 	/*
 	 * TODO
 	 */
-	public static boolean isRelationship(Tablescheme table){
+	public static boolean isRelationship(Tableschema table){
 		return !isNode(table);
 	}
 }

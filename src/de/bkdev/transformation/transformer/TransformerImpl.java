@@ -14,7 +14,7 @@ import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentLayer;
 import de.bkdev.transformation.storage.relational.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.TableContent;
-import de.bkdev.transformation.storage.relational.Tablescheme;
+import de.bkdev.transformation.storage.relational.Tableschema;
 
 
 public class TransformerImpl implements TransformerController{

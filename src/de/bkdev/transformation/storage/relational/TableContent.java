@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class TableContent {
-	private Tablescheme table;
+	private Tableschema table;
 	private ArrayList<ContentLayer> layer;
 	
 	public ArrayList<ContentLayer> getLayer() {
@@ -17,7 +17,7 @@ public class TableContent {
 
 	private ContentLayer currentLayer;
 	
-	public TableContent(Tablescheme table){
+	public TableContent(Tableschema table){
 		this.table = table;
 		this.layer = new ArrayList<ContentLayer>();
 	}
@@ -76,7 +76,7 @@ public class TableContent {
 	}
 	//public ContentLayer getLayer()
 
-	public Tablescheme getTableScheme() {
+	public Tableschema getTableScheme() {
 		return table;
 	}
 
