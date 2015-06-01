@@ -50,6 +50,9 @@ public class Property {
 			return false;
 		if(name==null || name.isEmpty())
 			return false;
+		if(reference!=null && !reference.isValid())
+			return false;
+		
 		
 		return true;
 	}

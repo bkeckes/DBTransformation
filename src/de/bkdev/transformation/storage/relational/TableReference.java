@@ -21,4 +21,13 @@ public class TableReference {
 	public String toString(){
 		return table + "." + attribute;
 	}
+	
+	public boolean isValid(){
+		if(table==null)
+			return false;
+		else if(attribute==null)
+			return false;
+		else
+			return true;
+	}
 }

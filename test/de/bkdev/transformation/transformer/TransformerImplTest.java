@@ -256,17 +256,17 @@ public class TransformerImplTest {
 		
 		assertEquals("Keine N to M Rels", 0, ntom.size());
 		
-		assertEquals("Ben", oneToMany.get(0).getStart().getProperyValue("name"));
-		assertEquals("Science", oneToMany.get(0).getEnd().getProperyValue("name"));
+		assertEquals("Ben", oneToMany.get(0).getEnd().getProperyValue("name"));
+		assertEquals("Science", oneToMany.get(0).getStart().getProperyValue("name"));
 		
-		assertEquals("Ben", oneToMany.get(1).getStart().getProperyValue("name"));
-		assertEquals("French", oneToMany.get(1).getEnd().getProperyValue("name"));
+		assertEquals("Ben", oneToMany.get(1).getEnd().getProperyValue("name"));
+		assertEquals("French", oneToMany.get(1).getStart().getProperyValue("name"));
 		
-		assertEquals("Rey", oneToMany.get(2).getStart().getProperyValue("name"));
-		assertEquals("Math", oneToMany.get(2).getEnd().getProperyValue("name"));
+		assertEquals("Rey", oneToMany.get(2).getEnd().getProperyValue("name"));
+		assertEquals("Math", oneToMany.get(2).getStart().getProperyValue("name"));
 		
-		assertEquals("Ben", oneToMany.get(3).getStart().getProperyValue("name"));
-		assertEquals("Bio", oneToMany.get(3).getEnd().getProperyValue("name"));
+		assertEquals("Ben", oneToMany.get(3).getEnd().getProperyValue("name"));
+		assertEquals("Bio", oneToMany.get(3).getStart().getProperyValue("name"));
 	}
 	
 	@Test

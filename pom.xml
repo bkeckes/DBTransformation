@@ -22,7 +22,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>de.bkdev.transformation.Transformator</mainClass>
+              <mainClass>de.bkdev.transformation.Transformer</mainClass>
             </manifest>
           </archive>
         </configuration>

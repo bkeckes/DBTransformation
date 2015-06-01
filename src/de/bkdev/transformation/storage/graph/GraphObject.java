@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-import de.bkdev.transformation.parser.DatabaseReader;
+import de.bkdev.transformation.DatabaseReader;
 import de.bkdev.transformation.storage.relational.Property;
 
 

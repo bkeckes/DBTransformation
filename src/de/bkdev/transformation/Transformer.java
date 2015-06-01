@@ -6,11 +6,10 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
-import de.bkdev.transformation.parser.DatabaseReader;
 
-public class Transformator {
+public class Transformer {
 
-	private static final Logger log4j = LogManager.getLogger(Transformator.class
+	private static final Logger log4j = LogManager.getLogger(Transformer.class
 	        .getName());
 	/**
 	 * @param args
@@ -36,6 +35,7 @@ public class Transformator {
 		log4j.info("Transaction to Neo4j DB...");
 		int nodeCounter = 0;
 		int relCounter = 0;
+		int constCounter = 0;
 		try ( Transaction tx = graphDb.beginTx() )
 		{
 			//erst alles loeschen
@@ -43,13 +43,14 @@ public class Transformator {
 			
 			for(String cons : reader.getConstStatements()){
 				//System.out.println(cons);
-				/*
+				
 				try{
 					graphDb.execute(cons);
+					constCounter++;
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				*/
+				
 			}
 			
 			for(String node : reader.getNodeStatements()){
@@ -66,7 +67,7 @@ public class Transformator {
 		    tx.success();
 		}
 		log4j.info("Transaction done");
-		log4j.info(nodeCounter + " Nodes and " +relCounter + " Relationships created");
+		log4j.info(constCounter + " Constraints, " + nodeCounter + " Nodes and " +relCounter + " Relationships created");
 	}
 
 	

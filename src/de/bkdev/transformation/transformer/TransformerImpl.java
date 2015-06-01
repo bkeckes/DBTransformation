@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.rules.RunRules;
 
-import de.bkdev.transformation.parser.DatabaseReader;
+import de.bkdev.transformation.DatabaseReader;
 import de.bkdev.transformation.storage.graph.KeyValuePair;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.NodeTupel;

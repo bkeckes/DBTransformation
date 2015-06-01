@@ -1,4 +1,4 @@
-package de.bkdev.transformation.parser;
+package de.bkdev.transformation;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.parboiled.common.Reference;
 
-import de.bkdev.transformation.Main;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentController;
@@ -198,16 +197,4 @@ public class DatabaseReader {
 		  return name.replace("`", "").replace(" ", "_");
 	  }
 	  
-	  public static void main(String[] args) {
-		  	if(args.length<3){
-		  		System.out.println("ERROR: You have to use the Parameter: dburl, dbname, user, password");
-		  		return;
-		  	}
-			String dburl = args[0];
-			String dbName =  args[1];
-			String user = args[2];
-			String pwd = args[3];
-				
-			new DatabaseReader(dburl,dbName,user,pwd);
-		}
 }

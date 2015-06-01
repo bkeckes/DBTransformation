@@ -17,7 +17,7 @@ public class PropertyTest {
 		p = new Property(true, null, "", "name");
 		assertFalse(p.isPropertyValid());
 		
-		p = new Property(true, new TableReference("Us",  "as"), "char", "name");
+		p = new Property(true, new TableReference(null,  "as"), "char", "name");
 		assertFalse(p.isPropertyValid());
 		
 		p = new Property(false, null, "int", "alter");
