@@ -33,16 +33,25 @@ public class ConfigFileReader {
 	public static String getGraphDatabasePath() {
 		return graphDatabasePath;
 	}
-	public static void main(String args[]){
-		readFile("config.properties");
+	
+	public static boolean isFileValid(){
+		if(relationalDatabaseName!=null &&
+				relationalDatabaseType != null &&
+				relationalDatabasePath != null &&
+				relationalDatabaseUser != null &&
+				relationalDatabasePassword != null &&
+				graphDatabasePath != null)
+			return true;
+		return false;
 	}
+	
 	public static void readFile(String fileName){
 		Properties prop = new Properties();
 		InputStream input = null;
 	 
 		try {
 	 
-			input = new FileInputStream("config.properties");
+			input = new FileInputStream(fileName);
 	 
 			// load a properties file
 			prop.load(input);

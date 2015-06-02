@@ -21,9 +21,11 @@ public class Transformer {
 		if(args.length>0){
 			configFile = args[0];
 	  	}
-		ConfigFileReader.readFile(configFile);
-		log4j.info("Read configfile '" + configFile + "'");
 		
+		log4j.info("Reading configfile '" + configFile + "'");
+		ConfigFileReader.readFile(configFile);
+		if(!ConfigFileReader.isFileValid())
+			return;
 		
 		// jdbc:mysql://localhost;
 		String dburl = "jdbc:" + ConfigFileReader.getRelationalDatabaseType() + "://" + ConfigFileReader.getRelationalDatabasePath();

@@ -109,9 +109,11 @@ public class DatabaseReader {
     	    System.out.println("SQLException: " + ex.getMessage());
     	    System.out.println("SQLState: " + ex.getSQLState());
     	    System.out.println("VendorError: " + ex.getErrorCode());
+    	    return;
     	} catch (SchemaCrawlerException e) {
 			log4j.error("An ERROR occured while reading the schema");
 			e.printStackTrace();
+			return;
 		}
 		
 		
