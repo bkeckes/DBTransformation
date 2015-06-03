@@ -17,21 +17,21 @@ import de.bkdev.transformation.storage.relational.TableContent;
 import de.bkdev.transformation.storage.relational.Tableschema;
 
 
-public class TransformerImpl implements TransformerController{
+public class Generator{
 
-	private static final Logger log4j = LogManager.getLogger(TransformerImpl.class
+	private static final Logger log4j = LogManager.getLogger(Generator.class
 	        .getName());
 	/**
 	 * macht normale Nodes
 	 */
-	@Override
+	
 	public ArrayList<Node> makeNodes(ArrayList<TableContent> tableList) {
 		
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for(TableContent e : tableList){
-			log4j.info("Make Nodes for '" + e.getTableScheme().getName() + "'");
+			log4j.info("Make Node for '" + e.getTableSchema().getTableName() + "'");
 			for(ContentLayer c : e.getLayer()){
-				nodes.add(makeNode(e.getTableScheme().getName(), c));
+				nodes.add(makeNode(e.getTableSchema().getTableName(), c));
 			}
 		}
 		
@@ -51,12 +51,12 @@ public class TransformerImpl implements TransformerController{
 	/**
 	 * Macht n:m Relationen
 	 */
-	@Override
-	public ArrayList<Relationship> makeRelationship(ArrayList<TableContent> rels, ArrayList<Node> nodes) {
+
+	public ArrayList<Relationship> makeManyToManyRelationships(ArrayList<TableContent> rels, ArrayList<Node> nodes) {
 		ArrayList<Relationship> relationships = new ArrayList<Relationship>();
 		
 		for(TableContent rel : rels){
-			log4j.info("Make n:m Relationships for '" + rel.getTableScheme().getName() +"'");
+			log4j.info("Make n:m Relationships for '" + rel.getTableSchema().getTableName() +"'");
 			for(ContentLayer layer : rel.getLayer()){
 				PropertyValueTupel firstfk = layer.getForeignKeyAt(0);
 				PropertyValueTupel secondfk = layer.getForeignKeyAt(1);
@@ -80,7 +80,7 @@ public class TransformerImpl implements TransformerController{
 					e.printStackTrace();
 				}
 				//Kante wird erstellt.
-				Relationship newRelationship = new Relationship(rel.getTableScheme().getName(), new NodeTupel(firstN, secondN));
+				Relationship newRelationship = new Relationship(rel.getTableSchema().getTableName(), new NodeTupel(firstN, secondN));
 				
 				//Attribute (falls vorhanden) werden hinzugefügt (Aber nicht die FKs).
 				for(PropertyValueTupel tupel : layer.getAttributesWithoutFks()){
@@ -137,8 +137,8 @@ public class TransformerImpl implements TransformerController{
 	 * macht Relationen wenn FK in einer anderen Node erwähnt wird.
 	 * Also 1:1 und 1:n
 	 */
-	@Override
-	public ArrayList<Relationship> makeRelationshipsWithProperties(ArrayList<Node> nodes) {
+
+	public ArrayList<Relationship> makeOneToManyRelationships(ArrayList<Node> nodes) {
 		ArrayList<Relationship> relationships = new ArrayList<Relationship>();
 		
 		for(Node n : nodes){

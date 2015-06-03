@@ -76,7 +76,7 @@ public class TableContent {
 	}
 	//public ContentLayer getLayer()
 
-	public Tableschema getTableScheme() {
+	public Tableschema getTableSchema() {
 		return table;
 	}
 

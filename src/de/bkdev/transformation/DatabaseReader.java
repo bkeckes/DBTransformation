@@ -20,8 +20,7 @@ import de.bkdev.transformation.storage.relational.TableContent;
 import de.bkdev.transformation.storage.relational.TableReference;
 import de.bkdev.transformation.storage.relational.Tableschema;
 import de.bkdev.transformation.transformer.StatementMaker;
-import de.bkdev.transformation.transformer.TransformerController;
-import de.bkdev.transformation.transformer.TransformerImpl;
+import de.bkdev.transformation.transformer.Generator;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Catalog;
@@ -42,8 +41,8 @@ public class DatabaseReader {
 		        .getName());
 	
 	
-	private SchemaController schemes = new SchemaController();
-	private ContentController contents = new ContentController();
+	private SchemaController schemaController = new SchemaController();
+	private ContentController contentController = new ContentController();
 	
 	private ArrayList<String> constStatements;
 	private ArrayList<String> nodeStatements;
@@ -62,21 +61,18 @@ public class DatabaseReader {
 
     	    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, new SchemaCrawlerOptions());
     	    
-    	    final Schema delSchema = catalog.getSchema(dbName);
+    	    final Schema tableSchema = catalog.getSchema(dbName);
     	    
     	    
-    	    log4j.info("Reading RDB '" + delSchema.getFullName() + "'");
+    	    log4j.info("Reading RDB '" + tableSchema.getFullName() + "'");
     	    
     	    //Alle Tabellen hintereinander
-    	    for (final Table table: catalog.getTables(delSchema)){
+    	    for (final Table table: catalog.getTables(tableSchema)){
     	    	
-    	    	schemes.addScheme(new Tableschema(removeMarks(table.getName())));
+    	    	schemaController.addSchema(new Tableschema(removeMarks(table.getName())));
     	    	log4j.info("Reading Schema from table '" + removeMarks(table.getName()) + "'");
     	    	
-    	    	
     	    	for (final Column column: table.getColumns()){
-    	    		
-    	    		
     	    		
     	    		TableReference refCol = null;
     	    		
@@ -87,7 +83,7 @@ public class DatabaseReader {
     	    		}
     	    		
     	    		//Schemateil zum aktuellen Schema hinzufuegen
-	    			schemes.getActualScheme().addProperty(new Property(
+	    			schemaController.getActualScheme().addProperty(new Property(
 	    					column.isPartOfPrimaryKey(), 
 	    					refCol,
 							column.getColumnDataType().getFullName(), 
@@ -96,10 +92,10 @@ public class DatabaseReader {
     	    	}
     	    	
     	    	//Daten werden geholt.
-    	    	contents.addContent(new TableContent(schemes.getScheme(schemes.getActualScheme().getName())));
+    	    	contentController.addContent(new TableContent(schemaController.getSchema(schemaController.getActualScheme().getTableName())));
     	    	
     	    	log4j.info("Reading Data from table '" + table.getName() + "'");
-    	    	contents = readContent(connection, table.getName(), contents, schemes.getActualScheme().getPropertyCount());
+    	    	contentController = readContent(connection, table.getName(), contentController, schemaController.getActualScheme().getPropertyCount());
 
     	    }
 
@@ -118,19 +114,19 @@ public class DatabaseReader {
 		
 		
 		
-		TransformerController transformer = new TransformerImpl();
+		Generator transformer = new Generator();
 		
 		//Nodes werden erstellt.
-		ArrayList<Node> nodes					= transformer.makeNodes(contents.getNodes());
+		ArrayList<Node> nodes					= transformer.makeNodes(contentController.getNodes());
 		
 		//Kanten werden erstellt.
-		ArrayList<Relationship> nToMRelationships 	= transformer.makeRelationship(contents.getRelationships(), nodes);
+		ArrayList<Relationship> nToMRelationships 	= transformer.makeManyToManyRelationships(contentController.getRelationships(), nodes);
 		
 		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
-		ArrayList<Relationship> oneToManyRelationships 	= transformer.makeRelationshipsWithProperties(nodes);
+		ArrayList<Relationship> oneToManyRelationships 	= transformer.makeOneToManyRelationships(nodes);
 		
 		
-		constStatements = StatementMaker.makeConstraints(schemes.getNodeSchemes());
+		constStatements = StatementMaker.makeConstraints(schemaController.getNodeSchemas());
 		log4j.info("Constraints: " + constStatements.size());
 		
 		

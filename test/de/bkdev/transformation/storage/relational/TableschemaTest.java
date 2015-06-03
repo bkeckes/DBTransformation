@@ -14,7 +14,7 @@ public class TableschemaTest {
 		table.addProperty(new Property(true, null, "varchar(20)", "id"));
 		table.addProperty(new Property(false, null, "varchr(128)", "name"));
 		
-		assertEquals("US", table.getName());
+		assertEquals("US", table.getTableName());
 	}
 	
 	@Test

@@ -5,36 +5,36 @@ import java.util.ArrayList;
 import de.bkdev.transformation.rules.Rules;
 
 public class SchemaController {
-	private ArrayList<Tableschema> schemes;
+	private ArrayList<Tableschema> schemas;
 	
 	public SchemaController(){
-		schemes = new ArrayList<Tableschema>();
+		schemas = new ArrayList<Tableschema>();
 	}
-	public void addScheme(Tableschema scheme){
-		schemes.add(scheme);
+	public void addSchema(Tableschema scheme){
+		schemas.add(scheme);
 	}
 	public Tableschema getActualScheme(){
-		return schemes.get(schemes.size()-1);
+		return schemas.get(schemas.size()-1);
 	}
 	/**
 	 * TODO Exception werfen wenn das Schema nicht gefunden wurde.
 	 */
-	public Tableschema getScheme(String schemeName){
+	public Tableschema getSchema(String schemeName){
 		
-		for(Tableschema e : schemes){
-			if(e.getName().equals(schemeName))
+		for(Tableschema e : schemas){
+			if(e.getTableName().equals(schemeName))
 				return e;
 		}
 		return null;
 	}
-	public ArrayList<Tableschema> getSchemes() {
-		return schemes;
+	public ArrayList<Tableschema> getSchemas() {
+		return schemas;
 	}
 	
-	public ArrayList<Tableschema> getNodeSchemes() {
+	public ArrayList<Tableschema> getNodeSchemas() {
 		ArrayList<Tableschema> list = new ArrayList<>();
 		
-		for(Tableschema s : schemes){
+		for(Tableschema s : schemas){
 			if(Rules.isNode(s))
 				list.add(s);
 		}

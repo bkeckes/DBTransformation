@@ -51,9 +51,9 @@ public class StatementMaker {
 		String temp="";
 		String cName = "";
 		for(Tableschema s : schemas){
-			cName = "const" + s.getName();
+			cName = "const" + s.getTableName();
 			try{
-				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE");
+				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getTableName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE");
 			}catch(NullPointerException e){
 				e.printStackTrace();
 			}

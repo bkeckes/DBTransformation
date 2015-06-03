@@ -19,45 +19,38 @@ public abstract class GraphObject {
 	private static final Logger log4j = LogManager.getLogger(GraphObject.class
 	        .getName());
 	
-	private ArrayList<KeyValuePair> attr;
+	private ArrayList<KeyValuePair> attributeList;
 	
 	public GraphObject(){
-		attr = new ArrayList<KeyValuePair>();
+		attributeList = new ArrayList<KeyValuePair>();
 	}
 	
 	public ArrayList<KeyValuePair> getPropertySet() {
-		return attr;
+		return attributeList;
 	}
 	
 	public void addProperty(Property key, String value){
-		attr.add(new KeyValuePair(key, value));
+		attributeList.add(new KeyValuePair(key, value));
 	}
 	
 	public int getPropertyCount(){
-		return attr.size();
+		return attributeList.size();
 	}
 	
 	public String getPropertyString(String key){
-		for(KeyValuePair e : attr){
+		for(KeyValuePair e : attributeList){
 			if(e.getKey().equals(key))
 				return e.getKey() + ":'" + e.getValue() + "'";
 		}
 		return "";
 	}
-	
-	public String getProperyValue(String key){
-		for(KeyValuePair e : attr){
-			if(e.getKey().equals(key))
-				return e.getValue();
-		}
-		return "";
-	}
+
 	
 	public String getAllPropertysInString(){
 		String temp = "";
-		for(int i=0; i<attr.size(); i++){
+		for(int i=0; i<attributeList.size(); i++){
 			try{
-				temp += attr.get(i).getKey() + ":'" + attr.get(i).getValue().replace("'", "") + "', ";
+				temp += attributeList.get(i).getKey() + ":'" + attributeList.get(i).getValue().replace("'", "") + "', ";
 			}catch(NullPointerException e){
 				log4j.error("Could not find key in "+ temp);
 			}
@@ -68,7 +61,7 @@ public abstract class GraphObject {
 	
 	public String getPropertyStringForStatement(){
 		String temp ="";
-		for(KeyValuePair e : attr){
+		for(KeyValuePair e : attributeList){
 			//e.nextElement()
 			temp += getPropertyString(e.getValue()) + " ";
 		}
@@ -78,7 +71,7 @@ public abstract class GraphObject {
 	
 	
 	public String getPropertyValue(String key){
-		for(KeyValuePair e : attr){
+		for(KeyValuePair e : attributeList){
 			if(e.getKey().equals(key))
 				return e.getValue();
 		}
@@ -86,7 +79,7 @@ public abstract class GraphObject {
 	}
 	
 	public KeyValuePair getPrimaryKey(){
-		for(KeyValuePair e: attr){
+		for(KeyValuePair e: attributeList){
 			if(e.isPrimaryKey())
 				return e;
 		}

@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import de.bkdev.transformation.rules.Rules;
 
 public class ContentController {
-	private ArrayList<TableContent> contents; 
+	private ArrayList<TableContent> contentList; 
 	
 	
 	public ContentController(){
-		contents = new ArrayList<TableContent>();
+		contentList = new ArrayList<TableContent>();
 	}
 	
 	public void addContent(TableContent tc){
-		contents.add(tc);
+		contentList.add(tc);
 	}
 	
 	public TableContent getActualContent(){
-		return contents.get(contents.size()-1);
+		return contentList.get(contentList.size()-1);
 	}
 	
 	public boolean isNode(Tableschema schema){
@@ -25,7 +25,7 @@ public class ContentController {
 	}
 	
 	public ArrayList<TableContent> getContent(){
-		return contents;
+		return contentList;
 	}
 	
 	
@@ -33,8 +33,8 @@ public class ContentController {
 		
 		ArrayList<TableContent> nodes = new ArrayList<TableContent>();
 		
-		for(TableContent e : contents){
-			if(Rules.isNode(e.getTableScheme())){
+		for(TableContent e : contentList){
+			if(Rules.isNode(e.getTableSchema())){
 				
 				nodes.add(e);
 				
@@ -48,8 +48,8 @@ public class ContentController {
 		
 		ArrayList<TableContent> rels = new ArrayList<TableContent>();
 		
-		for(TableContent e : contents){
-			if(Rules.isRelationship(e.getTableScheme()))
+		for(TableContent e : contentList){
+			if(Rules.isRelationship(e.getTableSchema()))
 				rels.add(e);
 		}
 		return rels;
