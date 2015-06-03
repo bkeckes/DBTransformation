@@ -1,5 +1,9 @@
 package de.bkdev.transformation.storage.graph;
 
+import java.util.ArrayList;
+
+import de.bkdev.transformation.storage.PropertyValueTupel;
+
 
 /**
  * Representor of a Graph-Node.
@@ -13,6 +17,12 @@ public class Node extends GraphObject{
 	public Node(String label){
 		super();
 		this.label = label;
+		this.nodeID = IdentificationMaker.makeNewNodeID();
+	}
+	public Node(String label, ArrayList<PropertyValueTupel> attributeList){
+		super();
+		this.label = label;
+		this.setAttributeList(attributeList);
 		this.nodeID = IdentificationMaker.makeNewNodeID();
 	}
 	public String getNodeID() {

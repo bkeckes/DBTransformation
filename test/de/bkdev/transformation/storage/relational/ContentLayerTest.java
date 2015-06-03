@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
+import de.bkdev.transformation.storage.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.Property;
 
 public class ContentLayerTest {

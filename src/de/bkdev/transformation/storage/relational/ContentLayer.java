@@ -2,12 +2,15 @@ package de.bkdev.transformation.storage.relational;
 
 import java.util.ArrayList;
 
+import de.bkdev.transformation.storage.PropertyValueTupel;
+
 public class ContentLayer {
 	private ArrayList<PropertyValueTupel> attr;
 	
 	public ContentLayer(){
 		attr = new ArrayList<PropertyValueTupel>();
 	}
+	
 	
 	public void addValue(Property property, String value){
 		

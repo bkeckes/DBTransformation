@@ -114,16 +114,16 @@ public class DatabaseReader {
 		
 		
 		
-		Generator transformer = new Generator();
+		Generator generator = new Generator();
 		
 		//Nodes werden erstellt.
-		ArrayList<Node> nodes					= transformer.makeNodes(contentController.getNodes());
+		ArrayList<Node> nodes = generator.makeNodes(contentController.getNodes());
 		
 		//Kanten werden erstellt.
-		ArrayList<Relationship> nToMRelationships 	= transformer.makeManyToManyRelationships(contentController.getRelationships(), nodes);
+		ArrayList<Relationship> nToMRelationships = generator.makeManyToManyRelationships(contentController.getRelationships(), nodes);
 		
 		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
-		ArrayList<Relationship> oneToManyRelationships 	= transformer.makeOneToManyRelationships(nodes);
+		ArrayList<Relationship> oneToManyRelationships = generator.makeOneToManyRelationships(nodes);
 		
 		
 		constStatements = StatementMaker.makeConstraints(schemaController.getNodeSchemas());

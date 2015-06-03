@@ -7,12 +7,11 @@ import org.apache.logging.log4j.Logger;
 import org.junit.rules.RunRules;
 
 import de.bkdev.transformation.DatabaseReader;
-import de.bkdev.transformation.storage.graph.KeyValuePair;
 import de.bkdev.transformation.storage.graph.Node;
 import de.bkdev.transformation.storage.graph.NodeTupel;
 import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentLayer;
-import de.bkdev.transformation.storage.relational.PropertyValueTupel;
+import de.bkdev.transformation.storage.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.TableContent;
 import de.bkdev.transformation.storage.relational.Tableschema;
 
@@ -31,22 +30,13 @@ public class Generator{
 		for(TableContent e : tableList){
 			log4j.info("Make Node for '" + e.getTableSchema().getTableName() + "'");
 			for(ContentLayer c : e.getLayer()){
-				nodes.add(makeNode(e.getTableSchema().getTableName(), c));
+				nodes.add(new Node(e.getTableSchema().getTableName(), c.getAttributes()));
 			}
 		}
 		
 		return nodes;
 	}
 	
-	private Node makeNode(String label, ContentLayer layer){
-		Node node = new Node(label);
-		
-		for(PropertyValueTupel tupel : layer.getAttributes()){
-			node.addProperty(tupel.getProperty(), tupel.getValue());
-		}
-		
-		return node;
-	}
 	
 	/**
 	 * Macht n:m Relationen
@@ -142,7 +132,7 @@ public class Generator{
 		ArrayList<Relationship> relationships = new ArrayList<Relationship>();
 		
 		for(Node n : nodes){
-			for(KeyValuePair kv : n.getPropertySet()){
+			for(PropertyValueTupel kv : n.getPropertySet()){
 				if(kv.getProperty().isForeignKey()){
 					
 					Node found = findAttributeInNodesAsPrimaryKey2(kv, nodes, kv.getProperty().getRefTable());
@@ -164,12 +154,12 @@ public class Generator{
 		return relationships;
 	}
 	
-	public Node findAttributeInNodesAsPrimaryKey2(KeyValuePair toFind, ArrayList<Node> nodes, String inScheme){
+	public Node findAttributeInNodesAsPrimaryKey2(PropertyValueTupel toFind, ArrayList<Node> nodes, String inScheme){
 		
 		
 		for(Node n : nodes){
 			if(n.getLabel().equals(inScheme)){
-				for(KeyValuePair kv : n.getPropertySet()){
+				for(PropertyValueTupel kv : n.getPropertySet()){
 					if(kv.getProperty().isPrimaryKey()){
 						if(kv.getValue().equals(toFind.getValue())){
 							return n;
@@ -186,11 +176,11 @@ public class Generator{
 	 * Durchsucht alle Nodes (TODO Ausser in angegebener Tabelle) ob sie diesen Wert als PK haben. 
 	 * @return
 	 */
-	public Node findAttributeInNodesAsPrimaryKey(KeyValuePair toFind, ArrayList<Node> nodes, String notInhisScheme){
+	public Node findAttributeInNodesAsPrimaryKey(PropertyValueTupel toFind, ArrayList<Node> nodes, String notInhisScheme){
 		
 		for(Node n : nodes){
 			if(!n.getLabel().equals(notInhisScheme)){
-				for(KeyValuePair kv : n.getPropertySet()){
+				for(PropertyValueTupel kv : n.getPropertySet()){
 					if(kv.getProperty().isPrimaryKey()){
 						if(kv.getValue().equals(toFind.getValue())){
 							return n;

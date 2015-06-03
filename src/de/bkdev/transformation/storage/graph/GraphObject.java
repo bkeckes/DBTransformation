@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 
 import de.bkdev.transformation.DatabaseReader;
+import de.bkdev.transformation.storage.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.Property;
 
 
@@ -19,18 +20,22 @@ public abstract class GraphObject {
 	private static final Logger log4j = LogManager.getLogger(GraphObject.class
 	        .getName());
 	
-	private ArrayList<KeyValuePair> attributeList;
+	private ArrayList<PropertyValueTupel> attributeList;
 	
+	public void setAttributeList(ArrayList<PropertyValueTupel> attributeList) {
+		this.attributeList = attributeList;
+	}
+
 	public GraphObject(){
-		attributeList = new ArrayList<KeyValuePair>();
+		attributeList = new ArrayList<PropertyValueTupel>();
 	}
 	
-	public ArrayList<KeyValuePair> getPropertySet() {
+	public ArrayList<PropertyValueTupel> getPropertySet() {
 		return attributeList;
 	}
 	
 	public void addProperty(Property key, String value){
-		attributeList.add(new KeyValuePair(key, value));
+		attributeList.add(new PropertyValueTupel(key, value));
 	}
 	
 	public int getPropertyCount(){
@@ -38,7 +43,7 @@ public abstract class GraphObject {
 	}
 	
 	public String getPropertyString(String key){
-		for(KeyValuePair e : attributeList){
+		for(PropertyValueTupel e : attributeList){
 			if(e.getKey().equals(key))
 				return e.getKey() + ":'" + e.getValue() + "'";
 		}
@@ -61,7 +66,7 @@ public abstract class GraphObject {
 	
 	public String getPropertyStringForStatement(){
 		String temp ="";
-		for(KeyValuePair e : attributeList){
+		for(PropertyValueTupel e : attributeList){
 			//e.nextElement()
 			temp += getPropertyString(e.getValue()) + " ";
 		}
@@ -71,15 +76,15 @@ public abstract class GraphObject {
 	
 	
 	public String getPropertyValue(String key){
-		for(KeyValuePair e : attributeList){
+		for(PropertyValueTupel e : attributeList){
 			if(e.getKey().equals(key))
 				return e.getValue();
 		}
 		return null;
 	}
 	
-	public KeyValuePair getPrimaryKey(){
-		for(KeyValuePair e: attributeList){
+	public PropertyValueTupel getPrimaryKey(){
+		for(PropertyValueTupel e: attributeList){
 			if(e.isPrimaryKey())
 				return e;
 		}
