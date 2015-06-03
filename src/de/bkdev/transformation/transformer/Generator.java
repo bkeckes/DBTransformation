@@ -13,6 +13,7 @@ import de.bkdev.transformation.storage.graph.Relationship;
 import de.bkdev.transformation.storage.relational.ContentLayer;
 import de.bkdev.transformation.storage.PropertyValueTupel;
 import de.bkdev.transformation.storage.relational.TableContent;
+import de.bkdev.transformation.storage.relational.TableReference;
 import de.bkdev.transformation.storage.relational.Tableschema;
 
 
@@ -28,7 +29,7 @@ public class Generator{
 		
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for(TableContent e : tableList){
-			log4j.info("Make Node for '" + e.getTableSchema().getTableName() + "'");
+			log4j.info("Make Nodes for '" + e.getTableSchema().getTableName() + "'");
 			for(ContentLayer c : e.getLayer()){
 				nodes.add(new Node(e.getTableSchema().getTableName(), c.getAttributes()));
 			}
@@ -54,7 +55,9 @@ public class Generator{
 				Node secondN = null;
 				
 				try{
-					firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
+					//firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
+					firstN = getNodeWithSameKey(nodes, firstfk);
+					
 					//secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
 				}catch(RuntimeException e){
 					log4j.error("Reference from '" + firstN.getLabel() + "' to '" + firstfk.getProperty().getRefTable() + "' could not found in Nodes");
@@ -63,7 +66,7 @@ public class Generator{
 				
 				try{
 					//firstN = getNodeWithPrimaryKeyValue(firstfk, getNodesWithScheme(nodes, firstfk.getProperty().getRefTable()));
-					secondN = getNodeWithPrimaryKeyValue(secondfk, getNodesWithScheme(nodes, secondfk.getProperty().getRefTable()));
+					secondN = getNodeWithSameKey(nodes, secondfk);
 					
 				}catch(RuntimeException e){
 					log4j.error("Reference from '" + secondN.getLabel() + "' to '" + secondfk.getProperty().getRefTable() + "' could not found in Nodes");
@@ -140,7 +143,7 @@ public class Generator{
 					 
 					if(found!=null){
 						relationships.add(new Relationship(kv.getKey(), new NodeTupel(n, found)));
-						log4j.info("Make 1:1 or 1:N Relationship from '" + n.getLabel() +"' to '" + found.getLabel() + "'");
+						//log4j.info("Make 1:1 or 1:N Relationship from '" + n.getLabel() +"' to '" + found.getLabel() + "'");
 						
 						//relationships.add(new Relationship(kv.getKey(), new NodeTupel(found, n)));
 						//log4j.info("Make 1:1 or 1:N Relationship from '" + found.getLabel() +"' to '" + n.getLabel() + "'");
@@ -159,12 +162,26 @@ public class Generator{
 		
 		for(Node n : nodes){
 			if(n.getLabel().equals(inScheme)){
+				//if(n.getPrimaryKey().getKey().equals(toFind.getKey()) && n.getPrimaryKey().getValue().equals(toFind.getValue()))
+				//	return n;
 				for(PropertyValueTupel kv : n.getPropertySet()){
 					if(kv.getProperty().isPrimaryKey()){
 						if(kv.getValue().equals(toFind.getValue())){
 							return n;
 						}
 					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Node getNodeWithSameKey(ArrayList<Node> nodes, PropertyValueTupel fk){
+		TableReference ref = fk.getTableReference();
+		for(Node n: nodes){
+			if(n.getLabel().equals(ref.getTable())){
+				if(n.getPrimaryKey().getValue().equals(fk.getValue())){
+					return n;
 				}
 			}
 		}

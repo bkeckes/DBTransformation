@@ -2,30 +2,30 @@ package de.bkdev.transformation.storage.relational;
 
 public class TableReference {
 	private String table;
-	private String attribute;
+	private String attributeName;
 	
 	public TableReference(String table, String attribute){
 		this.table = table;
-		this.attribute = attribute;
+		this.attributeName = attribute;
 	}
 
 	public String getTable() {
 		return table;
 	}
 
-	public String getAttribute() {
-		return attribute;
+	public String getAttributeName() {
+		return attributeName;
 	}
 	
 	@Override
 	public String toString(){
-		return table + "." + attribute;
+		return table + "." + attributeName;
 	}
 	
 	public boolean isValid(){
 		if(table==null)
 			return false;
-		else if(attribute==null)
+		else if(attributeName==null)
 			return false;
 		else
 			return true;

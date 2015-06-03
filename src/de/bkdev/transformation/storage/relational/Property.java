@@ -21,6 +21,9 @@ public class Property {
 		
 	}
 
+	public TableReference getReference(){
+		return reference;
+	}
 	public String getRefTable() {
 		return reference.getTable();
 	}

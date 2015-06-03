@@ -1,9 +1,10 @@
 package de.bkdev.transformation.storage;
 
 import de.bkdev.transformation.storage.relational.Property;
+import de.bkdev.transformation.storage.relational.TableReference;
 
 
-public class PropertyValueTupel {
+public class PropertyValueTupel{
 	private Property prop;
 	private String value;
 	
@@ -31,5 +32,7 @@ public class PropertyValueTupel {
 		return prop.isForeignKey();
 	}
 	
-	
+	public TableReference getTableReference(){
+		return prop.getReference();
+	}
 }
