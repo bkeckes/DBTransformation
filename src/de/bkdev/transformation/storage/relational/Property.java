@@ -8,7 +8,7 @@ package de.bkdev.transformation.storage.relational;
 public class Property {
 	private boolean isPrimaryKey;
 	private boolean isForeignKey;
-	private String type;
+	private String type;	//TODO Type sollte ein enum sein dementsprechend Attributdatentypen richtig zuweisen.
 	private String name;
 	private TableReference reference;
 	

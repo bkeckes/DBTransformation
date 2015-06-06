@@ -8,14 +8,10 @@ import de.bkdev.transformation.storage.relational.Tableschema;
 
 public class StatementMaker {
 
-	/**
-	 * TODO
-	 */
 	public static String getNodeIdentifer(Node node){
 		return node.getPrimaryKey().getKey()+node.getPrimaryKey().getValue();
 	}
 	public static String makeNodeStatement(Node node) {
-		
 		return "CREATE (" + getNodeIdentifer(node) + ":" + node.getLabel() + " {" + node.getAllPropertysInString() + "})";
 	}
 	public static String makeRelationshipStatement(Relationship rel){
@@ -48,20 +44,33 @@ public class StatementMaker {
 	
 	public static ArrayList<String> makeConstraints(ArrayList<Tableschema> schemas){
 		ArrayList<String> list = new ArrayList<>();
-		String temp="";
-		String cName = "";
+		String constraintName = "";
 		for(Tableschema s : schemas){
-			cName = "const" + s.getTableName();
+			constraintName = "c" + s.getTableName();
 			try{
-				list.add("CREATE CONSTRAINT ON (" + cName + ":" + s.getTableName() + ") ASSERT " + cName + "." + s.getPrimaryKey().getName() + " IS UNIQUE");
+				list.add("CREATE CONSTRAINT ON (" + constraintName + ":" + s.getTableName() + ") ASSERT " + constraintName + "." + s.getPrimaryKey().getName() + " IS UNIQUE");
 			}catch(NullPointerException e){
 				e.printStackTrace();
 			}
 		}
 		return list;
 	}
-	
 	public static String makeSingleRelationshipStatement(Relationship rel){
+		String props = "";
+		if(rel.getPropertyCount()>0){
+			props = " {" + rel.getAllPropertysInString() + "}";
+		}
+		return 	"MATCH (a:" + rel.getStart().getLabel() + 
+				" { " + rel.getStart().getPrimaryKey().getKey() + 
+				":'" + rel.getStart().getPrimaryKey().getValue() + 
+				"'}), (b:" + rel.getEnd().getLabel() + 
+				" { " + rel.getEnd().getPrimaryKey().getKey() + 
+				":'" + rel.getEnd().getPrimaryKey().getValue() + 
+				"'}) MERGE (a)-[r:" + rel.getLabel().toUpperCase() + 
+				props + "]->(b)";
+	 
+	}
+	/*public static String makeSingleRelationshipStatement(Relationship rel){
 		String props = "";
 		String temp ="";
 		if(rel.getPropertyCount()>0)
@@ -70,8 +79,8 @@ public class StatementMaker {
 		temp = "MATCH (a:" + rel.getStart().getLabel() + " { " + rel.getStart().getPrimaryKey().getKey() + ":'" + rel.getStart().getPrimaryKey().getValue() + "'})";
 		temp += ", (b:" + rel.getEnd().getLabel() + " { " + rel.getEnd().getPrimaryKey().getKey() + ":'" + rel.getEnd().getPrimaryKey().getValue() + "'})";
 		temp += " MERGE (a)-[r:" + rel.getLabel().toUpperCase() + props + "]->(b)";
-		return temp; //"CREATE (" + getNodeIdentifer(rel.getStart()) + ")-[" + rel.getRelID() + ":" + rel.getLabel().toUpperCase() + props + "]->(" + getNodeIdentifer(rel.getEnd()) + ")";
-	}
+		return temp;
+	}*/
 	public static ArrayList<String> makeCypherStatementFromSingleRelationships(ArrayList<Relationship> rels){
 		ArrayList<String> temp = new ArrayList<>();
 		for(Relationship r : rels){

@@ -116,13 +116,13 @@ public class DatabaseReader {
 		
 		Generator generator = new Generator();
 		
-		//Nodes werden erstellt.
+		//Knoten werden erstellt.
 		ArrayList<Node> nodes = generator.makeNodes(contentController.getNodes());
 		
-		//Kanten werden erstellt.
+		//Kanten aus n:m Beziehungen werden erstellt.
 		ArrayList<Relationship> nToMRelationships = generator.makeManyToManyRelationships(contentController.getRelationships(), nodes);
 		
-		//Kanten aus normalen 1:1 oder 1:n Beziehungen werden erstellt.
+		//Kanten aus 1:1 oder 1:n Beziehungen werden erstellt.
 		ArrayList<Relationship> oneToManyRelationships = generator.makeOneToManyRelationships(nodes);
 		
 		

@@ -138,7 +138,7 @@ public class Generator{
 			for(PropertyValueTupel kv : n.getPropertySet()){
 				if(kv.getProperty().isForeignKey()){
 					
-					Node found = findAttributeInNodesAsPrimaryKey2(kv, nodes, kv.getProperty().getRefTable());
+					Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, kv.getProperty().getRefTable());
 					// Node found = findAttributeInNodesAsPrimaryKey(kv, nodes, n.getLabel());
 					 
 					if(found!=null){
@@ -157,7 +157,7 @@ public class Generator{
 		return relationships;
 	}
 	
-	public Node findAttributeInNodesAsPrimaryKey2(PropertyValueTupel toFind, ArrayList<Node> nodes, String inScheme){
+	public Node findAttributeInNodesAsPrimaryKey(PropertyValueTupel toFind, ArrayList<Node> nodes, String inScheme){
 		
 		
 		for(Node n : nodes){
@@ -192,7 +192,7 @@ public class Generator{
 	/**
 	 * Durchsucht alle Nodes (TODO Ausser in angegebener Tabelle) ob sie diesen Wert als PK haben. 
 	 * @return
-	 */
+	 
 	public Node findAttributeInNodesAsPrimaryKey(PropertyValueTupel toFind, ArrayList<Node> nodes, String notInhisScheme){
 		
 		for(Node n : nodes){
@@ -208,5 +208,5 @@ public class Generator{
 		}
 		return null;
 	}
-
+	*/
 }

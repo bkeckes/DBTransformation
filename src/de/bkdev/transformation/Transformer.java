@@ -60,15 +60,14 @@ public class Transformer {
 		}
 		
 		try ( Transaction tx = graphDb.beginTx() )
-		{
-			//erst alles loeschen
-			//graphDb.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;");
+		{	
 			
 			for(String cons : reader.getConstStatements()){
-				//System.out.println(cons);
+				
 				
 				try{
 					//graphDb.execute(cons);
+					System.out.println(cons);
 					constCounter++;
 				}catch(Exception e){
 					e.printStackTrace();
@@ -77,14 +76,14 @@ public class Transformer {
 			}
 			
 			for(String node : reader.getNodeStatements()){
-				//System.out.println(node);
+				System.out.println(node);
 				graphDb.execute(node);
 				nodeCounter++;
 			}
 				
 			for(String rel : reader.getRelStatements()){
 				graphDb.execute(rel);
-				//System.out.println(rel);
+				System.out.println(rel);
 				relCounter++;
 			}
 		    tx.success();
