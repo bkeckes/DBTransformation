@@ -55,28 +55,28 @@ public class GeneratorTest {
 		ContentController contents = new ContentController();
 		
 		schemes.addSchema(new Tableschema("US"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "uid"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "varchar(20)", "uid"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
 		schemes.addSchema(new Tableschema("BG"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "bid"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "admin"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "varchar(20)", "bid"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchar(20)", "name"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "admin"));
 		
 		schemes.addSchema(new Tableschema("FR"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "fuser"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "fblog"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "fuser"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "fblog"));
 		
 		schemes.addSchema(new Tableschema("TG"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "tuser"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("CT", "cid"), "varchar(20)", "tcomment"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "tuser"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("CT", "cid"), "varchar(20)", "tcomment"));
 		
 		schemes.addSchema(new Tableschema("CT"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "varchar(20)", "cid"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "cblog"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "cuser"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "msg"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchar(20)", "date"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "varchar(20)", "cid"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("BG", "bid"), "varchar(20)", "cblog"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("US", "uid"), "varchar(20)", "cuser"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchar(20)", "msg"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchar(20)", "date"));
 		
 		
 		
@@ -207,10 +207,10 @@ public class GeneratorTest {
 		ContentController contents = new ContentController();
 		
 		schemes.addSchema(new Tableschema("USER"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
-		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.addContent(new TableContent(schemes.getActualSchema()));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Ben");
@@ -220,11 +220,11 @@ public class GeneratorTest {
 		
 		
 		schemes.addSchema(new Tableschema("BLOG"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
 		
-		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.addContent(new TableContent(schemes.getActualSchema()));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Science");
@@ -275,10 +275,10 @@ public class GeneratorTest {
 		ContentController contents = new ContentController();
 		
 		schemes.addSchema(new Tableschema("USER"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchr(128)", "name"));
 		
-		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.addContent(new TableContent(schemes.getActualSchema()));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Ben");
@@ -288,11 +288,11 @@ public class GeneratorTest {
 		
 		
 		schemes.addSchema(new Tableschema("BLOG"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "varchr(128)", "name"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "varchr(128)", "name"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("USER", "id"), "int", "admin"));
 		
-		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.addContent(new TableContent(schemes.getActualSchema()));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("name", "Science");
@@ -303,12 +303,12 @@ public class GeneratorTest {
 		contents.getActualContent().addAttributeToCurrentLayer("admin", "1");
 
 		schemes.addSchema(new Tableschema("COMMENT"));
-		schemes.getActualScheme().addProperty(new Property(true, null, "int", "id"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("BLOG", "id"), "int", "cblog"));
-		schemes.getActualScheme().addProperty(new Property(false, new TableReference("USER", "id"), "int", "cuser"));
-		schemes.getActualScheme().addProperty(new Property(false, null, "char", "msg"));
+		schemes.getActualSchema().addProperty(new Property(true, null, "int", "id"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("BLOG", "id"), "int", "cblog"));
+		schemes.getActualSchema().addProperty(new Property(false, new TableReference("USER", "id"), "int", "cuser"));
+		schemes.getActualSchema().addProperty(new Property(false, null, "char", "msg"));
 		
-		contents.addContent(new TableContent(schemes.getActualScheme()));
+		contents.addContent(new TableContent(schemes.getActualSchema()));
 		contents.getActualContent().addContentLayer();
 		contents.getActualContent().addAttributeToCurrentLayer("id", "1");
 		contents.getActualContent().addAttributeToCurrentLayer("cblog", "1");

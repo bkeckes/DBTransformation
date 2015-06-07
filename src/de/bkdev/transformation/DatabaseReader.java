@@ -83,7 +83,7 @@ public class DatabaseReader {
     	    		}
     	    		
     	    		//Schemateil zum aktuellen Schema hinzufuegen
-	    			schemaController.getActualScheme().addProperty(new Property(
+	    			schemaController.getActualSchema().addProperty(new Property(
 	    					column.isPartOfPrimaryKey(), 
 	    					refCol,
 							column.getColumnDataType().getFullName(), 
@@ -92,10 +92,10 @@ public class DatabaseReader {
     	    	}
     	    	
     	    	//Daten werden geholt.
-    	    	contentController.addContent(new TableContent(schemaController.getSchema(schemaController.getActualScheme().getTableName())));
+    	    	contentController.addContent(new TableContent(schemaController.getSchema(schemaController.getActualSchema().getTableName())));
     	    	
     	    	log4j.info("Reading Data from table '" + table.getName() + "'");
-    	    	contentController = readContent(connection, table.getName(), contentController, schemaController.getActualScheme().getPropertyCount());
+    	    	contentController = readContent(connection, table.getName(), contentController, schemaController.getActualSchema().getPropertyCount());
 
     	    }
 

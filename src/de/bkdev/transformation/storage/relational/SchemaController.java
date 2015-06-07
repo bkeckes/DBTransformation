@@ -13,7 +13,7 @@ public class SchemaController {
 	public void addSchema(Tableschema scheme){
 		schemas.add(scheme);
 	}
-	public Tableschema getActualScheme(){
+	public Tableschema getActualSchema(){
 		return schemas.get(schemas.size()-1);
 	}
 	/**
