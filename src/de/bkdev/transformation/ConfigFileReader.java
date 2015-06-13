@@ -13,7 +13,7 @@ public class ConfigFileReader {
 	public static String relationalDatabasePassword;
 	public static String graphDatabasePath;
 	public static String relationalDatabaseName;
-	
+	public static String tableNames;
 	
 	public static String getRelationalDatabaseName() {
 		return relationalDatabaseName;
@@ -33,7 +33,9 @@ public class ConfigFileReader {
 	public static String getGraphDatabasePath() {
 		return graphDatabasePath;
 	}
-	
+	public static String getTableNames() {
+		return tableNames;
+	}
 	public static boolean isFileValid(){
 		if(relationalDatabaseName!=null &&
 				relationalDatabaseType != null &&
@@ -63,6 +65,8 @@ public class ConfigFileReader {
 			relationalDatabasePassword = prop.getProperty("relationalDatabasePassword");
 			relationalDatabaseName = prop.getProperty("relationalDatabaseName");
 			graphDatabasePath = prop.getProperty("graphDatabasePath");
+			tableNames = prop.getProperty("tableNames");
+
 			
 	 
 		} catch (IOException ex) {

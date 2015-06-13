@@ -32,10 +32,12 @@ public class Transformer {
 		String dbName =  ConfigFileReader.getRelationalDatabaseName();
 		String user = ConfigFileReader.getRelationalDatabaseUser();
 		String pwd = ConfigFileReader.getRelationalDatabasePassword();
+		String tableNames = ConfigFileReader.getTableNames();
 			
 		log4j.info("Using Relational Database: " + dburl + dbName + ", Graph Database: " + ConfigFileReader.getGraphDatabasePath());
 		
-		DatabaseReader reader = new DatabaseReader(dburl,dbName,user,pwd);
+		DatabaseReader reader = new DatabaseReader(dburl,dbName,user,pwd, tableNames);
+		
 		GraphDatabaseService graphDb = null;
 		try{
 			graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(ConfigFileReader.getGraphDatabasePath());

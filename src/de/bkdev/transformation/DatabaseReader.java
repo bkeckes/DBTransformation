@@ -48,7 +48,7 @@ public class DatabaseReader {
 	private ArrayList<String> nodeStatements;
 	private ArrayList<String> relStatements;
 	
-	public DatabaseReader(String dburl, String dbName, String user, String password){
+	public DatabaseReader(String dburl, String dbName, String user, String password, String tableNames){
 		try {
 
     		final Connection connection = DriverManager.getConnection(dburl + "/" + dbName + "?user=" + user + "&password=" + password);
@@ -59,7 +59,7 @@ public class DatabaseReader {
     	    options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
     	    options.setRoutineInclusionRule(new ExcludeAll());
 
-    	    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, options);
+    	    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, new SchemaCrawlerOptions());
     	    
     	    final Schema tableSchema = catalog.getSchema(dbName);
     	    
@@ -68,6 +68,10 @@ public class DatabaseReader {
     	    
     	    //Alle Tabellen hintereinander
     	    for (final Table table: catalog.getTables(tableSchema)){
+    	    	
+    	    	//Nur wenn Tabellenname explizit im configfile erwähnt wurde oder * drin steht wird Tabelle ausgelesen.
+    	    	if(!tableNames.contains("*") && !tableNames.contains(table.getName()))
+    	    		continue;
     	    	
     	    	schemaController.addSchema(new Tableschema(removeMarks(table.getName())));
     	    	log4j.info("Reading Schema from table '" + removeMarks(table.getName()) + "'");
