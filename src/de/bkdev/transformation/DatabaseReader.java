@@ -59,7 +59,7 @@ public class DatabaseReader {
     	    options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
     	    options.setRoutineInclusionRule(new ExcludeAll());
 
-    	    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, new SchemaCrawlerOptions());
+    	    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, options);
     	    
     	    final Schema tableSchema = catalog.getSchema(dbName);
     	    
