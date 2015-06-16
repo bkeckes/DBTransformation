@@ -64,19 +64,45 @@ public class Transformer {
 		try ( Transaction tx = graphDb.beginTx() )
 		{	
 			
-			for(String cons : reader.getConstStatements()){
-				
-				
+			//Delete all Indizies and Constraints first
+			for(String del : reader.getDeleteStatements()){
 				try{
-					//graphDb.execute(cons);
+					
+					graphDb.execute(del);
+					System.out.println(del);
+					
+				}catch(Exception e){
+					System.out.println(del + " konnte nicht ausgeführt werden");
+				}
+			}
+			tx.success();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		log4j.info("cleaned graphDB from existing constraints");
+		try ( Transaction tx = graphDb.beginTx() )
+		{	
+						
+			for(String cons : reader.getConstStatements()){
+				try{
 					System.out.println(cons);
+					graphDb.execute(cons);
 					constCounter++;
 				}catch(Exception e){
 					e.printStackTrace();
 				}
 				
 			}
-			
+			tx.success();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try ( Transaction tx = graphDb.beginTx() )
+		{	
+						
 			for(String node : reader.getNodeStatements()){
 				System.out.println(node);
 				graphDb.execute(node);

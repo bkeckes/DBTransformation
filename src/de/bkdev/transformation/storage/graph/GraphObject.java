@@ -53,10 +53,14 @@ public abstract class GraphObject {
 	
 	public String getAllPropertysInString(){
 		String temp = "";
-		for(int i=0; i<attributeList.size(); i++){
+		for(PropertyValueTupel e : attributeList){
+			String value = e.getValue().replace("'", "");
 			try{
-				temp += attributeList.get(i).getKey() + ":'" + attributeList.get(i).getValue().replace("'", "") + "', ";
-			}catch(NullPointerException e){
+				if(isNumeric(value))
+					temp += e.getKey() + ":" + value + ", ";
+				else
+					temp += e.getKey() + ":'" + value + "', ";
+			}catch(NullPointerException a){
 				log4j.error("Could not find key in "+ temp);
 			}
 		}
@@ -91,4 +95,18 @@ public abstract class GraphObject {
 		throw new NullPointerException("No PK found " + this.toString());
 	}
 	
+	private boolean isNumeric(String possibleNumber) {
+		if(possibleNumber.charAt(0)=='0')
+			return false;
+		try  
+		  {  
+		    double d = Double.parseDouble(possibleNumber);  
+		  }  
+		  catch(NumberFormatException nfe)  
+		  {  
+		    return false;  
+		  }  
+			
+		  return true;  
+	}
 }

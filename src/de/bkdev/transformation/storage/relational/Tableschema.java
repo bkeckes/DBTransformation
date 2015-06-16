@@ -97,6 +97,15 @@ public class Tableschema {
 		return propertyList.size();
 	}
 	
+	public int getPrimaryKeyCount(){
+		int count=0;
+		for(Property p : propertyList){
+			if(p.isPrimaryKey())
+				count++;
+		}
+		return count;
+	}
+	
 	public String getPropertyNameByIndex(int index){
 		return propertyList.get(index).getName();
 	}
@@ -104,4 +113,6 @@ public class Tableschema {
 	public Property getPropertyByIndex(int index){
 		return propertyList.get(index);
 	}
+	
+	
 }

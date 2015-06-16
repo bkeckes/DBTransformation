@@ -45,8 +45,11 @@ public class DatabaseReader {
 	private ContentController contentController = new ContentController();
 	
 	private ArrayList<String> constStatements;
+	private ArrayList<String> deleteStatements;
 	private ArrayList<String> nodeStatements;
 	private ArrayList<String> relStatements;
+	
+	
 	
 	public DatabaseReader(String dburl, String dbName, String user, String password, String tableNames){
 		try {
@@ -129,7 +132,7 @@ public class DatabaseReader {
 		//Kanten aus 1:1 oder 1:n Beziehungen werden erstellt.
 		ArrayList<Relationship> oneToManyRelationships = generator.makeOneToManyRelationships(nodes);
 		
-		
+		deleteStatements = StatementMaker.makeDropIndexAndConstraintsStatements(schemaController.getNodeSchemas());
 		constStatements = StatementMaker.makeConstraints(schemaController.getNodeSchemas());
 		log4j.info("Constraints: " + constStatements.size());
 		
@@ -151,7 +154,14 @@ public class DatabaseReader {
 
 
 	  
-	  public ArrayList<String> getConstStatements() {
+	  public ArrayList<String> getDeleteStatements() {
+		return deleteStatements;
+	}
+
+
+
+
+	public ArrayList<String> getConstStatements() {
 		return constStatements;
 	}
 
