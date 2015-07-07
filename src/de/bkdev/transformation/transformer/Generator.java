@@ -75,7 +75,7 @@ public class Generator{
 				//Kante wird erstellt.
 				Relationship newRelationship = new Relationship(rel.getTableSchema().getTableName(), new NodeTupel(firstN, secondN));
 				
-				//Attribute (falls vorhanden) werden hinzugefügt (Aber nicht die FKs).
+				//Attribute (falls vorhanden) werden hinzugefuegt (Aber nicht die FKs).
 				for(PropertyValueTupel tupel : layer.getAttributesWithoutFks()){
 					newRelationship.addProperty(tupel.getProperty(), tupel.getValue());
 				}
@@ -112,7 +112,7 @@ public class Generator{
 	}
 	
 	/**
-	 * Geht alle Nodes durch und Vergleicht ob der PK gleich dem PK des tupels ist. Wenn ja wird die Node zurück gegeben.
+	 * Geht alle Nodes durch und Vergleicht ob der PK gleich dem PK des tupels ist. Wenn ja wird die Node zurueck gegeben.
 	 * @param tupel
 	 * @param nodes
 	 * @return foundNode
@@ -127,7 +127,7 @@ public class Generator{
 	}
 
 	/**
-	 * macht Relationen wenn FK in einer anderen Node erwähnt wird.
+	 * macht Relationen wenn FK in einer anderen Node erwaehnt wird.
 	 * Also 1:1 und 1:n
 	 */
 

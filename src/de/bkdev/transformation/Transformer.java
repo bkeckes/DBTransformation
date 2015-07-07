@@ -72,7 +72,7 @@ public class Transformer {
 					System.out.println(del);
 					
 				}catch(Exception e){
-					System.out.println(del + " konnte nicht ausgeführt werden");
+					System.out.println(del + " konnte nicht ausgefuehrt werden");
 				}
 			}
 			tx.success();

@@ -72,7 +72,7 @@ public class DatabaseReader {
     	    //Alle Tabellen hintereinander
     	    for (final Table table: catalog.getTables(tableSchema)){
     	    	
-    	    	//Nur wenn Tabellenname explizit im configfile erwähnt wurde oder * drin steht wird Tabelle ausgelesen.
+    	    	//Nur wenn Tabellenname explizit im configfile erwaehnt wurde oder * drin steht wird Tabelle ausgelesen.
     	    	if(!tableNames.contains("*") && !tableNames.contains(table.getName()))
     	    		continue;
     	    	
